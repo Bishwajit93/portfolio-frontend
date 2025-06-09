@@ -1,0 +1,4 @@
+/* Tailwind will still work if it's configured */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
