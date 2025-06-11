@@ -29,7 +29,7 @@ export default function ProjectsPage() {
         alert("Error adding project");
       }
     }
-
+  };
 
   if (loading) return <p>Loading projects...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -37,7 +37,9 @@ export default function ProjectsPage() {
   return (
     <main>
       <h1 className="text-3xl font-bold mb-6">My Projects</h1>
+
       <AddProjectForm onAdd={handleAddProject} />
+
       <ul className="mt-8 space-y-4">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
@@ -45,6 +47,4 @@ export default function ProjectsPage() {
       </ul>
     </main>
   );
-}
-
 }
