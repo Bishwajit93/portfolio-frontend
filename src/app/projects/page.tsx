@@ -45,8 +45,12 @@ export default function ProjectsPage() {
     try {
       const newProject = await createProject(projectData);
       setProjects((prev) => [...prev, newProject]); // add new project to state list
-    } catch (err: any) {
-      alert("Error adding project: " + err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert("Error adding project: " + err.message);
+      } else {
+        alert("An unknown error occurred.");
+      }
     }
   };
 
