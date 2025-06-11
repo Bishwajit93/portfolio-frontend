@@ -22,10 +22,14 @@ export default function ProjectsPage() {
     try {
       const newProject = await createProject(projectData);
       setProjects((prev) => [...prev, newProject]);
-    } catch (err: any) {
-      alert("Error adding project: " + err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert("Error adding project: " + err.message);
+      } else {
+        alert("Error adding project");
+      }
     }
-  };
+
 
   if (loading) return <p>Loading projects...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -41,4 +45,6 @@ export default function ProjectsPage() {
       </ul>
     </main>
   );
+}
+
 }
