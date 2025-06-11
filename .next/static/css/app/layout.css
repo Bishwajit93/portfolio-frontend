@@ -3,6 +3,15 @@
   \*****************************************************************************************************************************************************************************************************************************************************************/
 /*! tailwindcss v4.1.8 | MIT License | https://tailwindcss.com */
 @layer properties;
+.mx-auto {
+  margin-inline: auto;
+}
+.block {
+  display: block;
+}
+.w-full {
+  width: 100%;
+}
 .border {
   border-style: var(--tw-border-style);
   border-width: 1px;
