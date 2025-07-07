@@ -2,7 +2,7 @@
 export default function Resume() {
   return (
     <div className="resume-container">
-      <h1 className="resume-title">Abdullah's Resume</h1>
+      <h1 className="resume-title"> Resume of Bishwajit Karmaker</h1>
       
       {/* Personal Info */}
       <section>
