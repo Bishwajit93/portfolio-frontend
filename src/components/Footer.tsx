@@ -5,7 +5,6 @@ export default function Footer() {
   return (
     <footer className="footer bg-dark text-white py-4">
       <div className="container text-center">
-        <p>&copy; {new Date().getFullYear()} Portfolio of Bishwajit Karmaker. All rights reserved.</p>
         <p>
           <a href="https://www.linkedin.com/in/bishwajit-karmaker/" target="_blank" rel="noopener noreferrer">
             LinkedIn
@@ -23,6 +22,7 @@ export default function Footer() {
             Resume
           </Link> {/* Resume Link */}
         </p>
+        <p>&copy; {new Date().getFullYear()} Portfolio of Bishwajit Karmaker. All rights reserved.</p>
       </div>
     </footer>
   );
