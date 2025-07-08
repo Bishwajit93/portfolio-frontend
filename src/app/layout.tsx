@@ -3,7 +3,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
-import Head from "next/head"; // Importing the Head component
+import Head from "next/head";
 import "./globals.css"; // Global CSS import
 
 // Corrected metadata definition with fallback values
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <html lang="en" data-theme="dark"> {/* Set the default theme */}
+    <html lang="en" data-theme="dark">
       <body>
         <Head>
           {/* Add meta and title dynamically */}
@@ -23,9 +23,8 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <meta name="description" content={metadata.description || "Default Description"} />
           <meta name="author" content="Abdullah Karmaker" />
           <meta name="keywords" content="portfolio, web developer, Abdullah Karmaker" />
-          <title>{typeof metadata.title === "string" ? metadata.title : "Default Title"}</title> {/* Set default title */}
+          <title>{typeof metadata.title === "string" ? metadata.title : "Default Title"}</title>
         </Head>
-
         <div className="background"></div>
         <Header />
         <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 py-4 mt-20">
