@@ -10,11 +10,22 @@ export default function ProjectsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProjects()
-      .then((data) => setProjects(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+    const loadProjects = async () => {
+      try {
+        const data = await fetchProjects()
+        setProjects(data)
+      } catch (error){
+        if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError("An unknown error occurred");
+            }
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProjects();
+  }, [])
 
   return (
     <main>

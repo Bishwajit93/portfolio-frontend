@@ -7,6 +7,12 @@ export async function fetchProjects(): Promise<Project[]> {
   return res.json();
 }
 
+export async function fetchProject(id: number): Promise<Project> {
+    const res = await fetch(`${API_BASE_URL}/projects/${id}/`);
+    if (!res.ok) throw new Error("Failed to fetch Project detail");
+    return res.json();
+}
+
 export async function createProject(data: ProjectData): Promise<Project> {
   const res = await fetch(`${API_BASE_URL}/projects/`, {
     method: "POST",

@@ -10,10 +10,21 @@ export default function ExperiencePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchExperiences()
-      .then((data) => setExperiences(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    const loadExperiences = async () => {
+        try{
+            const data = await fetchExperiences()
+            setExperiences(data);
+        } catch(error) {
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError("An unknown error occurred");
+            }
+        } finally {
+            setLoading(false)
+        }
+    } 
+    loadExperiences()
   }, []);
 
   return (
