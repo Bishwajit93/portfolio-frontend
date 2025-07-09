@@ -1,4 +1,3 @@
-import { error } from "console";
 import { API_BASE_URL} from "./apiBase";
 import { Education, EducationData } from "@/types/education";
 
