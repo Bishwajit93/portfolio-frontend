@@ -97,7 +97,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
       {Object.entries(errors).length > 0 && (
         <div className="mb-3 text-red-400">
           {Object.entries(errors).map(([key, val]) => (
-            <p key={key}>{key}: {Array.isArray(val) ? val.join(", ") : val}</p>
+            <p key={key}>{key}: {(Array.isArray(val) ? val.join(", ") : val) as string}</p>
           ))}
         </div>
       )}
