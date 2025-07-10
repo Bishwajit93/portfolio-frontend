@@ -6,7 +6,7 @@ import { Project, ProjectData } from "@/types/project";
 
 type Props = {
   project: Project;
-  onProjectUpdated: () => Promise<void>;
+  onProjectUpdated: (updated: Project) => void;
   onClose: () => void;
 };
 
@@ -22,6 +22,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     end_date: project.end_date ?? "",
     status: project.status,
   });
+
   const [errors, setErrors] = useState<{ [key: string]: string | string[] }>({});
   const [saving, setSaving] = useState(false);
 
@@ -38,7 +39,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     setErrors({});
     try {
       await updateProject(project.id, form);
-      await onProjectUpdated();
+      onProjectUpdated({ ...form, id: project.id }); // instant local update
       onClose();
     } catch (err: unknown) {
       if (typeof err === "object" && err !== null) {
