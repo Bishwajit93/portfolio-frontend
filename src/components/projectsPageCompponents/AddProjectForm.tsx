@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { createProject } from '@/lib/api/projectApi';
-import { ProjectData } from '@/types/project';
+import { useState } from "react";
+import { createProject } from "@/lib/api/projectApi";
+import { ProjectData } from "@/types/project";
 
 type Props = {
   onProjectAdded: () => Promise<void>;
@@ -10,15 +10,15 @@ type Props = {
 
 export default function AddProjectForm({ onProjectAdded }: Props) {
   const [form, setForm] = useState<ProjectData>({
-    title: '',
-    description: '',
-    tech_stack: '',
-    github_frontend_url: '',
-    github_backend_url: '',
-    live_url: '',
-    start_date: '',
-    end_date: '',
-    status: 'In Progress',
+    title: "",
+    description: "",
+    tech_stack: "",
+    github_frontend_url: "",
+    github_backend_url: "",
+    live_url: "",
+    start_date: "",
+    end_date: "",
+    status: "In Progress",
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string | string[] }>({});
@@ -27,7 +27,8 @@ export default function AddProjectForm({ onProjectAdded }: Props) {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,22 +39,22 @@ export default function AddProjectForm({ onProjectAdded }: Props) {
       await createProject(form);
       await onProjectAdded();
       setForm({
-        title: '',
-        description: '',
-        tech_stack: '',
-        github_frontend_url: '',
-        github_backend_url: '',
-        live_url: '',
-        start_date: '',
-        end_date: '',
-        status: 'In Progress',
+        title: "",
+        description: "",
+        tech_stack: "",
+        github_frontend_url: "",
+        github_backend_url: "",
+        live_url: "",
+        start_date: "",
+        end_date: "",
+        status: "In Progress",
       });
     } catch (err: unknown) {
-        if (typeof err === "object" && err !== null) {
-          setErrors(err as { [key: string]: string | string[] });
-        } else {
-          setErrors({ non_field_errors: ["An unexpected error occurred."] });
-        }
+      if (typeof err === "object" && err !== null) {
+        setErrors(err as { [key: string]: string | string[] });
+      } else {
+        setErrors({ non_field_errors: ["An unexpected error occurred."] });
+      }
     } finally {
       setSaving(false);
     }
@@ -69,94 +70,36 @@ export default function AddProjectForm({ onProjectAdded }: Props) {
       </h2>
 
       <div className="space-y-5">
-        <div>
-          <label className="block mb-1 text-cyan-300">Title</label>
-          <input
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="Project title"
-          />
-        </div>
+        {([
+          { name: "title", label: "Title", type: "text" },
+          { name: "tech_stack", label: "Tech Stack", type: "text" },
+          { name: "github_frontend_url", label: "Frontend URL", type: "text" },
+          { name: "github_backend_url", label: "Backend URL", type: "text" },
+          { name: "live_url", label: "Live URL", type: "text" },
+          { name: "start_date", label: "Start Date", type: "date" },
+          { name: "end_date", label: "End Date", type: "date" },
+        ] as { name: keyof ProjectData; label: string; type: string }[]).map((field) => (
+          <div key={field.name}>
+            <label className="block mb-1 text-cyan-300">{field.label}</label>
+            <input
+              type={field.type}
+              name={field.name}
+              value={form[field.name] ?? ""}
+              onChange={handleChange}
+              className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
+            />
+          </div>
+        ))}
 
         <div>
           <label className="block mb-1 text-cyan-300">Description</label>
           <textarea
             name="description"
-            value={form.description}
+            value={form.description ?? ""}
             onChange={handleChange}
             rows={3}
             className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="Short description"
           />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-cyan-300">Tech Stack</label>
-          <input
-            name="tech_stack"
-            value={form.tech_stack}
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="React, Django, PostgreSQL"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-cyan-300">Frontend Repo URL</label>
-          <input
-            name="github_frontend_url"
-            value={form.github_frontend_url || ""}
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="https://github.com/user/frontend"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-cyan-300">Backend Repo URL</label>
-          <input
-            name="github_backend_url"
-            value={form.github_backend_url || ""}
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="https://github.com/user/backend"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-cyan-300">Live URL</label>
-          <input
-            name="live_url"
-            value={form.live_url || ""}
-            onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            placeholder="https://myapp.com"
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <label className="block mb-1 text-cyan-300">Start Date</label>
-            <input
-              type="date"
-              name="start_date"
-              value={form.start_date || ""}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block mb-1 text-cyan-300">End Date</label>
-            <input
-              type="date"
-              name="end_date"
-              value={form.end_date || ""}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            />
-          </div>
         </div>
 
         <div>
@@ -190,6 +133,5 @@ export default function AddProjectForm({ onProjectAdded }: Props) {
         </button>
       </div>
     </form>
-
   );
 }

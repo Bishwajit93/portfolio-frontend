@@ -15,11 +15,11 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     title: project.title,
     description: project.description,
     tech_stack: project.tech_stack,
-    github_frontend_url: project.github_frontend_url || "",
-    github_backend_url: project.github_backend_url || "",
-    live_url: project.live_url || "",
-    start_date: project.start_date || "",
-    end_date: project.end_date || "",
+    github_frontend_url: project.github_frontend_url ?? "",
+    github_backend_url: project.github_backend_url ?? "",
+    live_url: project.live_url ?? "",
+    start_date: project.start_date ?? "",
+    end_date: project.end_date ?? "",
     status: project.status,
   });
   const [errors, setErrors] = useState<{ [key: string]: string | string[] }>({});
@@ -27,7 +27,10 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => setForm({ ...form, [e.target.name]: e.target.value });
+  ) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,12 +41,12 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
       await onProjectUpdated();
       onClose();
     } catch (err: unknown) {
-        if (typeof err === "object" && err !== null) {
-            setErrors(err as { [key: string]: string | string[] });
-        } else {
-            setErrors({ non_field_errors: ["An unexpected error occurred."] });
-        }
-    }finally {
+      if (typeof err === "object" && err !== null) {
+        setErrors(err as { [key: string]: string | string[] });
+      } else {
+        setErrors({ non_field_errors: ["An unexpected error occurred."] });
+      }
+    } finally {
       setSaving(false);
     }
   };
@@ -51,7 +54,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 bg-gray-900 border border-cyan-400 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-cyan-300">Edit Project</h2>
-      {[
+      {([
         { name: "title", label: "Title", type: "text" },
         { name: "tech_stack", label: "Tech Stack", type: "text" },
         { name: "github_frontend_url", label: "Frontend URL", type: "text" },
@@ -59,13 +62,13 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
         { name: "live_url", label: "Live URL", type: "text" },
         { name: "start_date", label: "Start Date", type: "date" },
         { name: "end_date", label: "End Date", type: "date" },
-      ].map((field) => (
+      ] as { name: keyof ProjectData; label: string; type: string }[]).map((field) => (
         <div key={field.name} className="mb-3">
           <label className="block mb-1 text-cyan-300">{field.label}</label>
           <input
             type={field.type}
             name={field.name}
-            value={(form as any)[field.name]}
+            value={form[field.name] ?? ""}
             onChange={handleChange}
             className="w-full p-2 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
           />
@@ -75,7 +78,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
         <label className="block mb-1 text-cyan-300">Description</label>
         <textarea
           name="description"
-          value={form.description}
+          value={form.description ?? ""}
           onChange={handleChange}
           rows={3}
           className="w-full p-2 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
@@ -97,7 +100,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
       {Object.entries(errors).length > 0 && (
         <div className="mb-3 text-red-400">
           {Object.entries(errors).map(([key, val]) => (
-            <p key={key}>{key}: {(Array.isArray(val) ? val.join(", ") : val) as string}</p>
+            <p key={key}>{key}: {Array.isArray(val) ? val.join(", ") : val}</p>
           ))}
         </div>
       )}
