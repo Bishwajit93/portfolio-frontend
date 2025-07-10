@@ -37,9 +37,13 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
       await updateProject(project.id, form);
       await onProjectUpdated();
       onClose();
-    } catch (err: any) {
-      setErrors(err);
-    } finally {
+    } catch (err: unknown) {
+        if (typeof err === "object" && err !== null) {
+            setErrors(err as { [key: string]: string | string[] });
+        } else {
+            setErrors({ non_field_errors: ["An unexpected error occurred."] });
+        }
+    }finally {
       setSaving(false);
     }
   };

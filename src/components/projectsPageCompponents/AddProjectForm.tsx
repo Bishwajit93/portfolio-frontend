@@ -48,8 +48,12 @@ export default function AddProjectForm({ onProjectAdded }: Props) {
         end_date: '',
         status: 'In Progress',
       });
-    } catch (err: any) {
-      setErrors(err);
+    } catch (err: unknown) {
+        if (typeof err === "object" && err !== null) {
+          setErrors(err as { [key: string]: string | string[] });
+        } else {
+          setErrors({ non_field_errors: ["An unexpected error occurred."] });
+        }
     } finally {
       setSaving(false);
     }
