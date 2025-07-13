@@ -44,17 +44,17 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
       await createEducation(form);
       await onEducationAdded();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error creating education:", err);
-      setErrors(err);
+      setErrors(err as { [key: string]: string | string[] });
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="p-4 border rounded shadow max-w-md mx-auto">
-      <h2 className="text-xl mb-4">Add Education</h2>
+    <div className="p-4 rounded bg-gray-800 shadow-lg max-w-md mx-auto">
+      <h2 className="text-xl mb-4 text-white">Add Education</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -62,7 +62,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           placeholder="Institution Name"
           value={form.institution_name}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("institution_name")}
 
@@ -72,7 +72,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           placeholder="Degree"
           value={form.degree}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("degree")}
 
@@ -82,7 +82,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           placeholder="Field of Study"
           value={form.field_of_study}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("field_of_study")}
 
@@ -91,7 +91,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           name="start_date"
           value={form.start_date}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("start_date")}
 
@@ -100,7 +100,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           name="end_date"
           value={form.end_date ?? ""}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("end_date")}
 
@@ -110,7 +110,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           placeholder="Grade"
           value={form.grade}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("grade")}
 
@@ -119,15 +119,15 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
           placeholder="Description"
           value={form.description}
           onChange={handleChange}
-          className="w-full mb-1 p-2 border"
+          className="w-full mb-1 p-2 rounded bg-gray-900 border border-gray-700 text-white"
         />
         {renderError("description")}
 
         <div className="flex justify-between mt-4">
-          <button type="button" onClick={onClose} className="px-4 py-2 border rounded">
+          <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-600 rounded text-white">
             Cancel
           </button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-blue-500 text-white rounded">
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
             {saving ? "Saving..." : "Save"}
           </button>
         </div>

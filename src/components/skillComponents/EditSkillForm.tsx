@@ -20,16 +20,15 @@ export default function EditSkillModal({ skill, onSkillUpdated, onClose }: Props
 
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      onClose();
-    }
-  };
-
   useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
+  }, [onClose]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,9 +51,9 @@ export default function EditSkillModal({ skill, onSkillUpdated, onClose }: Props
       await updateSkill(skill.id, form);
       await onSkillUpdated();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error updating skill:", err);
-      setErrors(err);
+      setErrors(err as { [key: string]: string | string[] });
     } finally {
       setSaving(false);
     }

@@ -45,9 +45,9 @@ export default function EditEducationForm({ education, onEducationUpdated, onClo
       await updateEducation(education.id, form);
       await onEducationUpdated();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error updating education:", err);
-      setErrors(err);
+      setErrors(err as { [key: string]: string | string[] });
     } finally {
       setSaving(false);
     }
@@ -55,7 +55,7 @@ export default function EditEducationForm({ education, onEducationUpdated, onClo
 
   return (
     <div className="p-4 rounded bg-gray-800 shadow-lg">
-      <h2 className="text-xl mb-4">Edit Education</h2>
+      <h2 className="text-xl mb-4 text-white">Edit Education</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

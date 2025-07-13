@@ -39,17 +39,17 @@ export default function AddSkillForm({ onSkillAdded, onClose }: Props) {
       await createSkill(form);
       await onSkillAdded();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error creating skill:", err);
-      setErrors(err);
+      setErrors(err as { [key: string]: string | string[] });
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="p-4 rounded bg-gray-800 shadow-lg">
-      <h2 className="text-xl mb-4">Add Skill</h2>
+    <div className="p-4 rounded bg-gray-800 shadow-lg max-w-md mx-auto">
+      <h2 className="text-xl mb-4 text-white">Add Skill</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
