@@ -2,19 +2,19 @@ import { API_BASE_URL} from "./apiBase";
 import { Education, EducationData } from "@/types/education";
 
 export async function fetchEducations(): Promise<Education[]> {
-    const res = await fetch(`${API_BASE_URL}/education/`);
+    const res = await fetch(`${API_BASE_URL}/educations/`);
     if(!res.ok) throw new Error("Failed to fetch Education Data");
     return res.json()
 }
 
 export async function fetchEducation(id:number): Promise<Education>{
-    const res = await fetch(`${API_BASE_URL}/education/${id}`)
+    const res = await fetch(`${API_BASE_URL}/educations/${id}`)
     if(!res.ok) throw new Error("Failed to fetch Education detail");
     return res.json()
 }   
 
 export async function createEducation(data:EducationData): Promise<Education>{
-    const res = await fetch(`${API_BASE_URL}/education/`, {
+    const res = await fetch(`${API_BASE_URL}/educations/`, {
         method:"POST",
         headers:{"Content-Type": "application/json"},
         body:JSON.stringify(data),
@@ -38,7 +38,7 @@ export async function createEducation(data:EducationData): Promise<Education>{
 }
 
 export async function updateEducation(id:number, data:EducationData): Promise<Education> {
-    const res = await fetch(`${API_BASE_URL}/education/${id}/`, {
+    const res = await fetch(`${API_BASE_URL}/educations/${id}/`, {
         method: "PUT",
         headers:{"Content-Type": "application/json"},
         body:JSON.stringify(data),
@@ -62,7 +62,7 @@ export async function updateEducation(id:number, data:EducationData): Promise<Ed
 }
 
 export async function deleteEducation(id: number): Promise<boolean> {
-    const res= await fetch(`${API_BASE_URL}/education/${id}/`, {
+    const res= await fetch(`${API_BASE_URL}/educations/${id}/`, {
         method: "DELETE",
     })
     if(!res.ok) {

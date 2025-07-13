@@ -3,19 +3,19 @@ import { Experience, ExperienceData } from "@/types/experience";
 
 
 export async function fetchExperiences(): Promise<Experience[]> {
-    const res = await fetch(`${API_BASE_URL}/experience/`)
+    const res = await fetch(`${API_BASE_URL}/experiences/`)
     if(!res.ok) throw new Error("Failed to fetch Experience Data")
         return res.json()
 }
 
 export async function fetchExperience(id: number): Promise<Experience> {
-    const res = await fetch(`${API_BASE_URL}/experience/${id}/`);
+    const res = await fetch(`${API_BASE_URL}/experiences/${id}/`);
     if (!res.ok) throw new Error("Failed to fetch Experience detail");
     return res.json();
 }
 
 export async function createExperience(data: ExperienceData): Promise<Experience>{
-    const res = await fetch(`${API_BASE_URL}/experience/`, {
+    const res = await fetch(`${API_BASE_URL}/experiences/`, {
         method:"POST",
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(data),
@@ -40,7 +40,7 @@ export async function createExperience(data: ExperienceData): Promise<Experience
 }
 
 export async function updateExperience(id: number, data:ExperienceData): Promise<Experience> {
-    const res = await fetch(`${API_BASE_URL}/experience/${id}/`, {
+    const res = await fetch(`${API_BASE_URL}/experiences/${id}/`, {
         method: "PUT",
         headers:{"Content-Type": "application/json"},
             body: JSON.stringify(data)
@@ -63,15 +63,16 @@ export async function updateExperience(id: number, data:ExperienceData): Promise
     return await res.json()
 }
 
-export async function deleteExperience(id: number): Promise<boolean>{
-    const res = await fetch(`${API_BASE_URL}/experience/${id}`, {
+export async function deleteExperience(id: number): Promise<boolean> {
+    const res = await fetch(`${API_BASE_URL}/experiences/${id}/`, {
         method: "DELETE",
-    })
-    if(!res.ok){
-        const text = await res.text()
-        console.error("Delete experience failed:", text)
-        throw new Error("Failed to delete experience")
+    });
+
+    if (!res.ok) {
+        const text = await res.text();
+        console.error("Delete experience failed:", text);
+        throw new Error("Failed to delete experience");
     }
 
-    return true
+    return true;
 }

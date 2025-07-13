@@ -40,7 +40,7 @@ export async function createSkill(data:SkillData): Promise<Skill> {
 export async function updateSkill(id: number, data: SkillData): Promise<Skill> {
     const res = await fetch(`${API_BASE_URL}/skills/${id}/`, {
         method: "PUT",
-        headers: {"Content-Type":"aplication/json"},
+        headers: {"Content-Type":"application/json"},
         body: JSON.stringify(data),
     })
     if (!res.ok) {

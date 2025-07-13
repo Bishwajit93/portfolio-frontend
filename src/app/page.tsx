@@ -1,55 +1,109 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { fetchSkills } from "@/lib/api/skillApi";
+import { useState, useEffect } from "react";
+import { fetchSkills, deleteSkill } from "@/lib/api/skillApi";
 import { Skill } from "@/types/skill";
+import AddSkillForm from "@/components/skillComponents/AddSkillForm";
+import EditSkillModal from "@/components/skillComponents/EditSkillForm";
 
-export default function Home() {
-    const [skills, setSkills] = useState<Skill[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function AboutPage() {
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [addMode, setAddMode] = useState(false);
+  const [editId, setEditId] = useState<number | null>(null);
 
-    useEffect(() => {
-        const loadSkills = async () => {
-            try {
-                const data = await fetchSkills();
-                setSkills(data);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError("An unknown error occurred");
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadSkills();
-    }, []);
+  const loadSkills = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchSkills();
+      setSkills(data);
+    } catch (err) {
+      console.error("Failed to load skills", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <main className="home-page-container p-6">
-            <h1 className="home-page-heading text-4xl font-bold mb-4">
-                Welcome to my Portfolio
-            </h1>
-            <p className="home-page-intro text-lg mb-6">
-                I am Abdullah, a passionate developer focused on Python, Django, PostgreSQL and Next.js.
-            </p>
+  useEffect(() => {
+    loadSkills();
+  }, []);
 
-            <section className="skills-section">
-                <h2 className="skills-heading text-2xl font-bold mb-2">Skills</h2>
+  const handleDelete = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this skill?")) return;
+    try {
+      await deleteSkill(id);
+      await loadSkills();
+    } catch (err) {
+      console.error("Failed to delete skill", err);
+    }
+  };
 
-                {loading && <p className="skills-loading">Loading skills...</p>}
-                {error && <p className="skills-error text-red-500">{error}</p>}
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl mb-6">About Me</h1>
 
-                <ul className="skills-list flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                        <li key={skill.id} className="skill-item px-3 py-1 bg-gray-700 text-white rounded-full">
-                            {skill.name}{skill.level ? ` (${skill.level})` : ""}
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        </main>
-    );
+      <section className="mt-8">
+        <h2 className="text-2xl mb-4">My Skills</h2>
+
+        {addMode ? (
+          <AddSkillForm
+            onSkillAdded={async () => {
+              await loadSkills();
+              setAddMode(false);
+            }}
+            onClose={() => setAddMode(false)}
+          />
+        ) : (
+          <button
+            onClick={() => setAddMode(true)}
+            className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            Add New Skill
+          </button>
+        )}
+
+        {loading ? (
+          <p>Loading skills...</p>
+        ) : skills.length === 0 ? (
+          <p>No skills found.</p>
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            {skills.map((skill) => (
+              <div
+                key={skill.id}
+                className="p-4 rounded bg-gray-800 border border-gray-600 text-white shadow w-full max-w-xs"
+              >
+                <div>{skill.name} - {skill.level}</div>
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => setEditId(skill.id)}
+                    className="px-3 py-1 bg-yellow-500 text-white rounded"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(skill.id)}
+                    className="px-3 py-1 bg-red-600 text-white rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+
+                {editId === skill.id && (
+                  <EditSkillModal
+                    skill={skill}
+                    onSkillUpdated={async () => {
+                      await loadSkills();
+                      setEditId(null);
+                    }}
+                    onClose={() => setEditId(null)}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
 }

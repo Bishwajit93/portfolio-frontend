@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { fetchProjects, deleteProject } from "@/lib/api/projectApi";
 import { Project } from "@/types/project";
-import EditProjectForm from "@/components/projectsPageCompponents/EditProjectForm";
-import AddProjectForm from "@/components/projectsPageCompponents/AddProjectForm";
+import AddProjectForm from "@/components/projectsPageComponents/AddProjectForm";
+import EditProjectForm from "@/components/projectsPageComponents/EditProjectForm";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
   const loadProjects = async () => {
     try {
       const data = await fetchProjects();
-      data.sort((a, b) => a.id - b.id); // stable order
+      data.sort((a, b) => a.id - b.id); 
       setProjects(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -34,14 +34,7 @@ export default function ProjectsPage() {
   }, []);
 
   const handleProjectUpdated = (updated: Project) => {
-    setProjects((prev) =>
-      prev.map((p) => (p.id === updated.id ? updated : p))
-    );
-  };
-
-  const handleProjectAdded = async () => {
-    await loadProjects();
-    setAddMode(false);
+    setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
   };
 
   const handleDelete = async (id: number) => {
@@ -57,34 +50,43 @@ export default function ProjectsPage() {
 
   return (
     <main className="projects-page-container p-6">
-      <h1 className="projects-page-heading text-3xl font-bold mb-6 flex justify-between items-center">
-        Projects
-        <button
-          className="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow"
-          onClick={() => {
-            setAddMode(true);
-            setSelectedProject(null);
-          }}
-        >
-          + Add New Project
-        </button>
-      </h1>
+      <h1 className="projects-page-heading text-3xl font-bold mb-6">Projects</h1>
+
+      <button
+        className="mb-6 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow"
+        onClick={() => {
+          setAddMode(true);
+          setSelectedProject(null);
+        }}
+      >
+        + Add New Project
+      </button>
 
       {loading && <p>Loading projects...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {addMode ? (
-        <AddProjectForm onProjectAdded={handleProjectAdded} />
-      ) : selectedProject ? (
+      {addMode && (
+        <AddProjectForm
+          onProjectAdded={async () => {
+            await loadProjects();
+            setAddMode(false);
+          }}
+          onClose={() => setAddMode(false)}
+        />
+      )}
+
+      {selectedProject && (
         <EditProjectForm
           project={selectedProject}
-          onProjectUpdated={(updatedProject) => {
-            handleProjectUpdated(updatedProject);
+          onProjectUpdated={(updated) => {
+            handleProjectUpdated(updated);
             setSelectedProject(null);
           }}
           onClose={() => setSelectedProject(null)}
         />
-      ) : (
+      )}
+
+      {!addMode && !selectedProject && (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <li
@@ -111,7 +113,10 @@ export default function ProjectsPage() {
 
               <div className="flex gap-2 mt-4">
                 <button
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => {
+                    setSelectedProject(project);
+                    setAddMode(false);
+                  }}
                   className="border border-cyan-400 text-cyan-300 px-3 py-1 rounded hover:bg-cyan-200/10"
                 >
                   Edit

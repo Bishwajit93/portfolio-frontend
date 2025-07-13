@@ -1,56 +1,106 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react";
-import { fetchEducations } from "@/lib/api/educationApi";
+import { useState, useEffect } from "react";
+import { fetchEducations, deleteEducation } from "@/lib/api/educationApi";
 import { Education } from "@/types/education";
+import AddEducationForm from "@/components/educationPageComponents/AddEducationForm";
+import EditEducationForm from "@/components/educationPageComponents/EditEducationForm";
 
 export default function EducationPage() {
-    const [educations, setEducations] = useState<Education[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [educations, setEducations] = useState<Education[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [addMode, setAddMode] = useState(false);
+  const [editId, setEditId] = useState<number | null>(null);
 
-    useEffect(() => {
-        const loadEducations = async () => {
-            try {
-                const data = await fetchEducations();
-                setEducations(data);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError("An unknown error occurred");
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+  const loadEducations = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchEducations();
+      setEducations(data);
+    } catch (err) {
+      console.error("Failed to load educations", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        loadEducations();
-    }, []);
+  useEffect(() => {
+    loadEducations();
+  }, []);
 
-    return (
-        <main className="education-page-container p-6">
-            <h1 className="education-page-heading text-3xl font-bold mb-6">Education</h1>
+  const handleDelete = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this education?")) return;
+    try {
+      await deleteEducation(id);
+      await loadEducations();
+    } catch (err) {
+      console.error("Failed to delete education", err);
+    }
+  };
 
-            {loading && <p className="education-loading">Loading education records...</p>}
-            {error && <p className="education-error text-red-500">{error}</p>}
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl mb-4">My Education</h1>
 
-            <ul className="education-list space-y-6">
-                {educations.map((edu) => (
-                    <li key={edu.id} className="education-card mb-4 p-6 border rounded-lg shadow">
-                        <h2 className="education-title text-xl font-semibold mb-2">
-                            {edu.degree} in {edu.field_of_study} at {edu.institution_name}
-                        </h2>
-                        <p className="education-grade text-sm mb-1">
-                            <strong>Grade:</strong> {edu.grade || "N/A"}
-                        </p>
-                        <p className="education-duration text-sm mb-1">
-                            <strong>Duration:</strong> {edu.start_date} to {edu.end_date || "Present"}
-                        </p>
-                        <p className="education-description mt-3">{edu.description}</p>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    );
+      {addMode ? (
+        <AddEducationForm
+          onEducationAdded={loadEducations}
+          onClose={() => setAddMode(false)}
+        />
+      ) : (
+        <button
+          onClick={() => setAddMode(true)}
+          className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Add New Education
+        </button>
+      )}
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {educations.map((education) => (
+            <div
+              key={education.id}
+              className="border p-4 mb-4 rounded shadow"
+            >
+              {editId === education.id ? (
+                <EditEducationForm
+                  education={education}
+                  onEducationUpdated={loadEducations}
+                  onClose={() => setEditId(null)}
+                />
+              ) : (
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">
+                    {education.institution_name}
+                  </h2>
+                  <p><strong>Degree:</strong> {education.degree}</p>
+                  <p><strong>Field:</strong> {education.field_of_study}</p>
+                  <p><strong>Period:</strong> {education.start_date} - {education.end_date ?? "Present"}</p>
+                  <p><strong>Grade:</strong> {education.grade}</p>
+                  <p><strong>Description:</strong> {education.description}</p>
+                  <div className="mt-2 flex gap-2">
+                    <button
+                      onClick={() => setEditId(education.id)}
+                      className="px-3 py-1 bg-yellow-500 text-white rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(education.id)}
+                      className="px-3 py-1 bg-red-600 text-white rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
