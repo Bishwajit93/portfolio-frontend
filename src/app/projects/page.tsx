@@ -30,8 +30,17 @@ export default function ProjectsPage() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.warn("Access token not found in localStorage");
+      setError("You are not logged in. Token missing.");
+      setLoading(false);
+      return;
+    }
+
     loadProjects();
   }, []);
+
 
   const handleProjectUpdated = (updated: Project) => {
     setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
