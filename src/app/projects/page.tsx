@@ -13,10 +13,10 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [addMode, setAddMode] = useState(false);
 
+  // Fetch all projects (no authentication required)
   const loadProjects = async () => {
     try {
-      const data = await fetchProjects();
-      data.sort((a, b) => a.id - b.id); 
+      const data = await fetchProjects(); // No token needed here
       setProjects(data);
     } catch (error) {
       if (error instanceof Error) {
@@ -30,17 +30,8 @@ export default function ProjectsPage() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      console.warn("Access token not found in localStorage");
-      setError("You are not logged in. Token missing.");
-      setLoading(false);
-      return;
-    }
-
-    loadProjects();
-  }, []);
-
+    loadProjects(); // Load projects when the page mounts
+  }, []); // Empty dependency array makes it run only once
 
   const handleProjectUpdated = (updated: Project) => {
     setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
@@ -49,7 +40,7 @@ export default function ProjectsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this project?")) return;
     try {
-      await deleteProject(id);
+      await deleteProject(id); // Requires token for delete
       setProjects((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
       console.error("Failed to delete project", err);
@@ -77,7 +68,7 @@ export default function ProjectsPage() {
       {addMode && (
         <AddProjectForm
           onProjectAdded={async () => {
-            await loadProjects();
+            await loadProjects(); // Refresh the list after adding a project
             setAddMode(false);
           }}
           onClose={() => setAddMode(false)}
@@ -87,58 +78,59 @@ export default function ProjectsPage() {
       {selectedProject && (
         <EditProjectForm
           project={selectedProject}
-          onProjectUpdated={(updated) => {
-            handleProjectUpdated(updated);
-            setSelectedProject(null);
-          }}
+          onProjectUpdated={handleProjectUpdated}
           onClose={() => setSelectedProject(null)}
         />
       )}
 
       {!addMode && !selectedProject && (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <li
-              key={project.id}
-              className="bg-gray-800 text-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition"
-            >
-              <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-              <p><strong>Tech:</strong> {project.tech_stack}</p>
-              <p><strong>Status:</strong> {project.status}</p>
-              <p><strong>Duration:</strong> {project.start_date} to {project.end_date || "Present"}</p>
-              <p className="mt-2">{project.description}</p>
+          {projects.length > 0 ? (
+            projects.map((project) => (
+              <li
+                key={project.id}
+                className="bg-gray-800 text-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition"
+              >
+                <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
+                <p><strong>Tech:</strong> {project.tech_stack}</p>
+                <p><strong>Status:</strong> {project.status}</p>
+                <p><strong>Duration:</strong> {project.start_date} to {project.end_date || "Present"}</p>
+                <p className="mt-2">{project.description}</p>
 
-              <div className="flex gap-3 mt-4 flex-wrap">
-                {project.github_frontend_url && (
-                  <a href={project.github_frontend_url} target="_blank" className="text-blue-400 underline">Frontend</a>
-                )}
-                {project.github_backend_url && (
-                  <a href={project.github_backend_url} target="_blank" className="text-blue-400 underline">Backend</a>
-                )}
-                {project.live_url && (
-                  <a href={project.live_url} target="_blank" className="text-green-400 underline">Live</a>
-                )}
-              </div>
+                <div className="flex gap-3 mt-4 flex-wrap">
+                  {project.github_frontend_url && (
+                    <a href={project.github_frontend_url} target="_blank" className="text-blue-400 underline">Frontend</a>
+                  )}
+                  {project.github_backend_url && (
+                    <a href={project.github_backend_url} target="_blank" className="text-blue-400 underline">Backend</a>
+                  )}
+                  {project.live_url && (
+                    <a href={project.live_url} target="_blank" className="text-green-400 underline">Live</a>
+                  )}
+                </div>
 
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedProject(project);
-                    setAddMode(false);
-                  }}
-                  className="border border-cyan-400 text-cyan-300 px-3 py-1 rounded hover:bg-cyan-200/10"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(project.id)}
-                  className="border border-red-400 text-red-300 px-3 py-1 rounded hover:bg-red-400/20"
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))}
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => {
+                      setSelectedProject(project);
+                      setAddMode(false);
+                    }}
+                    className="border border-cyan-400 text-cyan-300 px-3 py-1 rounded hover:bg-cyan-200/10"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(project.id)} // Requires token for delete
+                    className="border border-red-400 text-red-300 px-3 py-1 rounded hover:bg-red-400/20"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p>No projects available.</p>
+          )}
         </ul>
       )}
     </main>

@@ -13,6 +13,7 @@ export default function ExperiencePage() {
     const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
     const [addMode, setAddMode] = useState(false);
 
+    // Load experiences on component mount
     const loadExperiences = async () => {
         try {
             const data = await fetchExperiences();
@@ -70,7 +71,13 @@ export default function ExperiencePage() {
                 />
             )}
 
-            {!addMode && !selectedExperience && (
+            {/* If no experiences, show this message */}
+            {!addMode && !selectedExperience && experiences.length === 0 && (
+                <p>No experience available.</p>
+            )}
+
+            {/* Show list of experiences if available */}
+            {!addMode && !selectedExperience && experiences.length > 0 && (
                 <ul className="space-y-6">
                     {experiences.map((exp) => (
                         <li key={exp.id} className="p-6 border rounded shadow bg-gray-800 text-gray-100">
@@ -95,5 +102,4 @@ export default function ExperiencePage() {
             )}
         </main>
     );
-
 }

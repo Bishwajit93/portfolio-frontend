@@ -1,97 +1,61 @@
-import { API_BASE_URL } from "../api/apiBase";
-import { Project, ProjectData } from "@/types/project";
+// projectApi.ts
+import { API_BASE_URL } from "./apiBase"; // Assuming API_BASE_URL is already set in apiBase.ts
+import { getAuthHeaders } from "./apiBase"; // Import the getAuthHeaders function
+import { Project, ProjectData } from "@/types/project"; // Assuming Project and ProjectData types are defined
 
-// Helper to get the access token from localStorage
-function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem("accessToken");
-  console.log("✅ Using access token:", token); // <== TEMP DEBUG
-  return token
-    ? { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
-    : { "Content-Type": "application/json" };
-}
-
-// Fetch all projects
+// Fetch all projects (no token needed for viewing projects)
 export async function fetchProjects(): Promise<Project[]> {
-  const res = await fetch(`${API_BASE_URL}/projects/`);
+  const res = await fetch(`${API_BASE_URL}/projects/`); // No token required for normal users to view
   if (!res.ok) throw new Error("Failed to fetch Projects Data");
   return res.json();
 }
 
-// Fetch a single project by ID
+// Fetch a single project by ID (no token required for viewing details)
 export async function fetchProject(id: number): Promise<Project> {
-  const res = await fetch(`${API_BASE_URL}/projects/${id}/`);
-  if (!res.ok) throw new Error("Failed to fetch Project detail");
+  const res = await fetch(`${API_BASE_URL}/projects/${id}/`); // No token needed for normal users to view
+  if (!res.ok) throw new Error("Failed to fetch Project Detail");
   return res.json();
 }
 
-// Create a new project
+// Create a new project (requires token)
 export async function createProject(data: ProjectData): Promise<Project> {
   const res = await fetch(`${API_BASE_URL}/projects/`, {
     method: "POST",
-    headers: getAuthHeaders(),
+    headers: getAuthHeaders(), // Attach headers, including token if available
     body: JSON.stringify(data),
   });
 
   if (!res.ok) {
-    let errors = {};
-    try {
-      errors = await res.json();
-      if (!errors || Object.keys(errors).length === 0) {
-        errors = { non_field_errors: ["Unknown server error."] };
-      }
-    } catch {
-      const text = await res.text();
-      errors = { non_field_errors: [text || "Unknown server error."] };
-    }
+    const errors = await res.json();
     throw errors;
   }
 
   return res.json();
 }
 
-// Update a project
+// Update an existing project (requires token)
 export async function updateProject(id: number, data: ProjectData): Promise<Project> {
-  const safeData = {
-    ...data,
-    start_date: data.start_date || "",
-    end_date: data.end_date || "",
-    github_frontend_url: data.github_frontend_url || "",
-    github_backend_url: data.github_backend_url || "",
-    live_url: data.live_url || "",
-  };
-
   const res = await fetch(`${API_BASE_URL}/projects/${id}/`, {
     method: "PUT",
-    headers: getAuthHeaders(),
-    body: JSON.stringify(safeData),
+    headers: getAuthHeaders(), // Attach headers, including token if available
+    body: JSON.stringify(data),
   });
 
   if (!res.ok) {
-    let errors = {};
-    try {
-      errors = await res.json();
-    } catch {
-      const text = await res.text();
-      errors = { non_field_errors: [text || "Unknown server error."] };
-    }
+    const errors = await res.json();
     throw errors;
   }
 
   return res.json();
 }
 
-// Delete a project
+// Delete a project (requires token)
 export async function deleteProject(id: number): Promise<boolean> {
   const res = await fetch(`${API_BASE_URL}/projects/${id}/`, {
     method: "DELETE",
-    headers: getAuthHeaders(),
+    headers: getAuthHeaders(), // Attach headers, including token if available
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error("Delete project failed:", text);
-    throw new Error("Failed to delete project");
-  }
-
+  if (!res.ok) throw new Error("Failed to delete project");
   return true;
 }

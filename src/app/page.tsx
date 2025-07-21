@@ -12,6 +12,7 @@ export default function AboutPage() {
   const [addMode, setAddMode] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
 
+  // Load skills on component mount
   const loadSkills = async () => {
     setLoading(true);
     try {
@@ -28,6 +29,7 @@ export default function AboutPage() {
     loadSkills();
   }, []);
 
+  // Handle delete skill
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this skill?")) return;
     try {
@@ -65,7 +67,7 @@ export default function AboutPage() {
         {loading ? (
           <p>Loading skills...</p>
         ) : skills.length === 0 ? (
-          <p>No skills found.</p>
+          <p>No skills found.</p> // No skills available message
         ) : (
           <div className="flex flex-wrap gap-3">
             {skills.map((skill) => (
