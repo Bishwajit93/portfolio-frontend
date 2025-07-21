@@ -10,6 +10,9 @@ import "./globals.css"; // Global CSS import
 export const metadata: Metadata = {
   title: "Bishwajit Karmaker Portfolio",  // Static title (you can replace it)
   description: "A unique, animated, eye-catching developer portfolio by Abdullah Karmaker.", // Static description (you can replace it)
+  icons: {
+    icon: "data:,"  // <-- this blank data URI replaces /favicon.ico
+  },
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
