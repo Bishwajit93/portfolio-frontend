@@ -8,7 +8,7 @@ import "./globals.css"; // Global CSS import
 
 // Corrected metadata definition with fallback values
 export const metadata: Metadata = {
-  title: "Abdullah Karmaker Portfolio",  // Static title (you can replace it)
+  title: "Bishwajit Karmaker Portfolio",  // Static title (you can replace it)
   description: "A unique, animated, eye-catching developer portfolio by Abdullah Karmaker.", // Static description (you can replace it)
 };
 
@@ -18,6 +18,9 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <body>
         <Head>
           {/* Add meta and title dynamically */}
+          {/* override the default /favicon.ico request */}
+          <link rel="icon" href="data:," />
+          {/* ...other meta/tags... */}
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="description" content={metadata.description || "Default Description"} />
