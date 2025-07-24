@@ -21,7 +21,8 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
-    const res = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
+      console.log("🔑 Sending login request with:", form);
+  const res = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -34,7 +35,9 @@ export default function LoginPage() {
     }
 
     const { access } = await res.json();
+    console.log("🎉 Received access token:", access);
     login(access);
+    console.log("✅ Stored in localStorage:", localStorage.getItem("accessToken"));
     router.push("/"); // or wherever
   };
 
