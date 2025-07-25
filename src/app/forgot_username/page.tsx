@@ -1,64 +1,56 @@
 "use client";
+
 import { useState } from "react";
-import { API_BASE_URL } from "@/lib/api/apiBase";
+import { retrieveUsername } from "@/lib/api/authApi";
 
 export default function ForgotUsernamePage() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setResult(null);
-    setError(null);
+    setMessage("");
+    setError("");
+    setLoading(true);
 
-    const res = await fetch(`${API_BASE_URL}/auth/username/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      setResult(`Your username is: ${data.username}`);
-    } else {
-      const err = await res.json();
-      setError(err.email?.join(", ") || "No account found with that email.");
+    try {
+      const data = await retrieveUsername(email);
+      setMessage(`Your username is: ${data.username}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center mt-12">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-gray-800 border-2 border-cyan-500 rounded-xl shadow-xl p-6 space-y-4"
-      >
-        <h2 className="text-2xl font-semibold text-white text-center">
-          Forgot Username
-        </h2>
-
-        {result && <p className="text-green-400 text-center">{result}</p>}
-        {error && <p className="text-red-400 text-center">{error}</p>}
-
-        <div>
-          <label className="block text-white mb-1">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            required
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 text-white"
-          />
-        </div>
-
+    <main className="min-h-screen flex flex-col items-center justify-center px-4">
+      <h1 className="text-3xl font-bold mb-6">Forgot Username</h1>
+      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
+        <input
+          type="email"
+          placeholder="Enter your registered email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full p-2 border rounded"
+        />
         <button
           type="submit"
-          className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          disabled={loading}
         >
-          Retrieve Username
+          {loading ? "Searching..." : "Find Username"}
         </button>
+        {message && <p className="text-green-600">{message}</p>}
+        {error && <p className="text-red-600">{error}</p>}
       </form>
-    </div>
+    </main>
   );
 }
