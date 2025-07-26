@@ -20,8 +20,8 @@ export default function ResetPasswordPage() {
     setError("");
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.")
-      return
+      setError("Passwords do not match.");
+      return;
     }
 
     const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password-confirm/`;
@@ -49,7 +49,7 @@ export default function ResetPasswordPage() {
       } else {
         setError(data.detail || "❌ Something went wrong. Please try again.");
       }
-    } catch (error) {
+    } catch {
       setError("❌ Server error. Please try again later.");
     }
   };
@@ -60,6 +60,7 @@ export default function ResetPasswordPage() {
         <h1 className="text-2xl font-semibold mb-6 text-center">Reset Your Password</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* New Password */}
           <div>
             <label className="block text-sm mb-1">New Password</label>
             <div className="relative">
@@ -80,6 +81,7 @@ export default function ResetPasswordPage() {
             </div>
           </div>
 
+          {/* Confirm Password */}
           <div>
             <label className="block text-sm mb-1">Confirm Password</label>
             <div className="relative">
@@ -100,6 +102,7 @@ export default function ResetPasswordPage() {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
@@ -108,6 +111,7 @@ export default function ResetPasswordPage() {
           </button>
         </form>
 
+        {/* Messages */}
         {message && <p className="text-green-400 mt-4 text-center">{message}</p>}
         {error && <p className="text-red-400 mt-4 text-center">{error}</p>}
       </div>
