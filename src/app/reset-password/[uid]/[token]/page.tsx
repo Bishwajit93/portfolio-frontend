@@ -24,7 +24,7 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password-confirm/`;
+    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password-confirm/`;
 
     try {
       const response = await fetch(endpoint, {
