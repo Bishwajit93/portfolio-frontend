@@ -1,4 +1,3 @@
-// src/app/login/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -21,24 +20,29 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
+    try {
       console.log("🔑 Sending login request with:", form);
-  const res = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+      const res = await fetch(`${API_BASE_URL}/auth/login/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    if (!res.ok) {
       const data = await res.json();
-      setError(data.detail || JSON.stringify(data));
-      return;
-    }
 
-    const { access } = await res.json();
-    console.log("🎉 Received access token:", access);
-    login(access);
-    console.log("✅ Stored in localStorage:", localStorage.getItem("accessToken"));
-    router.push("/"); // or wherever
+      if (!res.ok) {
+        setError(data.detail || "Login failed");
+        return;
+      }
+
+      const { access } = data;
+      console.log("🎉 Received access token:", access);
+      login(access);
+      router.push("/");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+      console.error("Login error:", err);
+    }
   };
 
   return (
@@ -47,9 +51,7 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-gray-800 border-2 border-cyan-500 rounded-xl shadow-xl p-6 space-y-4"
       >
-        <h2 className="text-2xl font-semibold text-white text-center">
-          Log In
-        </h2>
+        <h2 className="text-2xl font-semibold text-white text-center">Log In</h2>
 
         {error && <p className="text-red-400 text-center">{error}</p>}
 
