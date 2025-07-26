@@ -9,6 +9,8 @@ export default function ResetPasswordPage() {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -22,35 +24,34 @@ export default function ResetPasswordPage() {
       return;
     }
 
+    const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password-confirm/`;
+    console.log("Sending to:", endpoint);
+
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password-confirm/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            uid,
-            token,
-            new_password: newPassword,
-          }),
-        }
-      );
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid,
+          token,
+          new_password: newPassword,
+        }),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("Password reset successful. Redirecting to login...");
+        setMessage("✅ Password reset successful. Redirecting to login...");
         setTimeout(() => {
           router.push("/login");
         }, 2500);
       } else {
-        setError(data.detail || "Something went wrong.");
+        setError(data.detail || "❌ Something went wrong. Please try again.");
       }
-    } catch (err) {
-        console.error("Reset failed:", err);
-        setError("Server error. Please try again later.");
+    } catch (error) {
+      setError("❌ Server error. Please try again later.");
     }
   };
 
@@ -62,24 +63,42 @@ export default function ResetPasswordPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm mb-1">New Password</label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showNew ? "text" : "password"}
+                className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-blue-400"
+              >
+                {showNew ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <div>
             <label className="block text-sm mb-1">Confirm Password</label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showConfirm ? "text" : "password"}
+                className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-blue-400"
+              >
+                {showConfirm ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <button
