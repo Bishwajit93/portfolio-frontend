@@ -50,7 +50,7 @@ export default function ResetPasswordPage() {
       } else {
         setError(data.detail || "Something went wrong.");
       }
-    } catch (err) {
+    } catch {
       setError("Server error. Please try again later.");
     }
   };
