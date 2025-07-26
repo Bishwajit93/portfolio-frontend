@@ -26,7 +26,7 @@ export default function ResetPasswordPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password-confirm/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password-confirm/`,
         {
           method: "POST",
           headers: {
