@@ -9,8 +9,6 @@ export default function ResetPasswordPage() {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -50,7 +48,7 @@ export default function ResetPasswordPage() {
       } else {
         setError(data.detail || "Something went wrong.");
       }
-    } catch {
+    } catch (err) {
       setError("Server error. Please try again later.");
     }
   };
@@ -63,42 +61,24 @@ export default function ResetPasswordPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label className="block text-sm mb-1">New Password</label>
-            <div className="relative">
-              <input
-                type={showNew ? "text" : "password"}
-                className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowNew(!showNew)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-blue-400"
-              >
-                {showNew ? "Hide" : "Show"}
-              </button>
-            </div>
+            <input
+              type="password"
+              className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
           </div>
 
           <div>
             <label className="block text-sm mb-1">Confirm Password</label>
-            <div className="relative">
-              <input
-                type={showConfirm ? "text" : "password"}
-                className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-blue-400"
-              >
-                {showConfirm ? "Hide" : "Show"}
-              </button>
-            </div>
+            <input
+              type="password"
+              className="w-full px-4 py-2 rounded bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </div>
 
           <button
