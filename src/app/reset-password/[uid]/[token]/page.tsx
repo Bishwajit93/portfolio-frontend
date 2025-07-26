@@ -49,7 +49,8 @@ export default function ResetPasswordPage() {
         setError(data.detail || "Something went wrong.");
       }
     } catch (err) {
-      setError("Server error. Please try again later.");
+        console.error("Reset failed:", err);
+        setError("Server error. Please try again later.");
     }
   };
 
