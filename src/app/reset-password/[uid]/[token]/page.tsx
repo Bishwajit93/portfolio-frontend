@@ -20,12 +20,11 @@ export default function ResetPasswordPage() {
     setError("");
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
+      setError("Passwords do not match.")
+      return
     }
 
     const endpoint = `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password-confirm/`;
-    console.log("Sending to:", endpoint);
 
     try {
       const response = await fetch(endpoint, {
