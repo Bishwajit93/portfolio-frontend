@@ -22,7 +22,7 @@ export default function LoginPage() {
 
     try {
       console.log("🔑 Sending login request with:", form);
-      const res = await fetch(`${API_BASE_URL}/auth/login/`, {
+      const res = await fetch(`${API_BASE_URL}/auth/jwt/create/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -35,8 +35,8 @@ export default function LoginPage() {
         return;
       }
 
-      const { access } = data;
-      console.log("🎉 Received access token:", access);
+      const { access, refresh } = data;
+      console.log("🎉 Received access token:", {access, refresh});
       login(access);
       router.push("/");
     } catch (err) {
