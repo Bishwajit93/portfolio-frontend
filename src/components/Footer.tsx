@@ -1,13 +1,19 @@
-// src/app/components/Footer.tsx
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="hidden md:block bg-black text-cyan-300 border-t border-blue-500/20 shadow-[0_-4px_20px_rgba(0,191,255,0.4)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-blue-500/20 shadow-[0_-4px_20px_rgba(0,191,255,0.4)]">
-        <div className="py-6 text-center space-y-3">
+    <motion.footer
+      initial={{ y: 80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="hidden md:block w-full bg-black text-cyan-300 border-t border-blue-500/40 shadow-md"
+    >
+      {/* INNER glowing border box, like header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-blue-500/40 shadow-[0_-4px_20px_rgba(0,191,255,0.4)]">
+        <div className="py-6 text-center space-y-3 border-t border-blue-500/20">
           <div className="flex justify-center flex-wrap gap-6 text-sm font-medium">
             <a
               href="https://www.linkedin.com/in/bishwajit-karmaker/"
@@ -37,7 +43,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
-

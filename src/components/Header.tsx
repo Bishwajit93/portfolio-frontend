@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const { token, logout } = useAuth();
@@ -24,7 +25,12 @@ export default function Header() {
   ];
 
   return (
-    <header className="w-full bg-black text-white fixed top-0 left-0 z-50 h-[60px] md:h-[80px] border-b border-blue-500/20 shadow-[0_4px_20px_rgba(0,191,255,0.4)]">
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full bg-black text-white fixed top-0 left-0 z-50 h-[60px] md:h-[80px] border-b border-blue-500/40 shadow-md"
+    >
       <div className="flex items-center justify-between h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-blue-500/20 shadow-[0_4px_20px_rgba(0,191,255,0.4)]">
         <div className="text-sm md:text-lg font-extrabold text-cyan-300 tracking-wide">
           <Link href="/" className="hover:text-white transition">
@@ -63,6 +69,6 @@ export default function Header() {
           )}
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
