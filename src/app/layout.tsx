@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <div className="background" />
           <Header />
-          <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 py-4 mt-20">
+          <main className="flex-1 w-full pb-[60px] md:pb-0">
             {children}
           </main>
           <Footer />
