@@ -3,19 +3,20 @@ import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import MobileNav from "@/components/MobileNav";
 
 export const metadata: Metadata = {
   title: "Bishwajit Karmaker Portfolio",
   description: "A unique, animated, eye-catching developer portfolio by Abdullah Karmaker.",
   icons: {
-    icon: "/favicon.ico", // ✅ This uses the .ico file from your public folder
+    icon: "/favicon.ico",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="dark">
-      <body>
+      <body className="flex flex-col min-h-screen bg-black text-white">
         <AuthProvider>
           <div className="background" />
           <Header />
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <Footer />
+          <MobileNav />
         </AuthProvider>
       </body>
     </html>
