@@ -32,11 +32,16 @@ export default function Header() {
       className="w-full bg-black text-white fixed top-0 left-0 z-50 h-[60px] md:h-[80px] border-b border-blue-500/40 shadow-md"
     >
       <div className="flex items-center justify-between h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-blue-500/20 shadow-[0_4px_20px_rgba(0,191,255,0.4)]">
-        <div className="text-sm md:text-lg font-extrabold text-cyan-300 tracking-wide">
+        <div
+          className={`text-sm md:text-lg font-extrabold text-cyan-300 tracking-wide ${
+            !token ? "mx-auto md:mx-0" : ""
+          }`}
+        >
           <Link href="/" className="hover:text-white transition">
             Bishwajit Karmaker
           </Link>
         </div>
+
 
         <div className="flex items-center space-x-6">
           <ul className="hidden md:flex space-x-5 text-sm font-semibold text-cyan-300">
