@@ -1,4 +1,5 @@
 // src/app/Header.tsx
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
@@ -21,7 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <div className="background" />
           <Header />
-          <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 py-4 mt-[60px] mb-[60px] md:mt-20 md:mb-0">
+          <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 pt-[60px] pb-[70px] md:pt-20 md:pb-10">
+
+
             {children}
           </main>
           <Footer />
