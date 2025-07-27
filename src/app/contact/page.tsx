@@ -2,14 +2,6 @@
 
 import { useState } from "react";
 
-type ContactFormData = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
-
 export default function ContactPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,19 +18,17 @@ export default function ContactPage() {
     setStatusMessage("");
     setLoading(true);
 
-    const formData: ContactFormData = {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      subject,
-      message,
-    };
-
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/contact-form/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          subject,
+          message,
+        }),
       });
 
       const data = await res.json();
@@ -53,12 +43,8 @@ export default function ContactPage() {
         setSubject("");
         setMessage("");
       }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error("Contact form error:", err.message);
-      } else {
-        console.error("Unexpected error:", err);
-      }
+    } catch (err) {
+      console.error("Contact form error:", err);
       setError("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
