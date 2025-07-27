@@ -29,7 +29,8 @@ export default function ForgotUsernamePage() {
         setMessage("If the email is registered, your username has been sent.");
       }
     } catch (err) {
-      setError("Something went wrong.");
+        console.error("Forgot username error:", err);
+        setError("Something went wrong.");
     } finally {
       setLoading(false);
     }
