@@ -9,6 +9,7 @@ import { API_BASE_URL } from "@/lib/api/apiBase";
 export default function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false); // ✅ added
   const router = useRouter();
   const { login } = useAuth();
 
@@ -36,7 +37,7 @@ export default function LoginPage() {
       }
 
       const { access, refresh } = data;
-      console.log("🎉 Received access token:", {access, refresh});
+      console.log("🎉 Received access token:", { access, refresh });
       login(access);
       router.push("/");
     } catch (err) {
@@ -70,15 +71,24 @@ export default function LoginPage() {
 
         <div>
           <label className="block text-white mb-1">Password</label>
-          <input
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="••••••••"
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 text-white"
-            required
-          />
+          <div className="relative">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              value={form.password}
+              onChange={handleChange}
+              placeholder="••••••••"
+              className="w-full p-2 rounded border border-gray-600 bg-gray-700 text-white pr-10"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-2 text-sm text-cyan-300 hover:text-cyan-100"
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
         </div>
 
         <button
