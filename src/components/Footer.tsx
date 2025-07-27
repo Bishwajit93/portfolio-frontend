@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-cyan-300 mt-auto border-t border-blue-500/40">
+    <footer className="hidden md:block bg-black text-cyan-300 border-t border-blue-500/20 shadow-[0_-4px_20px_rgba(0,191,255,0.4)]">
       {/* This is the glowing part that matches header nav */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-blue-500/20 shadow-[0_-4px_20px_rgba(0,191,255,0.4)]">
         <div className="py-6 text-center space-y-3">
