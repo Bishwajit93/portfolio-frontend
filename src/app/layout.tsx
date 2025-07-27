@@ -1,5 +1,3 @@
-// src/app/layout.tsx
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
@@ -10,7 +8,7 @@ export const metadata: Metadata = {
   title: "Bishwajit Karmaker Portfolio",
   description: "A unique, animated, eye-catching developer portfolio by Abdullah Karmaker.",
   icons: {
-    icon: "data:,",
+    icon: "/favicon.ico", // ✅ This uses the .ico file from your public folder
   },
 };
 
