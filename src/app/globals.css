@@ -24,7 +24,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height: 100dvh; /* ✅ Use "dynamic viewport height" unit (modern browser support) */
   overflow-x: hidden;
 }
 
