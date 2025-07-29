@@ -13,7 +13,7 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
-    router.push("/login");
+    router.push("/");
   };
 
   const navItems = [
