@@ -1,0 +1,26 @@
+.footer-link {
+  position: relative;
+  padding: 0 1rem;
+  color: #66fcf1;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.footer-link:hover {
+  color: white;
+  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+}
+
+/* Glowing divider line between links */
+.footer-link:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  width: 1px;
+  background: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+  border-radius: 2px;
+}
