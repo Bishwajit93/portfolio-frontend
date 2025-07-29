@@ -50,13 +50,11 @@ export default function Header() {
                 <Link
                   href={item.href}
                   className={`px-4 py-1.5 rounded-md transition-all duration-300 border border-[0.5px]
-                    ${
-                      pathname === item.href
-                        ? "border-cyan-300 bg-cyan-500/10 text-cyan-300 shadow-[0_0_4px_rgba(0,255,255,0.3)]"
-                        : "border-transparent hover:border-cyan-400 hover:text-white hover:shadow-[0_0_3px_rgba(0,255,255,0.2)]"
-                    } cursor-pointer`}
-
-
+                   ${
+                    pathname === item.href
+                      ? "border-cyan-400 bg-cyan-500/10 text-cyan-300 shadow-[0_0_6px_rgba(0,255,255,0.5)]"
+                      : "border-transparent hover:border-cyan-400 hover:text-white hover:shadow-[0_0_3px_rgba(0,255,255,0.2)]"
+                  } cursor-pointer`}
                 >
                   {item.label}
                 </Link>
