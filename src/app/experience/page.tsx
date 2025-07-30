@@ -6,8 +6,8 @@ import { Experience } from "@/types/experience";
 import { useAuth } from "@/context/AuthContext";
 import AddExperienceForm from "@/components/experiencePageComponents/AddExperienceForm";
 import EditExperienceForm from "@/components/experiencePageComponents/EditExperienceForm";
-import { motion } from "framer-motion";
 import ExperienceModal from "@/components/experiencePageComponents/ExperienceModal";
+import { motion } from "framer-motion";
 import "@/styles/experienceCard.css";
 
 export default function ExperiencePage() {
@@ -38,7 +38,7 @@ export default function ExperiencePage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this experience?")) return;
     try {
-      await deleteExperience(id); // requires token
+      await deleteExperience(id);
       setExperiences((prev) => prev.filter((e) => e.id !== id));
     } catch (err) {
       console.error("Failed to delete experience", err);
@@ -47,7 +47,7 @@ export default function ExperiencePage() {
   };
 
   return (
-    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
+    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10 bg-black">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
           Experience
@@ -55,7 +55,9 @@ export default function ExperiencePage() {
 
         {token && (
           <button
-            className="mb-6 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow transition hover:shadow-cyan-500/40"
+            className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
             onClick={() => {
               setAddMode(true);
               setSelectedExperience(null);
@@ -105,6 +107,7 @@ export default function ExperiencePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: i * 0.1 }}
+                  onClick={() => setModalExperience(exp)} // ✅ modal trigger fixed
                   className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
                   rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
                   hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
@@ -145,6 +148,7 @@ export default function ExperiencePage() {
                       </button>
                     </div>
                   )}
+
                   <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
                 </motion.li>
               ))}
@@ -152,7 +156,10 @@ export default function ExperiencePage() {
           )}
 
         {modalExperience && (
-          <ExperienceModal experience={modalExperience} onClose={() => setModalExperience(null)} />
+          <ExperienceModal
+            experience={modalExperience}
+            onClose={() => setModalExperience(null)}
+          />
         )}
       </div>
     </main>
