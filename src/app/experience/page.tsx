@@ -1,4 +1,3 @@
-// src/app/experience/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,6 +6,9 @@ import { Experience } from "@/types/experience";
 import { useAuth } from "@/context/AuthContext";
 import AddExperienceForm from "@/components/experiencePageComponents/AddExperienceForm";
 import EditExperienceForm from "@/components/experiencePageComponents/EditExperienceForm";
+import { motion } from "framer-motion";
+import ExperienceModal from "@/components/experiencePageComponents/ExperienceModal";
+import "@/styles/experienceCard.css";
 
 export default function ExperiencePage() {
   const { token } = useAuth();
@@ -14,6 +16,7 @@ export default function ExperiencePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [modalExperience, setModalExperience] = useState<Experience | null>(null);
   const [addMode, setAddMode] = useState(false);
 
   const loadExperiences = async () => {
@@ -44,100 +47,114 @@ export default function ExperiencePage() {
   };
 
   return (
-    <main className="experience-page-container p-6">
-      <h1 className="experience-page-heading text-3xl font-bold mb-6">Experience</h1>
+    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
+          Experience
+        </h1>
 
-      {/* Add button visible only when logged in */}
-      {token && (
-        <button
-          className="mb-6 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow"
-          onClick={() => {
-            setAddMode(true);
-            setSelectedExperience(null);
-          }}
-        >
-          + Add Experience
-        </button>
-      )}
-
-      {loading && <p>Loading experiences...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-
-      {/* Add form */}
-      {addMode && token && (
-        <AddExperienceForm
-          onExperienceAdded={async () => {
-            await loadExperiences();
-            setAddMode(false);
-          }}
-          onClose={() => setAddMode(false)}
-        />
-      )}
-
-      {/* Edit form */}
-      {selectedExperience && token && (
-        <EditExperienceForm
-          experience={selectedExperience}
-          onExperienceUpdated={async () => {
-            await loadExperiences();
-            setSelectedExperience(null);
-          }}
-          onClose={() => setSelectedExperience(null)}
-        />
-      )}
-
-      {/* No experience message */}
-      {!addMode &&
-        !selectedExperience &&
-        !loading &&
-        experiences.length === 0 && <p>No experience available.</p>}
-
-      {/* Experience list */}
-      {!addMode &&
-        !selectedExperience &&
-        experiences.length > 0 && (
-          <ul className="space-y-6">
-            {experiences.map((exp) => (
-              <li
-                key={exp.id}
-                className="p-6 border rounded shadow bg-gray-800 text-gray-100"
-              >
-                <h2 className="text-xl font-semibold mb-2">
-                  {exp.job_title} at {exp.company_name}
-                </h2>
-                <p>
-                  <strong>Location:</strong> {exp.location}
-                </p>
-                <p>
-                  <strong>Duration:</strong> {exp.start_date} to{" "}
-                  {exp.end_date ?? (exp.still_working ? "Present" : "N/A")}
-                </p>
-                <p className="mt-3">{exp.description}</p>
-
-                {/* Edit/Delete visible only when logged in */}
-                {token && (
-                  <div className="mt-4 flex gap-2">
-                    <button
-                      className="px-4 py-2 border border-cyan-400 text-cyan-300 rounded hover:bg-cyan-200/10"
-                      onClick={() => {
-                        setSelectedExperience(exp);
-                        setAddMode(false);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="px-4 py-2 border border-red-400 text-red-300 rounded hover:bg-red-400/20"
-                      onClick={() => handleDelete(exp.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
+        {token && (
+          <button
+            className="mb-6 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow transition hover:shadow-cyan-500/40"
+            onClick={() => {
+              setAddMode(true);
+              setSelectedExperience(null);
+            }}
+          >
+            + Add Experience
+          </button>
         )}
+
+        {loading && <p className="text-gray-400">Loading experiences...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+
+        {addMode && token && (
+          <AddExperienceForm
+            onExperienceAdded={async () => {
+              await loadExperiences();
+              setAddMode(false);
+            }}
+            onClose={() => setAddMode(false)}
+          />
+        )}
+
+        {selectedExperience && token && (
+          <EditExperienceForm
+            experience={selectedExperience}
+            onExperienceUpdated={async () => {
+              await loadExperiences();
+              setSelectedExperience(null);
+            }}
+            onClose={() => setSelectedExperience(null)}
+          />
+        )}
+
+        {!addMode &&
+          !selectedExperience &&
+          !loading &&
+          experiences.length === 0 && <p>No experience available.</p>}
+
+        {!addMode &&
+          !selectedExperience &&
+          experiences.length > 0 && (
+            <ul className="space-y-6">
+              {experiences.map((exp, i) => (
+                <motion.li
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                  rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                  hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
+                >
+                  <h2 className="text-xl font-semibold text-cyan-300 mb-2">
+                    {exp.job_title} at {exp.company_name}
+                  </h2>
+                  <p>
+                    <strong>Location:</strong> {exp.location}
+                  </p>
+                  <p>
+                    <strong>Duration:</strong> {exp.start_date} to{" "}
+                    {exp.end_date ?? (exp.still_working ? "Present" : "N/A")}
+                  </p>
+                  <p className="mt-3">{exp.description}</p>
+
+                  {token && (
+                    <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        onClick={() => {
+                          setSelectedExperience(exp);
+                          setAddMode(false);
+                        }}
+                        className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+                          shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+                          hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(exp.id)}
+                        className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
+                          shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+                          hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                  <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
+                </motion.li>
+              ))}
+            </ul>
+          )}
+
+        {modalExperience && (
+          <ExperienceModal experience={modalExperience} onClose={() => setModalExperience(null)} />
+        )}
+      </div>
     </main>
   );
 }
