@@ -99,7 +99,7 @@ export default function ProjectsPage() {
 
         {!addMode && !selectedProject && projects.length > 0 && (
           <ul className="space-y-6">
-            {projects.map((project, i) => (
+            {projects.map((project) => (
                 <li
                   key={project.id}
                   onClick={() => setModalProject(project)}
