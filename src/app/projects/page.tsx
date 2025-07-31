@@ -8,7 +8,6 @@ import AddProjectForm from "@/components/projectsPageComponents/AddProjectForm";
 import EditProjectForm from "@/components/projectsPageComponents/EditProjectForm";
 import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
 import ProjectModal from "@/components/projectsPageComponents/ProjectModal.ts";
-import { motion } from "framer-motion";
 import "@/styles/experienceCard.css";
 
 export default function ProjectsPage() {

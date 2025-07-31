@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { fetchSkills, deleteSkill, updateSkill } from "@/lib/api/skillApi";
+import { fetchSkills, deleteSkill} from "@/lib/api/skillApi";
 import { Skill } from "@/types/skill";
 import { useAuth } from "@/context/AuthContext";
 import AddSkillForm from "@/components/skillComponents/AddSkillForm";

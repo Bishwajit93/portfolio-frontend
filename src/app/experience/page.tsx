@@ -8,7 +8,6 @@ import AddExperienceForm from "@/components/experiencePageComponents/AddExperien
 import EditExperienceForm from "@/components/experiencePageComponents/EditExperienceForm";
 import ExperienceModal from "@/components/experiencePageComponents/ExperienceModal";
 import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
-import { motion } from "framer-motion";
 import "@/styles/experienceCard.css";
 
 export default function ExperiencePage() {
@@ -103,15 +102,14 @@ export default function ExperiencePage() {
           !selectedExperience &&
           experiences.length > 0 && (
             <ul className="space-y-6">
-              {experiences.map((exp, i) => (
+              {experiences.map((exp) => (
                 <li
-                    key={exp.id}
-                    onClick={() => setModalExperience(exp)}
-                    className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
-                      rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
-                      hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
-                    >
-
+                  key={exp.id}
+                  onClick={() => setModalExperience(exp)}
+                  className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                    rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                    hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
+                >
                   <h2 className="text-xl font-semibold text-cyan-300 mb-2">
                     {exp.job_title} at {exp.company_name}
                   </h2>
