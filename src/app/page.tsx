@@ -1,25 +1,25 @@
-// src/app/about/page.tsx
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { fetchSkills, deleteSkill } from "@/lib/api/skillApi";
+import { useEffect, useState } from "react";
+import { fetchSkills, deleteSkill, updateSkill } from "@/lib/api/skillApi";
 import { Skill } from "@/types/skill";
 import { useAuth } from "@/context/AuthContext";
 import AddSkillForm from "@/components/skillComponents/AddSkillForm";
 import EditSkillModal from "@/components/skillComponents/EditSkillForm";
+import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
 
 export default function AboutPage() {
-  const { token } = useAuth();    // ← pull token from context
+  const { token } = useAuth();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [addMode, setAddMode] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
+  const [deleteSkillId, setDeleteSkillId] = useState<number | null>(null);
 
-  // Load skills on component mount
   const loadSkills = async () => {
     setLoading(true);
     try {
-      const data = await fetchSkills();  // public endpoint
+      const data = await fetchSkills();
       setSkills(data);
     } catch (err) {
       console.error("Failed to load skills", err);
@@ -32,36 +32,54 @@ export default function AboutPage() {
     loadSkills();
   }, []);
 
-  // Handle delete skill
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this skill?")) return;
+  const handleDeleteConfirmed = async () => {
+    if (deleteSkillId === null) return;
     try {
-      await deleteSkill(id);  // requires token
-      await loadSkills();
+      await deleteSkill(deleteSkillId);
+      setSkills(prev => prev.filter(s => s.id !== deleteSkillId));
     } catch (err) {
       console.error("Failed to delete skill", err);
       alert("Could not delete skill. See console for details.");
+    } finally {
+      setDeleteSkillId(null);
     }
   };
 
+  const handleSkillUpdated = async (updated: Skill) => {
+    setSkills(prev =>
+      prev.map(s => (s.id === updated.id ? updated : s))
+    );
+    setEditId(null);
+  };
+
   return (
-    <main className="p-8">
-      <h1 className="text-3xl mb-6">About Me</h1>
+    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 text-cyan-400">
+          About Me
+        </h1>
 
-      <section className="mt-8">
-        <h2 className="text-2xl mb-4">My Skills</h2>
+        <p className="text-lg md:text-xl text-cyan-200 text-center max-w-3xl mx-auto mb-16 leading-relaxed">
+          I am a passionate and determined full-stack developer with a strong foundation in web technologies. I enjoy solving problems, building sleek user interfaces, and ensuring clean, scalable backend logic. Whether it is a small business app or a personal creative project, I always strive to deliver elegant solutions with full dedication and continuous learning.
+        </p>
 
-        {/* + Add button only for logged-in user */}
+        <h2 className="text-3xl md:text-4xl text-cyan-300 font-semibold mb-8 text-center">
+          My Skills
+        </h2>
+
         {token && !addMode && editId === null && (
-          <button
-            onClick={() => setAddMode(true)}
-            className="mb-4 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded shadow"
-          >
-            + Add New Skill
-          </button>
+          <div className="text-center mb-8">
+            <button
+              onClick={() => setAddMode(true)}
+              className="px-6 py-2 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
+            >
+              + Add Skill
+            </button>
+          </div>
         )}
 
-        {/* Add form modal */}
         {addMode && token && (
           <AddSkillForm
             onSkillAdded={async () => {
@@ -73,54 +91,71 @@ export default function AboutPage() {
         )}
 
         {loading ? (
-          <p>Loading skills...</p>
+          <p className="text-center text-gray-400">Loading skills...</p>
         ) : skills.length === 0 ? (
-          <p>No skills found.</p>
+          <p className="text-center text-gray-400">No skills found.</p>
         ) : (
-          <div className="flex flex-wrap gap-3">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {skills.map((skill) => (
-              <div
+              <li
                 key={skill.id}
-                className="p-4 rounded bg-gray-800 border border-gray-600 text-white shadow w-full max-w-xs"
+                className="relative p-6 border border-cyan-400/30 rounded-xl bg-black text-white 
+                shadow-[0_0_20px_rgba(0,255,255,0.3)] hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] 
+                transition duration-500 group"
               >
-                <div>
-                  {skill.name} — {skill.level}
-                </div>
+                <h3 className="text-xl font-semibold text-cyan-300 mb-2">
+                  {skill.name}
+                </h3>
+                <p className="text-gray-300 mb-3">
+                  <strong>Level:</strong> {skill.level}
+                </p>
 
-                {/* Edit/Delete only for logged-in user */}
                 {token && (
-                  <div className="mt-2 flex gap-2">
+                  <div className="flex gap-3">
                     <button
                       onClick={() => setEditId(skill.id)}
-                      className="px-3 py-1 bg-yellow-500 hover:bg-yellow-400 text-white rounded"
+                      className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+                      shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+                      hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] transition-all duration-300 cursor-pointer"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(skill.id)}
-                      className="px-3 py-1 bg-red-600 hover:bg-red-500 text-white rounded"
+                      onClick={() => setDeleteSkillId(skill.id)}
+                      className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
+                      shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+                      hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] transition-all duration-300 cursor-pointer"
                     >
                       Delete
                     </button>
                   </div>
                 )}
 
-                {/* Edit modal */}
                 {editId === skill.id && token && (
                   <EditSkillModal
                     skill={skill}
                     onSkillUpdated={async () => {
-                      await loadSkills();
-                      setEditId(null);
+                      const updated = await fetchSkills().then(data =>
+                        data.find(s => s.id === skill.id)
+                      );
+                      if (updated) await handleSkillUpdated(updated);
                     }}
                     onClose={() => setEditId(null)}
                   />
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-      </section>
+
+        {deleteSkillId !== null && (
+          <DeleteConfirmationModal
+            message="Are you sure you want to delete this skill?"
+            onConfirm={handleDeleteConfirmed}
+            onCancel={() => setDeleteSkillId(null)}
+          />
+        )}
+      </div>
     </main>
   );
 }

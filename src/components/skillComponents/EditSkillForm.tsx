@@ -60,10 +60,15 @@ export default function EditSkillModal({ skill, onSkillUpdated, onClose }: Props
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div ref={modalRef} className="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h3 className="text-xl mb-4 font-semibold text-gray-100">Edit Skill</h3>
-        <form onSubmit={handleSubmit} className="space-y-3">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
+      <div
+        ref={modalRef}
+        className="relative bg-[#0a0a0a] p-6 rounded-xl border border-cyan-400 
+                   shadow-[0_0_25px_rgba(0,255,255,0.3)] w-full max-w-md"
+      >
+        <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">Edit Skill</h3>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
               type="text"
@@ -71,10 +76,12 @@ export default function EditSkillModal({ skill, onSkillUpdated, onClose }: Props
               placeholder="Skill Name"
               value={form.name}
               onChange={handleChange}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-2 rounded bg-black border border-cyan-400/40 text-cyan-100 
+              focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             {renderError("name")}
           </div>
+
           <div>
             <input
               type="text"
@@ -82,24 +89,31 @@ export default function EditSkillModal({ skill, onSkillUpdated, onClose }: Props
               placeholder="Skill Level"
               value={form.level}
               onChange={handleChange}
-              className="w-full p-2 rounded bg-gray-800 border border-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-2 rounded bg-black border border-cyan-400/40 text-cyan-100 
+              focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
             {renderError("level")}
           </div>
-          <div className="flex justify-between mt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-gray-700"
-            >
-              Cancel
-            </button>
+
+          <div className="flex justify-between gap-4 mt-6">
             <button
               type="submit"
               disabled={saving}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
+              className="flex-1 py-2 border border-cyan-400 text-cyan-300 rounded-md 
+              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
             >
               {saving ? "Saving..." : "Save"}
+            </button>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 py-2 border border-red-500 text-red-400 rounded-md 
+              shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+              hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
+            >
+              Cancel
             </button>
           </div>
         </form>

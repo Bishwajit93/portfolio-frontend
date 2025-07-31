@@ -8,7 +8,6 @@
     rgba(0, 255, 255, 0.2) 360deg
   );
   mask-image: linear-gradient(black, black); /* fix for Safari */
-  animation: spin-glow 4s linear infinite;
   border-radius: 0.75rem;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
   opacity: 0.5;

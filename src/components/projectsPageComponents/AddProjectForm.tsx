@@ -21,13 +21,12 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
     end_date: "",
     status: "In Progress",
   });
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
+
   const [saving, setSaving] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string | string[] }>({});
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -38,7 +37,6 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
     setSaving(true);
     setErrors({});
 
-    // If no end_date, force status to "In Progress"
     const payload: ProjectData = {
       ...form,
       status: form.end_date ? form.status : "In Progress",
@@ -50,9 +48,8 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
       await onProjectAdded();
       onClose();
     } catch (err: unknown) {
-      // Narrow the error shape
       if (typeof err === "object" && err !== null) {
-        setErrors(err as Record<string, string[]>);
+        setErrors(err as { [key: string]: string | string[] });
       } else {
         setErrors({ non_field_errors: ["An unexpected error occurred."] });
       }
@@ -64,51 +61,57 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-2xl mx-auto bg-gray-900 border border-cyan-400 rounded-xl p-8 space-y-6"
+      className="max-w-2xl mx-auto p-6 bg-black border border-cyan-400/20 rounded-xl 
+      shadow-[0_0_25px_rgba(0,255,255,0.3)] text-white"
     >
-      <div className="flex justify-end">
+      {/* Close */}
+      <div className="flex justify-end mb-4">
         <button
-          onClick={onClose}
           type="button"
-          className="text-cyan-300 hover:text-cyan-100"
+          onClick={onClose}
+          className="text-cyan-300 hover:text-white font-semibold cursor-pointer transition duration-300"
         >
-          ✖
+          ✖ Close
         </button>
       </div>
-      <h2 className="text-2xl font-bold text-cyan-300 text-center">
-        {saving ? "Saving..." : "Add New Project"}
+
+      <h2 className="text-3xl font-bold text-center text-cyan-300 mb-8">
+        {saving ? "Saving..." : "Add Project"}
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
+        {/* Title */}
         <div>
-          <label className="block text-cyan-300 mb-1">Title</label>
+          <label className="block mb-1 text-cyan-300">Title</label>
           <input
+            type="text"
             name="title"
             value={form.title}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
-            required
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
+        {/* Tech Stack */}
         <div>
-          <label className="block text-cyan-300 mb-1">Tech Stack</label>
+          <label className="block mb-1 text-cyan-300">Tech Stack</label>
           <input
+            type="text"
             name="tech_stack"
             value={form.tech_stack}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
-            required
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
+        {/* Status */}
         <div>
-          <label className="block text-cyan-300 mb-1">Status</label>
+          <label className="block mb-1 text-cyan-300">Status</label>
           <select
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
           >
             <option>In Progress</option>
             <option>Completed</option>
@@ -116,87 +119,88 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
           </select>
         </div>
 
+        {/* Start Date */}
         <div>
-          <label className="block text-cyan-300 mb-1">Start Date</label>
+          <label className="block mb-1 text-cyan-300">Start Date</label>
           <input
-            name="start_date"
             type="date"
+            name="start_date"
             value={form.start_date || ""}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
-            required
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
           />
         </div>
 
+        {/* End Date */}
         <div>
-          <label className="block text-cyan-300 mb-1">
-            End Date (optional)
-          </label>
+          <label className="block mb-1 text-cyan-300">End Date</label>
           <input
-            name="end_date"
             type="date"
-            value={form.end_date ?? ""}
+            name="end_date"
+            value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
           />
-          <p className="text-sm text-gray-500 mt-1">
-            Leave blank to mark as “In Progress.”
-          </p>
+          <p className="text-sm text-gray-500 mt-1">Leave blank to mark as “In Progress.”</p>
         </div>
 
+        {/* Description */}
         <div>
-          <label className="block text-cyan-300 mb-1">Description</label>
+          <label className="block mb-1 text-cyan-300">Description</label>
           <textarea
             name="description"
-            rows={3}
             value={form.description}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
-            required
+            rows={4}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
           />
         </div>
 
-        {(["github_frontend_url", "github_backend_url", "live_url"] as const).map(
-          (field) => (
-            <div key={field}>
-              <label className="block text-cyan-300 mb-1">
-                {field.replace(/_/g, " ").replace(/\b\w/g, (c) =>
-                  c.toUpperCase()
-                )}
-              </label>
-              <input
-                name={field}
-                value={form[field] ?? ""}
-                onChange={handleChange}
-                className="w-full p-2 bg-gray-800 border border-cyan-400 rounded"
-              />
-            </div>
-          )
-        )}
+        {/* URLs */}
+        {(["github_frontend_url", "github_backend_url", "live_url"] as const).map((field) => (
+          <div key={field}>
+            <label className="block mb-1 text-cyan-300">
+              {field.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+            </label>
+            <input
+              type="text"
+              name={field}
+              value={form[field] ?? ""}
+              onChange={handleChange}
+              className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            />
+          </div>
+        ))}
 
-        {Object.keys(errors).length > 0 && (
-          <div className="text-red-400 space-y-1">
-            {Object.entries(errors).map(([field, msgs]) => (
-              <p key={field}>
-                <strong>{field}:</strong>{" "}
-                {Array.isArray(msgs) ? msgs.join(", ") : msgs}
+        {/* Error Display */}
+        {Object.entries(errors).length > 0 && (
+          <div className="text-red-400 text-sm">
+            {Object.entries(errors).map(([k, v]) => (
+              <p key={k}>
+                {k}: {Array.isArray(v) ? v.join(", ") : v}
               </p>
             ))}
           </div>
         )}
 
-        <div className="flex gap-4">
+        {/* Buttons */}
+        <div className="flex gap-4 mt-6">
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 py-2 bg-cyan-600 rounded text-white disabled:opacity-50"
+            className="flex-1 py-3 border border-cyan-400 text-cyan-300 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
           >
-            {saving ? "Saving..." : "Save Project"}
+            {saving ? "Saving..." : "Save"}
           </button>
+
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2 bg-gray-600 rounded text-white"
+            className="flex-1 py-3 border border-red-500 text-red-400 rounded-md 
+            shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+            hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
           >
             Cancel
           </button>

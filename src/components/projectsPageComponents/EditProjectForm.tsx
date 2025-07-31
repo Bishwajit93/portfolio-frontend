@@ -37,6 +37,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     e.preventDefault();
     setSaving(true);
     setErrors({});
+
     try {
       await updateProject(project.id, form);
       onProjectUpdated({ ...form, id: project.id });
@@ -55,13 +56,15 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-2xl mx-auto bg-gray-900 border border-cyan-400 rounded-xl p-8 shadow-2xl"
+      className="max-w-2xl mx-auto p-6 bg-black border border-cyan-400/20 rounded-xl 
+      shadow-[0_0_25px_rgba(0,255,255,0.3)] text-white"
     >
+      {/* Close */}
       <div className="flex justify-end mb-4">
         <button
           type="button"
           onClick={onClose}
-          className="text-cyan-300 hover:text-cyan-100 font-semibold"
+          className="text-cyan-300 hover:text-white font-semibold cursor-pointer transition duration-300"
         >
           ✖ Close
         </button>
@@ -72,45 +75,41 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
       </h2>
 
       <div className="space-y-5">
-        {([
-          { name: "title", label: "Title", type: "text" },
-          { name: "tech_stack", label: "Tech Stack", type: "text" },
-          { name: "github_frontend_url", label: "Frontend URL", type: "text" },
-          { name: "github_backend_url", label: "Backend URL", type: "text" },
-          { name: "live_url", label: "Live URL", type: "text" },
-          { name: "start_date", label: "Start Date", type: "date" },
-          { name: "end_date", label: "End Date", type: "date" },
-        ] as { name: keyof ProjectData; label: string; type: string }[]).map((field) => (
-          <div key={field.name}>
-            <label className="block mb-1 text-cyan-300">{field.label}</label>
-            <input
-              type={field.type}
-              name={field.name}
-              value={form[field.name] ?? ""}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
-            />
-          </div>
-        ))}
-
+        {/* Title */}
         <div>
-          <label className="block mb-1 text-cyan-300">Description</label>
-          <textarea
-            name="description"
-            value={form.description ?? ""}
+          <label className="block mb-1 text-cyan-300">Title</label>
+          <input
+            type="text"
+            name="title"
+            value={form.title}
             onChange={handleChange}
-            rows={3}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
         </div>
 
+        {/* Tech Stack */}
+        <div>
+          <label className="block mb-1 text-cyan-300">Tech Stack</label>
+          <input
+            type="text"
+            name="tech_stack"
+            value={form.tech_stack}
+            onChange={handleChange}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+
+        {/* Status */}
         <div>
           <label className="block mb-1 text-cyan-300">Status</label>
           <select
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full p-3 rounded bg-gray-800 border border-cyan-400 focus:outline-none"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-white focus:outline-none"
           >
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
@@ -118,26 +117,92 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
           </select>
         </div>
 
+        {/* Dates */}
+        <div>
+          <label className="block mb-1 text-cyan-300">Start Date</label>
+          <input
+            type="date"
+            name="start_date"
+            value={form.start_date || ""}
+            onChange={handleChange}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-cyan-100 focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 text-cyan-300">End Date</label>
+          <input
+            type="date"
+            name="end_date"
+            value={form.end_date || ""}
+            onChange={handleChange}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-cyan-100 focus:outline-none"
+          />
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block mb-1 text-cyan-300">Description</label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            rows={4}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+            text-white focus:outline-none"
+          />
+        </div>
+
+        {/* URLs */}
+        {([
+          { name: "github_frontend_url", label: "Frontend URL" },
+          { name: "github_backend_url", label: "Backend URL" },
+          { name: "live_url", label: "Live URL" },
+        ] as { name: keyof ProjectData; label: string }[]).map((field) => (
+          <div key={field.name}>
+            <label className="block mb-1 text-cyan-300">{field.label}</label>
+            <input
+              type="text"
+              name={field.name}
+              value={form[field.name] ?? ""}
+              onChange={handleChange}
+              className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
+              text-white focus:outline-none"
+            />
+          </div>
+        ))}
+
+        {/* Error Display */}
         {Object.entries(errors).length > 0 && (
-          <div className="text-red-400">
+          <div className="text-red-400 text-sm">
             {Object.entries(errors).map(([k, v]) => (
-              <p key={k}>{k}: {Array.isArray(v) ? v.join(", ") : v}</p>
+              <p key={k}>
+                {k}: {Array.isArray(v) ? v.join(", ") : v}
+              </p>
             ))}
           </div>
         )}
 
+        {/* Buttons */}
         <div className="flex gap-4 mt-6">
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded transition"
+            className="flex-1 py-3 border border-cyan-400 text-cyan-300 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
+
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-3 bg-gray-600 hover:bg-gray-500 text-white font-semibold rounded transition"
+            className="flex-1 py-3 border border-red-500 text-red-400 rounded-md 
+            shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+            hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
           >
             Cancel
           </button>

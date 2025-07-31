@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import AddExperienceForm from "@/components/experiencePageComponents/AddExperienceForm";
 import EditExperienceForm from "@/components/experiencePageComponents/EditExperienceForm";
 import ExperienceModal from "@/components/experiencePageComponents/ExperienceModal";
+import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
 import { motion } from "framer-motion";
 import "@/styles/experienceCard.css";
 
@@ -17,6 +18,7 @@ export default function ExperiencePage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [modalExperience, setModalExperience] = useState<Experience | null>(null);
+  const [experienceToDelete, setExperienceToDelete] = useState<Experience | null>(null);
   const [addMode, setAddMode] = useState(false);
 
   const loadExperiences = async () => {
@@ -35,19 +37,20 @@ export default function ExperiencePage() {
     loadExperiences();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this experience?")) return;
+  const handleDeleteConfirmed = async () => {
+    if (!experienceToDelete) return;
     try {
-      await deleteExperience(id);
-      setExperiences((prev) => prev.filter((e) => e.id !== id));
+      await deleteExperience(experienceToDelete.id);
+      setExperiences(prev => prev.filter(e => e.id !== experienceToDelete.id));
+      setExperienceToDelete(null);
     } catch (err) {
-      console.error("Failed to delete experience", err);
+      console.error("Delete experience failed:", err);
       alert("Could not delete experience. See console for details.");
     }
   };
 
   return (
-    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10 bg-black">
+    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
           Experience
@@ -101,17 +104,14 @@ export default function ExperiencePage() {
           experiences.length > 0 && (
             <ul className="space-y-6">
               {experiences.map((exp, i) => (
-                <motion.li
-                  key={exp.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  onClick={() => setModalExperience(exp)} // ✅ modal trigger fixed
-                  className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
-                  rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
-                  hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
-                >
+                <li
+                    key={exp.id}
+                    onClick={() => setModalExperience(exp)}
+                    className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                      rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                      hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
+                    >
+
                   <h2 className="text-xl font-semibold text-cyan-300 mb-2">
                     {exp.job_title} at {exp.company_name}
                   </h2>
@@ -139,7 +139,7 @@ export default function ExperiencePage() {
                       </button>
 
                       <button
-                        onClick={() => handleDelete(exp.id)}
+                        onClick={() => setExperienceToDelete(exp)}
                         className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
                           shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
                           hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
@@ -150,7 +150,7 @@ export default function ExperiencePage() {
                   )}
 
                   <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
-                </motion.li>
+                </li>
               ))}
             </ul>
           )}
@@ -159,6 +159,14 @@ export default function ExperiencePage() {
           <ExperienceModal
             experience={modalExperience}
             onClose={() => setModalExperience(null)}
+          />
+        )}
+
+        {experienceToDelete && (
+          <DeleteConfirmationModal
+            message={`Are you sure you want to delete "${experienceToDelete.job_title}" at "${experienceToDelete.company_name}"?`}
+            onConfirm={handleDeleteConfirmed}
+            onCancel={() => setExperienceToDelete(null)}
           />
         )}
       </div>

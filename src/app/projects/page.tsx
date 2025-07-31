@@ -1,4 +1,3 @@
-// src/app/projects/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,6 +6,10 @@ import { Project } from "@/types/project";
 import { useAuth } from "@/context/AuthContext";
 import AddProjectForm from "@/components/projectsPageComponents/AddProjectForm";
 import EditProjectForm from "@/components/projectsPageComponents/EditProjectForm";
+import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
+import ProjectModal from "@/components/projectsPageComponents/ProjectModal.ts";
+import { motion } from "framer-motion";
+import "@/styles/experienceCard.css";
 
 export default function ProjectsPage() {
   const { token } = useAuth();
@@ -15,6 +18,8 @@ export default function ProjectsPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [addMode, setAddMode] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
+  const [modalProject, setModalProject] = useState<Project | null>(null); // ✅
 
   const loadProjects = async () => {
     setLoading(true);
@@ -32,11 +37,12 @@ export default function ProjectsPage() {
     loadProjects();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
+  const confirmDelete = async () => {
+    if (!projectToDelete) return;
     try {
-      await deleteProject(id);
-      setProjects((prev) => prev.filter((p) => p.id !== id));
+      await deleteProject(projectToDelete.id);
+      setProjects((prev) => prev.filter((p) => p.id !== projectToDelete.id));
+      setProjectToDelete(null);
     } catch (err) {
       console.error("Failed to delete project", err);
       alert("Could not delete project. Check console for details.");
@@ -44,129 +50,134 @@ export default function ProjectsPage() {
   };
 
   return (
-    <main className="projects-page-container p-6">
-      <h1 className="projects-page-heading text-3xl font-bold mb-6">Projects</h1>
+    <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
+          Projects
+        </h1>
 
-      {/* + Add button only for you */}
-      {token && (
-        <button
-          className="mb-6 bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded shadow"
-          onClick={() => {
-            setAddMode(true);
-            setSelectedProject(null);
-          }}
-        >
-          + Add New Project
-        </button>
-      )}
+        {token && (
+          <button
+            className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
+            onClick={() => {
+              setAddMode(true);
+              setSelectedProject(null);
+            }}
+          >
+            + Add Project
+          </button>
+        )}
 
-      {loading && <p>Loading projects...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+        {loading && <p className="text-gray-400">Loading projects...</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
-      {/* Add form modal */}
-      {addMode && token && (
-        <AddProjectForm
-          onProjectAdded={async () => {
-            await loadProjects();
-            setAddMode(false);
-          }}
-          onClose={() => setAddMode(false)}
-        />
-      )}
+        {addMode && token && (
+          <AddProjectForm
+            onProjectAdded={async () => {
+              await loadProjects();
+              setAddMode(false);
+            }}
+            onClose={() => setAddMode(false)}
+          />
+        )}
 
-      {/* Edit form modal */}
-      {selectedProject && token && (
-        <EditProjectForm
-          project={selectedProject}
-          onProjectUpdated={async (updated) => {
-            setProjects((prev) =>
-              prev.map((p) => (p.id === updated.id ? updated : p))
-            );
-            setSelectedProject(null);
-          }}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
+        {selectedProject && token && (
+          <EditProjectForm
+            project={selectedProject}
+            onProjectUpdated={async () => {
+              await loadProjects();
+              setSelectedProject(null);
+            }}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
 
-      {/* Project list */}
-      {!addMode && !selectedProject && (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <li
-                key={project.id}
-                className="bg-gray-800 text-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition"
-              >
-                <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-                <p>
-                  <strong>Tech:</strong> {project.tech_stack}
-                </p>
-                <p>
-                  <strong>Status:</strong> {project.status}
-                </p>
-                <p>
-                  <strong>Duration:</strong>{" "}
-                  {project.start_date} to {project.end_date || "Present"}
-                </p>
-                <p className="mt-2">{project.description}</p>
+        {!addMode && !selectedProject && !loading && projects.length === 0 && (
+          <p>No projects available.</p>
+        )}
 
-                <div className="flex gap-3 mt-4 flex-wrap">
+        {!addMode && !selectedProject && projects.length > 0 && (
+          <ul className="space-y-6">
+            {projects.map((project, i) => (
+                <li
+                  key={project.id}
+                  onClick={() => setModalProject(project)}
+                  className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                    rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                    hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
+                >
+
+                <h2 className="text-xl font-semibold text-cyan-300 mb-2">
+                  {project.title}
+                </h2>
+                <p><strong>Tech Stack:</strong> {project.tech_stack}</p>
+                <p><strong>Status:</strong> {project.status}</p>
+                <p><strong>Duration:</strong> {project.start_date} to {project.end_date ?? "Present"}</p>
+                <p className="mt-3">{project.description}</p>
+
+                <div className="flex flex-wrap gap-4 mt-3 text-sm">
                   {project.github_frontend_url && (
-                    <a
-                      href={project.github_frontend_url}
-                      target="_blank"
-                      className="text-blue-400 underline"
-                    >
-                      Frontend
-                    </a>
+                    <a href={project.github_frontend_url} target="_blank" rel="noopener noreferrer"
+                      className="text-blue-400 underline hover:text-blue-300">Frontend</a>
                   )}
                   {project.github_backend_url && (
-                    <a
-                      href={project.github_backend_url}
-                      target="_blank"
-                      className="text-blue-400 underline"
-                    >
-                      Backend
-                    </a>
+                    <a href={project.github_backend_url} target="_blank" rel="noopener noreferrer"
+                      className="text-blue-400 underline hover:text-blue-300">Backend</a>
                   )}
                   {project.live_url && (
-                    <a
-                      href={project.live_url}
-                      target="_blank"
-                      className="text-green-400 underline"
-                    >
-                      Live
-                    </a>
+                    <a href={project.live_url} target="_blank" rel="noopener noreferrer"
+                      className="text-green-400 underline hover:text-green-300">Live</a>
                   )}
                 </div>
 
-                {/* Edit/Delete only for you */}
                 {token && (
-                  <div className="flex gap-2 mt-4">
+                  <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => {
                         setSelectedProject(project);
                         setAddMode(false);
                       }}
-                      className="border border-cyan-400 text-cyan-300 px-3 py-1 rounded hover:bg-cyan-200/10"
+                      className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+                        shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+                        hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
                     >
                       Edit
                     </button>
+
                     <button
-                      onClick={() => handleDelete(project.id)}
-                      className="border border-red-400 text-red-300 px-3 py-1 rounded hover:bg-red-400/20"
+                      onClick={() => setProjectToDelete(project)}
+                      className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
+                        shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+                        hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
                     >
                       Delete
                     </button>
                   </div>
                 )}
+
+                <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
               </li>
-            ))
-          ) : (
-            <li>No projects available.</li>
-          )}
-        </ul>
-      )}
+            ))}
+          </ul>
+        )}
+
+        {projectToDelete && (
+          <DeleteConfirmationModal
+            message={`Are you sure you want to delete the project "${projectToDelete.title}"?`}
+            onConfirm={confirmDelete}
+            onCancel={() => setProjectToDelete(null)}
+          />
+        )}
+
+        {modalProject && (
+          <ProjectModal
+            project={modalProject}
+            onClose={() => setModalProject(null)}
+          />
+        )}
+      </div>
     </main>
   );
 }

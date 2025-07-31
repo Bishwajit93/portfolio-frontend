@@ -10,11 +10,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function EditEducationForm({
-  education,
-  onEducationUpdated,
-  onClose,
-}: Props) {
+export default function EditEducationForm({ education, onEducationUpdated, onClose }: Props) {
   const [form, setForm] = useState<EducationData>({
     institution_name: education.institution_name || "",
     degree: education.degree || "",
@@ -24,6 +20,7 @@ export default function EditEducationForm({
     grade: education.grade || "",
     description: education.description || "",
   });
+
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [saving, setSaving] = useState(false);
 
@@ -57,128 +54,150 @@ export default function EditEducationForm({
     const msg = errors[field];
     if (!msg) return null;
     return (
-      <p className="text-red-400 text-sm mb-2">
-        {msg.join(", ")}
-      </p>
+      <p className="text-red-400 text-sm mb-2">{msg.join(", ")}</p>
     );
   };
 
   return (
-    <div className="relative p-6 bg-gray-800 rounded-lg shadow-lg">
-      {/* Close button */}
-      <button
-        type="button"
-        onClick={onClose}
-        className="absolute top-2 right-2 text-cyan-300 hover:text-cyan-100"
-      >
-        ✖
-      </button>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-2xl mx-auto p-6 bg-black border border-cyan-400/20 rounded-xl 
+      shadow-[0_0_25px_rgba(0,255,255,0.3)] text-white"
+    >
+      {/* Close Button */}
+      <div className="flex justify-end mb-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-cyan-300 hover:text-white font-semibold cursor-pointer transition duration-300"
+        >
+          ✖ Close
+        </button>
+      </div>
 
-      <h2 className="text-xl font-semibold text-white mb-4">Edit Education</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-3xl font-bold text-center text-cyan-300 mb-8">
+        {saving ? "Saving..." : "Edit Education"}
+      </h2>
+
+      <div className="space-y-5">
+        {/* Institution Name */}
         <div>
+          <label className="block mb-1 text-cyan-300">Institution Name</label>
           <input
             type="text"
             name="institution_name"
-            placeholder="Institution Name"
             value={form.institution_name}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
             required
           />
           {renderError("institution_name")}
         </div>
 
+        {/* Degree */}
         <div>
+          <label className="block mb-1 text-cyan-300">Degree</label>
           <input
             type="text"
             name="degree"
-            placeholder="Degree"
             value={form.degree}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
             required
           />
           {renderError("degree")}
         </div>
 
+        {/* Field of Study */}
         <div>
+          <label className="block mb-1 text-cyan-300">Field of Study</label>
           <input
             type="text"
             name="field_of_study"
-            placeholder="Field of Study"
             value={form.field_of_study}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
             required
           />
           {renderError("field_of_study")}
         </div>
 
+        {/* Start Date */}
         <div>
+          <label className="block mb-1 text-cyan-300">Start Date</label>
           <input
             type="date"
             name="start_date"
             value={form.start_date}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
             required
           />
           {renderError("start_date")}
         </div>
 
+        {/* End Date */}
         <div>
+          <label className="block mb-1 text-cyan-300">End Date</label>
           <input
             type="date"
             name="end_date"
-            value={form.end_date ?? ""}
+            value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
           />
           {renderError("end_date")}
         </div>
 
+        {/* Grade */}
         <div>
+          <label className="block mb-1 text-cyan-300">Grade</label>
           <input
             type="text"
             name="grade"
-            placeholder="Grade"
             value={form.grade}
             onChange={handleChange}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
           />
           {renderError("grade")}
         </div>
 
+        {/* Description */}
         <div>
+          <label className="block mb-1 text-cyan-300">Description</label>
           <textarea
             name="description"
-            placeholder="Description"
             value={form.description}
             onChange={handleChange}
-            rows={3}
-            className="w-full p-2 bg-gray-900 border border-gray-700 rounded text-white"
+            rows={4}
+            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
           />
           {renderError("description")}
         </div>
 
-        <div className="flex justify-end gap-4 mt-4">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-600 rounded text-white hover:bg-gray-500"
-          >
-            Cancel
-          </button>
+        {/* Action Buttons */}
+        <div className="flex gap-4 mt-6">
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-cyan-600 rounded text-white hover:bg-cyan-500 disabled:opacity-50"
+            className="flex-1 py-3 border border-cyan-400 text-cyan-300 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
           >
-            {saving ? "Saving..." : "Save"}
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 py-3 border border-red-500 text-red-400 rounded-md 
+            shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
+            hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
+          >
+            Cancel
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }

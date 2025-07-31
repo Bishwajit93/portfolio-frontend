@@ -52,76 +52,91 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center mt-12">
+    <main className="min-h-screen flex items-center justify-center px-4 py-12 text-white">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-gray-800 border-2 border-cyan-500 rounded-xl shadow-xl p-6 space-y-4"
+        className="w-full max-w-sm bg-[#0a0a0a] border border-cyan-400/40 rounded-xl 
+        shadow-[0_0_30px_rgba(0,255,255,0.3)] p-6 space-y-6"
       >
-        <h2 className="text-2xl font-semibold text-white text-center">
-          Sign Up
-        </h2>
+        <h2 className="text-3xl font-bold text-center text-cyan-300">Sign Up</h2>
 
-        {error && <div className="text-red-400 text-center">{error}</div>}
+        {error && (
+          <div className="text-red-400 text-center text-sm leading-tight">{error}</div>
+        )}
 
         <div>
-          <label className="block text-white mb-1">Username</label>
+          <label className="block mb-1 text-cyan-200">Username</label>
           <input
             name="username"
             type="text"
             value={form.username}
             onChange={handleChange}
             placeholder="your-username"
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 focus:border-cyan-400 focus:outline-none text-white"
+            className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
+              rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
+              focus:outline-none focus:border-cyan-300 
+              focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all"
             required
           />
         </div>
 
         <div>
-          <label className="block text-white mb-1">Email</label>
+          <label className="block mb-1 text-cyan-200">Email</label>
           <input
             name="email"
             type="email"
             value={form.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 focus:border-cyan-400 focus:outline-none text-white"
+            className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
+              rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
+              focus:outline-none focus:border-cyan-300 
+              focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all"
             required
           />
         </div>
 
         <div>
-          <label className="block text-white mb-1">Password</label>
+          <label className="block mb-1 text-cyan-200">Password</label>
           <input
             name="password"
             type="password"
             value={form.password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 focus:border-cyan-400 focus:outline-none text-white"
+            className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
+              rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
+              focus:outline-none focus:border-cyan-300 
+              focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all"
             required
           />
         </div>
 
         <div>
-          <label className="block text-white mb-1">Confirm Password</label>
+          <label className="block mb-1 text-cyan-200">Confirm Password</label>
           <input
             name="re_password"
             type="password"
             value={form.re_password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full p-2 rounded border border-gray-600 bg-gray-700 focus:border-cyan-400 focus:outline-none text-white"
+            className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
+              rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
+              focus:outline-none focus:border-cyan-300 
+              focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded"
+          className="w-full py-2 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
+            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
         >
           Register
         </button>
       </form>
-    </div>
+    </main>
   );
 }
