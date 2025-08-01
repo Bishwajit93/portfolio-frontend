@@ -56,7 +56,17 @@ export default function EducationPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
             Education
           </h1>
-
+          <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
+            <p>
+              I came to Germany with the goal of studying Scientific Computing and building a better future through education. My academic journey was ambitious, and I genuinely wanted to finish the master's program and use that knowledge to contribute to the tech industry.
+            </p>
+            <p>
+              However, over time I faced many challenges—financial pressure, long working hours to survive, and the realization that traditional academic paths were not aligning with my learning style. I started focusing more on real-world development, practicing web technologies, and building projects. That shift in direction eventually made it difficult to complete the degree within the expected timeline.
+            </p>
+            <p>
+              Although I did not finish the course, the experience gave me resilience, adaptability, and a solid technical base. I am now fully committed to web development and proving my abilities through practical work, self-driven learning, and continuous improvement.
+            </p>
+          </div>
           {token && (
             <button
               className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 

@@ -57,7 +57,17 @@ export default function ExperiencePage() {
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
             Experience
           </h1>
-
+          <div className="text-base md:text-lg text-cyan-300 font-normal text-center max-w-2xl mx-auto mb-16 leading-loose space-y-6">
+            <p>
+              I began my career working in customer-focused environments, such as restaurants and retail. While these roles may seem unrelated to web development at first glance, they taught me perseverance, time management, and attention to detail—skills that I now apply to coding.
+            </p>
+            <p>
+              My interest in development started during my studies in Scientific Computing, and over time I transitioned into building real-world web applications. This section documents my professional journey honestly, including non-tech jobs, because every role shaped my discipline and mindset.
+            </p>
+            <p>
+              I am now fully focused on securing a junior web development position and proving my skills through projects, learning, and consistent growth.
+            </p>
+          </div>
           {token && (
             <button
               className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 

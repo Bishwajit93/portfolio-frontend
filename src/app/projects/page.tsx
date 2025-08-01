@@ -57,7 +57,17 @@ export default function ProjectsPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
             Projects
           </h1>
-
+          <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
+            <p>
+              My journey into web development has not been traditional. While working full-time and managing life challenges, I often started small coding projects and left them unfinished—not due to lack of interest, but due to limited support, energy, or proper direction at the time. Despite that, I never gave up learning, and every attempt became part of my growth.
+            </p>
+            <p>
+              Today, I am finally in a position where I can focus clearly. I have completed my first full project and continue building more with structure and dedication. I use tools like ChatGPT not as a crutch, but as a learning assistant—to debug faster, understand deeply, and stay productive while managing a full-time job.
+            </p>
+            <p>
+              This section showcases the projects I have completed so far. Each one reflects a step forward in my skills, mindset, and confidence. I am now fully committed to quality work and continuous improvement, aiming to build practical, impactful web applications in both professional and personal settings.
+            </p>
+          </div>
           {token && (
             <button
               className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 

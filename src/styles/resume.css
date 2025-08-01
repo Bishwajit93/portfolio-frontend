@@ -1,0 +1,54 @@
+:root {
+  --tw-color-cyan-300: #67e8f9; /* Fallback for text-cyan-300 */
+  --tw-color-cyan-400: #22d3ee;
+  --tw-color-cyan-500: #06b6d4;
+  --tw-color-blue-400: #60a5fa;
+}
+
+/* Optional: general glow border for download-safe effect */
+.glow-border {
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+  border-color: #22d3ee !important;
+}
+
+.resume-container {
+  background-color: #000000;
+  color: white;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+  padding: 24px;
+}
+
+.resume-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #67e8f9;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.resume-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #67e8f9;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+  padding-bottom: 4px;
+}
+
+.resume-link {
+  color: #38bdf8;
+  text-decoration: underline;
+  margin: 0 6px;
+}
+
+.glow-border {
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  cursor: pointer;
+}
