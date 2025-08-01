@@ -88,7 +88,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="title"
             value={form.title}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -100,7 +102,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="tech_stack"
             value={form.tech_stack}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -127,7 +131,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="start_date"
             value={form.start_date || ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -139,7 +145,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="end_date"
             value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
           <p className="text-sm text-gray-500 mt-1">Leave blank to mark as “In Progress.”</p>
         </div>
@@ -152,7 +160,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -167,7 +177,9 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
               name={field}
               value={form[field] ?? ""}
               onChange={handleChange}
-              className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             />
           </div>
         ))}

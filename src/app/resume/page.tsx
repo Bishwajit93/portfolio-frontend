@@ -54,7 +54,7 @@ export default function ResumePage() {
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-cyan-400 mb-1">{info.name}</h1>
           <h2 className="text-sm text-cyan-300 mb-2">{info.title}</h2>
-          <p className="text-cyan-200 text-xs">
+          <p className="text-cyan-200 text-xs text-[14px] font-light leading-snug text-black font-sans">
             {info.location} • {info.phone} • {info.email}
             <br />
             <a href={info.website} className="underline text-blue-400" target="_blank">abdullahstack.com</a> •{" "}

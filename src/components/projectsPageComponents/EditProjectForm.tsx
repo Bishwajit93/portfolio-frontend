@@ -83,8 +83,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="title"
             value={form.title}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -96,8 +97,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="tech_stack"
             value={form.tech_stack}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -108,8 +110,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           >
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
@@ -125,8 +128,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="start_date"
             value={form.start_date || ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -137,8 +141,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="end_date"
             value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -150,8 +155,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-            text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -168,8 +174,9 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
               name={field.name}
               value={form[field.name] ?? ""}
               onChange={handleChange}
-              className="w-full p-3 rounded-md bg-black border border-cyan-400/40 
-              text-white focus:outline-none"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             />
           </div>
         ))}

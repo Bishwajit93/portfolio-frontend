@@ -112,10 +112,10 @@ export default function ContactPage() {
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center space-y-2 mb-6">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-cyan-300 drop-shadow-sm min-h-[2.5rem]">
+          <h1 className="font-sans text-xl sm:text-2xl md:text-3xl font-bold text-cyan-300 drop-shadow-sm min-h-[2.5rem]">
             {heading}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
+          <p className="text-base font-light font-sans sm:text-sm md:text-base text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto">
             Whether you want to collaborate, hire me, or just ask a question — feel free to drop a message.
           </p>
           <div className="flex justify-center gap-8 text-cyan-300 mt-2">
@@ -175,9 +175,9 @@ export default function ContactPage() {
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   required
-                  className="w-full p-2 rounded bg-zinc-800 text-white placeholder-cyan-200 
-                    border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-                    focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+                  className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                    placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                    focus:outline-none focus:ring-2 focus:ring-cyan-400 transition resize-none cursor-text"
                 />
               </div>
             ))}
@@ -192,9 +192,9 @@ export default function ContactPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full p-2 rounded bg-zinc-800 text-white placeholder-cyan-200 
-                border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition resize-none cursor-text"
             />
           </div>
 
@@ -207,10 +207,13 @@ export default function ContactPage() {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               required
-              className="w-full p-2 rounded bg-zinc-800 text-white placeholder-cyan-200 
-                border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 
+                shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 
+                transition cursor-text"
             />
+
           </div>
 
           {/* Message */}
@@ -222,8 +225,8 @@ export default function ContactPage() {
               onChange={(e) => setMessage(e.target.value)}
               required
               rows={4}
-              className="w-full p-2 rounded bg-zinc-800 text-white placeholder-cyan-200 
-                border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
                 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition resize-none cursor-text"
             />
           </div>
@@ -232,10 +235,11 @@ export default function ContactPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 font-bold text-cyan-300 border border-cyan-400 rounded 
-              bg-zinc-900 hover:bg-black transition duration-300 
-              shadow-[0_0_8px_rgba(0,255,255,0.4)] hover:shadow-[0_0_14px_rgba(0,255,255,0.7)] 
-              hover:text-white cursor-pointer"
+            className="w-full py-2 px-4 font-sans text-sm font-semibold text-cyan-300 
+              border border-cyan-400 rounded bg-zinc-900 transition duration-300 
+              shadow-[0_0_8px_rgba(0,255,255,0.4)] hover:bg-black 
+              hover:text-white hover:shadow-[0_0_14px_rgba(0,255,255,0.7)] 
+              cursor-pointer"
           >
             {loading ? "Sending..." : "Send Message"}
           </button>

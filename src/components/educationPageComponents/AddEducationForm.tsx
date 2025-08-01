@@ -67,7 +67,7 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
         <button
           type="button"
           onClick={onClose}
-          className="text-cyan-300 hover:text-white font-semibold cursor-pointer transition duration-300"
+          className="text-cyan-300 hover:text-white font-light font-sans cursor-pointer transition duration-300"
         >
           ✖ Close
         </button>
@@ -86,7 +86,10 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="institution_name"
             value={form.institution_name}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+
             required
           />
           {renderError("institution_name")}
@@ -100,7 +103,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="degree"
             value={form.degree}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             required
           />
           {renderError("degree")}
@@ -114,7 +119,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="field_of_study"
             value={form.field_of_study}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             required
           />
           {renderError("field_of_study")}
@@ -128,7 +135,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="start_date"
             value={form.start_date}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             required
           />
           {renderError("start_date")}
@@ -142,7 +151,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="end_date"
             value={form.end_date|| ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
           {renderError("end_date")}
         </div>
@@ -155,7 +166,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             name="grade"
             value={form.grade}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
           {renderError("grade")}
         </div>
@@ -168,7 +181,9 @@ export default function AddEducationForm({ onEducationAdded, onClose }: Props) {
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
           {renderError("description")}
         </div>

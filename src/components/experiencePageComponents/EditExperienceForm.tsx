@@ -84,7 +84,10 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
             name="company_name"
             value={form.company_name}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+
           />
         </div>
 
@@ -96,7 +99,10 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
             name="job_title"
             value={form.job_title}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+
           />
         </div>
 
@@ -108,7 +114,9 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
             name="start_date"
             value={form.start_date || ""}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-cyan-100 focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -122,7 +130,9 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
                 name="still_working"
                 checked={form.still_working}
                 onChange={handleChange}
-                className="w-5 h-5 accent-cyan-600"
+                className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                  placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                  focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
               />
               <span className="text-cyan-300 text-sm">Still Working</span>
             </div>
@@ -147,7 +157,9 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
             name="location"
             value={form.location}
             onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -159,7 +171,9 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
+            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 

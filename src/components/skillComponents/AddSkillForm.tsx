@@ -72,7 +72,9 @@ export default function AddSkillForm({ onSkillAdded, onClose }: Props) {
               placeholder="Skill Name"
               value={form.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 rounded bg-black border border-cyan-500 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             />
             {renderError("name")}
           </div>
@@ -83,7 +85,9 @@ export default function AddSkillForm({ onSkillAdded, onClose }: Props) {
               placeholder="Skill Level"
               value={form.level}
               onChange={handleChange}
-              className="w-full px-3 py-2 rounded bg-black border border-cyan-500 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             />
             {renderError("level")}
           </div>

@@ -54,17 +54,17 @@ export default function ProjectsPage() {
     <AnimatedPageWrapper key="projects">
       <div className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
+          <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
             Projects
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               My path into web development has been shaped by perseverance and self-motivation. Balancing full-time work with limited resources, I often started personal projects without fully finishing them—not from a lack of drive, but due to the real-world challenges of time and energy.
             </p>
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               Today, I am in a position to work with focus and structure. I have completed my first full-stack portfolio project and continue developing more. I actively use tools like ChatGPT—not to replace understanding, but to deepen it, debug faster, and maintain progress while working full-time.
             </p>
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               This section highlights the projects I have completed so far. Each project represents a concrete step forward in my learning, mindset, and capabilities. I am committed to building impactful, user-focused applications and continuously leveling up as a developer.
             </p>
           </div>
@@ -121,13 +121,13 @@ export default function ProjectsPage() {
                         rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
                         hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                     >
-                      <h2 className="text-xl font-semibold text-cyan-300 mb-2">
+                      <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
                         {project.title}
                       </h2>
-                      <p><strong>Tech Stack:</strong> {project.tech_stack}</p>
-                      <p><strong>Status:</strong> {project.status}</p>
-                      <p><strong>Duration:</strong> {project.start_date} to {project.end_date ?? "Present"}</p>
-                      <p className="mt-3">{project.description}</p>
+                      <p className="text-sm font-light font-sans"><strong>Tech Stack:</strong> {project.tech_stack}</p>
+                      <p className="text-sm font-light font-sans"><strong>Status:</strong> {project.status}</p>
+                      <p className="text-sm font-light font-sans"><strong>Duration:</strong> {project.start_date} to {project.end_date ?? "Present"}</p>
+                      <p className="text-sm font-light font-sans mt-3">{project.description}</p>
 
                       <div className="flex flex-wrap gap-4 mt-3 text-sm">
                         {project.github_frontend_url && (

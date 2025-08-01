@@ -53,17 +53,17 @@ export default function EducationPage() {
     <AnimatedPageWrapper key="education">
       <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-cyan-400">
-            Education
+          <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
+            Projects
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               I hold a Bachelor’s degree in Mathematics from BRAC University, where I developed strong analytical thinking and problem-solving skills. My mathematical background laid the foundation for my logical mindset and structured approach to coding.
             </p>
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               After moving to Germany, I shifted my focus entirely to full-stack web development. I taught myself through hands-on projects, a structured bootcamp, and consistent self-study — building complete applications using technologies like Django, PostgreSQL, React, and Next.js.
             </p>
-            <p>
+            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
               Today, I back up my skills with real work: a fully developed and deployed portfolio, clean code, and a passion for learning. My academic strength, combined with practical development experience, makes me confident in contributing to any tech team.
             </p>
           </div>
@@ -119,13 +119,13 @@ export default function EducationPage() {
                         rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
                         hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                     >
-                      <h2 className="text-xl font-semibold text-cyan-300 mb-2">
+                      <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
                         {edu.degree} at {edu.institution_name}
                       </h2>
-                      <p><strong>Field:</strong> {edu.field_of_study}</p>
-                      <p><strong>Period:</strong> {edu.start_date} - {edu.end_date ?? "Present"}</p>
-                      <p><strong>Grade:</strong> {edu.grade}</p>
-                      <p className="mt-3">{edu.description}</p>
+                      <p className="text-sm font-light font-sans"><strong>Field:</strong> {edu.field_of_study}</p>
+                      <p className="text-sm font-light font-sans"><strong>Period:</strong> {edu.start_date} - {edu.end_date ?? "Present"}</p>
+                      <p className="text-sm font-light font-sans"><strong>Grade:</strong> {edu.grade}</p>
+                      <p className="text-sm font-light font-sans mt-3">{edu.description}</p>
 
                       {token && (
                         <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>

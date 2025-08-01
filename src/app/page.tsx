@@ -58,15 +58,14 @@ export default function AboutPage() {
     <AnimatedPageWrapper key="about">
       <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 text-cyan-400">
+          <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
             About Me
           </h1>
-
-          <p className="text-lg md:text-xl text-cyan-200 text-center max-w-3xl mx-auto mb-16 leading-relaxed">
+          <p className="text-[16px] font-light font-sans leading-snug text-cyan-200 text-center max-w-3xl mx-auto mb-16 ">
             I am a passionate and determined full-stack developer with a strong foundation in web technologies. I enjoy solving problems, building sleek user interfaces, and ensuring clean, scalable backend logic. Whether it is a small business app or a personal creative project, I always strive to deliver elegant solutions with full dedication and continuous learning.
           </p>
 
-          <h2 className="text-3xl md:text-4xl text-cyan-300 font-semibold mb-8 text-center">
+          <h2 className="text-xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
             My Skills
           </h2>
 
@@ -98,58 +97,59 @@ export default function AboutPage() {
           ) : skills.length === 0 ? (
             <p className="text-center text-gray-400">No skills found.</p>
           ) : (
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {skills.map((skill) => (
-                <MotionCard key={skill.id}>
-                  <li
-                    className="relative p-6 border border-cyan-400/30 rounded-xl bg-black text-white 
-                    shadow-[0_0_20px_rgba(0,255,255,0.3)] hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] 
-                    transition duration-500 group"
-                  >
-                    <h3 className="text-xl font-semibold text-cyan-300 mb-2">
-                      {skill.name}
-                    </h3>
-                    <p className="text-gray-300 mb-3">
-                      <strong>Level:</strong> {skill.level}
-                    </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {skills.map((skill) => (
+                  <MotionCard key={skill.id}>
+                    <li
+                      className="relative p-5 border border-cyan-400/20 rounded-lg bg-[#0b0b0b] text-white 
+                      shadow-[0_0_10px_rgba(0,255,255,0.15)] hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] 
+                      transition duration-300 group cursor-pointer"
+                    >
+                      <h3 className="text-[15px] font-medium text-cyan-300 mb-1 tracking-wide">
+                        {skill.name}
+                      </h3>
+                      <p className="text-[13px] text-gray-300 mb-3 leading-snug">
+                        <span className="text-cyan-400">Level:</span> {skill.level}
+                      </p>
 
-                    {token && (
-                      <div className="flex gap-3">
-                        <button
-                          onClick={() => setEditId(skill.id)}
-                          className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
-                          shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-                          hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] transition-all duration-300 cursor-pointer"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => setDeleteSkillId(skill.id)}
-                          className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
-                          shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
-                          hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] transition-all duration-300 cursor-pointer"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
+                      {token && (
+                        <div className="flex gap-3 mt-2">
+                          <button
+                            onClick={() => setEditId(skill.id)}
+                            className="px-3 py-1 text-[12px] font-medium text-cyan-300 border border-cyan-400 rounded-md 
+                            shadow-[0_0_5px_rgba(0,255,255,0.3)] hover:bg-cyan-500/10 
+                            hover:text-white hover:shadow-[0_0_10px_rgba(0,255,255,0.5)] transition-all duration-300 cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => setDeleteSkillId(skill.id)}
+                            className="px-3 py-1 text-[12px] font-medium text-red-400 border border-red-500 rounded-md 
+                            shadow-[0_0_5px_rgba(255,0,0,0.3)] hover:bg-red-600/10 
+                            hover:text-red-100 hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] transition-all duration-300 cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
 
-                    {editId === skill.id && token && (
-                      <EditSkillModal
-                        skill={skill}
-                        onSkillUpdated={async () => {
-                          const updated = await fetchSkills().then(data =>
-                            data.find(s => s.id === skill.id)
-                          );
-                          if (updated) await handleSkillUpdated(updated);
-                        }}
-                        onClose={() => setEditId(null)}
-                      />
-                    )}
-                  </li>
-                </MotionCard>
-              ))}
-            </ul>
+                      {editId === skill.id && token && (
+                        <EditSkillModal
+                          skill={skill}
+                          onSkillUpdated={async () => {
+                            const updated = await fetchSkills().then(data =>
+                              data.find(s => s.id === skill.id)
+                            );
+                            if (updated) await handleSkillUpdated(updated);
+                          }}
+                          onClose={() => setEditId(null)}
+                        />
+                      )}
+                    </li>
+                  </MotionCard>
+                ))}
+              </ul>
+
           )}
 
           {deleteSkillId !== null && (
