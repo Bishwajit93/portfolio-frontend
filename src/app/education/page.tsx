@@ -58,7 +58,7 @@ export default function EducationPage() {
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
             <p>
-              I came to Germany with the goal of studying Scientific Computing and building a better future through education. My academic journey was ambitious, and I genuinely wanted to finish the master's program and use that knowledge to contribute to the tech industry.
+              I came to Germany with the goal of studying Scientific Computing and building a better future through education. My academic journey was ambitious, and I genuinely wanted to finish the Master study program and use that knowledge to contribute to the tech industry.
             </p>
             <p>
               However, over time I faced many challenges—financial pressure, long working hours to survive, and the realization that traditional academic paths were not aligning with my learning style. I started focusing more on real-world development, practicing web technologies, and building projects. That shift in direction eventually made it difficult to complete the degree within the expected timeline.
