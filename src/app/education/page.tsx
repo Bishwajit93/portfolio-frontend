@@ -54,7 +54,7 @@ export default function EducationPage() {
       <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
-            Projects
+            Education
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
             <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
