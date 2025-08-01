@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import ResumePDF from "@/components/ResumePDF";
 import ResumeDownloadButton from "@/components/ResumeDownloadButton";
 
 
