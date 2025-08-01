@@ -40,3 +40,13 @@ a {
 .glow-text {
   text-shadow: 0 0 6px var(--glow), 0 0 12px var(--glow);
 }
+
+#resume-pdf * {
+  color: #ffffff !important;
+  background: transparent !important;
+  background-color: #000000 !important;
+  border-color: #00ffff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}

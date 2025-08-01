@@ -58,13 +58,13 @@ export default function EducationPage() {
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
             <p>
-              I came to Germany with the goal of studying Scientific Computing and building a better future through education. My academic journey was ambitious, and I genuinely wanted to finish the Master study program and use that knowledge to contribute to the tech industry.
+              I hold a Bachelor’s degree in Mathematics from BRAC University, where I developed strong analytical thinking and problem-solving skills. My mathematical background laid the foundation for my logical mindset and structured approach to coding.
             </p>
             <p>
-              However, over time I faced many challenges—financial pressure, long working hours to survive, and the realization that traditional academic paths were not aligning with my learning style. I started focusing more on real-world development, practicing web technologies, and building projects. That shift in direction eventually made it difficult to complete the degree within the expected timeline.
+              After moving to Germany, I shifted my focus entirely to full-stack web development. I taught myself through hands-on projects, a structured bootcamp, and consistent self-study — building complete applications using technologies like Django, PostgreSQL, React, and Next.js.
             </p>
             <p>
-              Although I did not finish the course, the experience gave me resilience, adaptability, and a solid technical base. I am now fully committed to web development and proving my abilities through practical work, self-driven learning, and continuous improvement.
+              Today, I back up my skills with real work: a fully developed and deployed portfolio, clean code, and a passion for learning. My academic strength, combined with practical development experience, makes me confident in contributing to any tech team.
             </p>
           </div>
           {token && (

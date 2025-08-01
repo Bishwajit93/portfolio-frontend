@@ -59,13 +59,13 @@ export default function ExperiencePage() {
           </h1>
           <div className="text-base md:text-lg text-cyan-300 font-normal text-center max-w-2xl mx-auto mb-16 leading-loose space-y-6">
             <p>
-              I began my career working in customer-focused environments, such as restaurants and retail. While these roles may seem unrelated to web development at first glance, they taught me perseverance, time management, and attention to detail—skills that I now apply to coding.
+              My professional journey began in customer-oriented roles across restaurants and retail. These experiences shaped my discipline, time management, and attention to detail—qualities I now bring to my work as a developer.
             </p>
             <p>
-              My interest in development started during my studies in Scientific Computing, and over time I transitioned into building real-world web applications. This section documents my professional journey honestly, including non-tech jobs, because every role shaped my discipline and mindset.
+              During my studies in Scientific Computing, I developed a strong interest in web development and gradually shifted my focus toward real-world application building. Every position I have held, technical or not, has contributed to the mindset and work ethic I bring to software development today.
             </p>
             <p>
-              I am now fully focused on securing a junior web development position and proving my skills through projects, learning, and consistent growth.
+              I am now fully dedicated to a career in web development, showcasing my skills through full-stack projects, continuous learning, and a commitment to delivering value in a team.
             </p>
           </div>
           {token && (

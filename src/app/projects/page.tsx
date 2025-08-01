@@ -59,13 +59,13 @@ export default function ProjectsPage() {
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
             <p>
-              My journey into web development has not been traditional. While working full-time and managing life challenges, I often started small coding projects and left them unfinished—not due to lack of interest, but due to limited support, energy, or proper direction at the time. Despite that, I never gave up learning, and every attempt became part of my growth.
+              My path into web development has been shaped by perseverance and self-motivation. Balancing full-time work with limited resources, I often started personal projects without fully finishing them—not from a lack of drive, but due to the real-world challenges of time and energy.
             </p>
             <p>
-              Today, I am finally in a position where I can focus clearly. I have completed my first full project and continue building more with structure and dedication. I use tools like ChatGPT not as a crutch, but as a learning assistant—to debug faster, understand deeply, and stay productive while managing a full-time job.
+              Today, I am in a position to work with focus and structure. I have completed my first full-stack portfolio project and continue developing more. I actively use tools like ChatGPT—not to replace understanding, but to deepen it, debug faster, and maintain progress while working full-time.
             </p>
             <p>
-              This section showcases the projects I have completed so far. Each one reflects a step forward in my skills, mindset, and confidence. I am now fully committed to quality work and continuous improvement, aiming to build practical, impactful web applications in both professional and personal settings.
+              This section highlights the projects I have completed so far. Each project represents a concrete step forward in my learning, mindset, and capabilities. I am committed to building impactful, user-focused applications and continuously leveling up as a developer.
             </p>
           </div>
           {token && (
