@@ -101,9 +101,9 @@ export default function AboutPage() {
                 {skills.map((skill) => (
                   <MotionCard key={skill.id}>
                     <li
-                      className="relative p-5 border border-cyan-400/20 rounded-lg bg-[#0b0b0b] text-white 
-                      shadow-[0_0_10px_rgba(0,255,255,0.15)] hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] 
-                      transition duration-300 group cursor-pointer"
+                      className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                        rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                        hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                     >
                       <h3 className="text-[15px] font-medium text-cyan-300 mb-1 tracking-wide">
                         {skill.name}
@@ -173,9 +173,9 @@ export default function AboutPage() {
             ].map((quality, idx) => (
               <MotionCard key={idx}>
                 <li
-                  className="relative p-5 border border-cyan-400/20 rounded-lg bg-[#0b0b0b] text-white 
-                  shadow-[0_0_10px_rgba(0,255,255,0.15)] hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] 
-                  transition duration-300 group"
+                  className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
+                    rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
+                    hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                 >
                   <p className="text-[14px] font-light text-cyan-200 leading-snug">{quality}</p>
                 </li>
