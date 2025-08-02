@@ -62,7 +62,7 @@ export default function LoginPage() {
             type="text"
             value={form.username}
             onChange={handleChange}
-            placeholder="your-username"
+            placeholder="Your Username"
             className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
               rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
               focus:outline-none focus:border-cyan-300 focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all"
@@ -78,7 +78,7 @@ export default function LoginPage() {
               type={showPassword ? "text" : "password"}
               value={form.password}
               onChange={handleChange}
-              placeholder="••••••••"
+              placeholder="Your Password"
               className="w-full p-2.5 bg-black text-white border border-cyan-400/30 
                 rounded-md shadow-[0_0_5px_rgba(0,255,255,0.2)] 
                 focus:outline-none focus:border-cyan-300 focus:shadow-[0_0_10px_rgba(0,255,255,0.6)] transition-all pr-10"
