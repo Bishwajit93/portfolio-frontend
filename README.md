@@ -22,8 +22,6 @@ This is the frontend for **Bishwajit Karmaker's** full-stack portfolio, built wi
 
 ## 📁 Project Structure
 
-## 📁 Project Structure
-
 ```bash
 portfolio_backend/
 ├── auth/           # Custom auth views (login, reset, forgot username)
