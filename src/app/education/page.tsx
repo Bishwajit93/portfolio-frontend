@@ -122,11 +122,18 @@ export default function EducationPage() {
                       <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
                         {edu.degree} at {edu.institution_name}
                       </h2>
-                      <p className="text-sm font-light font-sans"><strong>Field:</strong> {edu.field_of_study}</p>
-                      <p className="text-sm font-light font-sans"><strong>Period:</strong> {edu.start_date} - {edu.end_date ?? "Present"}</p>
-                      <p className="text-sm font-light font-sans"><strong>Grade:</strong> {edu.grade}</p>
-                      <p className="text-sm font-light font-sans mt-3">{edu.description}</p>
-
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Field:</span> {edu.field_of_study}
+                      </p>
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Period:</span> {edu.start_date} - {edu.end_date ?? "Present"}
+                      </p>
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Grade:</span> {edu.grade}
+                      </p>
+                      <p className="text-sm font-light font-sans mt-3">
+                        <span className="text-cyan-400">Description:</span> {edu.description}
+                      </p>
                       {token && (
                         <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
                           <button

@@ -159,6 +159,29 @@ export default function AboutPage() {
               onCancel={() => setDeleteSkillId(null)}
             />
           )}
+          <h2 className="text-xl md:text-3xl font-bold text-cyan-400 text-center mt-16 mb-6">
+            Personal Qualities
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {[
+              "Responsible and reliable in every task I take.",
+              "Team-oriented and respectful toward all collaborators.",
+              "Always learning, open to feedback and improvement.",
+              "Calm under pressure, even in tough or urgent situations.",
+              "Purpose-driven — I work not just for results, but with meaning.",
+              "Honesty and ethical drive in every hard situation."
+            ].map((quality, idx) => (
+              <MotionCard key={idx}>
+                <li
+                  className="relative p-5 border border-cyan-400/20 rounded-lg bg-[#0b0b0b] text-white 
+                  shadow-[0_0_10px_rgba(0,255,255,0.15)] hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] 
+                  transition duration-300 group"
+                >
+                  <p className="text-[14px] font-light text-cyan-200 leading-snug">{quality}</p>
+                </li>
+              </MotionCard>
+            ))}
+          </ul>
         </div>
       </main>
     </AnimatedPageWrapper>

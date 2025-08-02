@@ -45,10 +45,17 @@ export default function Footer() {
             >
               Resume
             </Link>
+            <Link
+              href="/docs"
+              className={`px-4 glow-text transition duration-300 ${
+                pathname === "/docs"
+                  ? "text-white border-b border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.6)]"
+                  : "text-cyan-300 hover:text-white hover:shadow-[0_0_6px_rgba(0,255,255,0.4)]"
+              }`}
+            >
+              Docs
+            </Link>
           </div>
-
-
-
             <p className="text-xs text-cyan-500">
               &copy; {new Date().getFullYear()} Portfolio of Bishwajit Karmaker. All rights reserved.
             </p>

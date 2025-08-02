@@ -123,10 +123,15 @@ export default function ExperiencePage() {
                     <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
                       {exp.job_title} at {exp.company_name}
                     </h2>
-                    <p className="text-sm font-light font-sans"><strong>Location:</strong> {exp.location}</p>
-                    <p className="text-sm font-light font-sans"><strong>Duration:</strong> {exp.start_date} to {exp.end_date ?? (exp.still_working ? "Present" : "N/A")}</p>
-                    <p className="text-sm font-light font-sans mt-3">{exp.description}</p>
-
+                    <p className="text-sm font-light font-sans">
+                      <span className="text-cyan-400">Location:</span> {exp.location}
+                    </p>
+                    <p className="text-sm font-light font-sans">
+                      <span className="text-cyan-400">Duration:</span> {exp.start_date} to {exp.end_date ?? (exp.still_working ? "Present" : "N/A")}
+                    </p>
+                    <p className="text-sm font-light font-sans mt-3">
+                      <span className="text-cyan-400">Description:</span> {exp.description}
+                    </p>
                     {token && (
                       <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
                         <button

@@ -124,11 +124,18 @@ export default function ProjectsPage() {
                       <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
                         {project.title}
                       </h2>
-                      <p className="text-sm font-light font-sans"><strong>Tech Stack:</strong> {project.tech_stack}</p>
-                      <p className="text-sm font-light font-sans"><strong>Status:</strong> {project.status}</p>
-                      <p className="text-sm font-light font-sans"><strong>Duration:</strong> {project.start_date} to {project.end_date ?? "Present"}</p>
-                      <p className="text-sm font-light font-sans mt-3">{project.description}</p>
-
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Tech Stack:</span> {project.tech_stack}
+                      </p>
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Status:</span> {project.status}
+                      </p>
+                      <p className="text-sm font-light font-sans">
+                        <span className="text-cyan-400">Duration:</span> {project.start_date} to {project.end_date ?? "Present"}
+                      </p>
+                      <p className="text-sm font-light font-sans mt-3">
+                        <span className="text-cyan-400">Description:</span> {project.description}
+                      </p>
                       <div className="flex flex-wrap gap-4 mt-3 text-sm">
                         {project.github_frontend_url && (
                           <a href={project.github_frontend_url} target="_blank" rel="noopener noreferrer"
