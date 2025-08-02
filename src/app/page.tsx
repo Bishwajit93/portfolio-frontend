@@ -171,7 +171,10 @@ export default function AboutPage() {
               "Always learning, open to feedback and improvement.",
               "Calm under pressure, even in tough or urgent situations.",
               "Purpose-driven — I work not just for results, but with meaning.",
-              "Honesty and ethical drive in every hard situation."
+              "Honesty and ethical drive in every hard situation.",
+              "Exceptionally detail-oriented, observant, and skilled at multitasking",
+              "Ideal for product testing and quality-focused development.",
+              "Driven to grow - turning limitations into motivation, grit beats the conventional path."
             ].map((quality, idx) => (
               <MotionCard key={idx}>
                 <li
