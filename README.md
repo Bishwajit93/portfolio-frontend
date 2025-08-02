@@ -22,19 +22,19 @@ This is the frontend for **Bishwajit Karmaker's** full-stack portfolio, built wi
 
 ## 📁 Project Structure
 
-src/
-├── app/ # All app routes (pages)
-│ ├── projects/ # Project listing page
-│ ├── experience/ # Experience timeline page
-│ ├── education/ # Education history page
-│ ├── resume/ # Resume page with download
-│ ├── contact/ # Contact form page
-│ ├── docs/ # Project documentation page
-├── components/ # Reusable UI components
-├── lib/ # API communication functions
-├── styles/ # Tailwind & custom CSS files
-├── context/ # Auth context for JWT management
-└── public/ # Assets like icons or preview image
+## 📁 Project Structure
+
+```bash
+portfolio_backend/
+├── auth/           # Custom auth views (login, reset, forgot username)
+├── projects/       # Project models, serializers, views
+├── education/      # Education models, views
+├── experience/     # Experience models, views
+├── skills/         # Skill models, views
+├── contact/        # Contact form handling
+├── settings.py     # Env, CORS, email config, etc.
+├── urls.py         # All endpoint routes
+└── ...
 
 
 ---
