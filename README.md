@@ -41,7 +41,7 @@ src/
 
 ## 🔐 Authentication
 
-- **Protected Actions**: Add, edit, delete items (Projects, Skills, etc.) are only to the site owner
+- **Protected Actions**: Add, edit, delete items are only available to the site owner
 - **Public Views**: All content is readable by visitors
 - **Login**: JWT-based login system
 - **Password Reset**: Custom email-based reset using Resend + Zoho
