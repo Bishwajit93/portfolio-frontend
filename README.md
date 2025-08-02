@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio – Frontend (Next.js + Tailwind CSS)
 
-## Getting Started
+This is the frontend for **Bishwajit Karmaker's** full-stack portfolio, built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**. It is fully responsive, animated, and deployed on Vercel. The site connects to a Django REST API backend for dynamic content (Projects, Experience, Education, Skills) and includes features like user authentication, contact form integration, and PDF resume download.
 
-First, run the development server:
+## 🔗 Live Website
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🌐 [https://www.abdullahstack.com](https://www.abdullahstack.com)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: Next.js 14 (App Router, TypeScript)
+- **Styling**: Tailwind CSS + Custom CSS + Responsive Design
+- **Animations**: Framer Motion
+- **Forms**: Controlled React forms with validation
+- **PDF Export**: `html2canvas` + `jsPDF`
+- **Deployment**: Vercel (auto-deploy from GitHub)
+- **Environment**: `.env.local` for API routes
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+src/
+├── app/ # All app routes (pages)
+│ ├── projects/ # Project listing page
+│ ├── experience/ # Experience timeline page
+│ ├── education/ # Education history page
+│ ├── resume/ # Resume page with download
+│ ├── contact/ # Contact form page
+│ ├── docs/ # Project documentation page
+├── components/ # Reusable UI components
+├── lib/ # API communication functions
+├── styles/ # Tailwind & custom CSS files
+├── context/ # Auth context for JWT management
+└── public/ # Assets like icons or preview image
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 Authentication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Protected Actions**: Add, edit, delete items (Projects, Skills, etc.) are only available to the site owner
+- **Public Views**: All content is readable by visitors
+- **Login**: JWT-based login system
+- **Password Reset**: Custom email-based reset using Resend + Zoho
+- **Forgot Username**: Email recovery option
+
+---
+
+## 📬 Contact Form
+
+The contact form uses a Django REST API and Resend service to:
+
+- Deliver the message to `contact@abdullahstack.com`
+- CC a personal backup email
+- Hide email address from spam bots
+- Display real-time status messages
+
+---
+
+## 📄 Resume Page
+
+- Dynamic toggle between **English** and **German** versions
+- Downloadable as PDF (formatted using `html2canvas` + `jsPDF`)
+- Content matches original CV exactly
+- Optimized for print (white background, readable fonts)
+
+---
+
+## 🌍 Deployment
+
+- **Frontend**: [Vercel](https://vercel.com/)
+- **Domain**: [abdullahstack.com](https://www.abdullahstack.com) (custom connected)
+- **CI/CD**: GitHub → Vercel (auto-build on push)
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_BACKEND_URL=https://your-backend-api-url.com/api
+
+💡 Future Improvements
+
+    - Theme toggle (Dark/Light)
+
+    - Multilingual i18n routing
+
+    - Lazy loading and performance optimization
+
+🙌 Credits
+
+    - Icons from react-icons
+
+    - PDF rendering with jsPDF + html2canvas
+
+    - Hosting via Vercel
+
+    - Email by Resend + Zoho
+
+Crafted with 🔥 by Bishwajit Karmaker
+
+📃 License
+
+
+This project is for personal use and learning. Contact me for permission to reuse.
