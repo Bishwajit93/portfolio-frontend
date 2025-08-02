@@ -61,10 +61,12 @@ export default function AboutPage() {
           <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
             About Me
           </h1>
-          <p className="text-[16px] font-light font-sans leading-snug text-cyan-200 text-center max-w-3xl mx-auto mb-16 ">
-            I am a passionate and determined full-stack developer with a strong foundation in web technologies. I enjoy solving problems, building sleek user interfaces, and ensuring clean, scalable backend logic. Whether it is a small business app or a personal creative project, I always strive to deliver elegant solutions with full dedication and continuous learning.
+          <p className="text-[16px] font-light font-sans leading-snug text-cyan-200 text-center max-w-3xl mx-auto mb-6 ">
+            I am a passionate and determined full-stack developer with a strong foundation in web technologies. I enjoy solving problems, building sleek user interfaces, and ensuring clean, scalable backend logic.
           </p>
-
+          <p className="text-[16px] font-light font-sans leading-snug text-cyan-200 text-center max-w-3xl mx-auto mb-16 ">
+            Whether it is a small business app or a personal creative project, I always strive to deliver elegant solutions with full dedication and continuous learning.
+          </p>
           <h2 className="text-xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
             My Skills
           </h2>
