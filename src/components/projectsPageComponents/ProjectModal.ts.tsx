@@ -23,7 +23,7 @@ export default function ProjectModal({ project, onClose }: Props) {
       <div className="relative max-w-2xl w-full bg-[#0a0a0a] border border-cyan-400/40 text-white shadow-[0_0_40px_rgba(0,255,255,0.4)] rounded-xl p-8 overflow-y-auto max-h-[90vh]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 cursor-pointer text-cyan-300 hover:text-cyan-100 text-2xl"
+          className="absolute top-3 right-4 text-gray-400 hover:text-cyan-300 text-xl font-bold cursor-pointer transition duration-300 z-20"
         >
           ✖
         </button>

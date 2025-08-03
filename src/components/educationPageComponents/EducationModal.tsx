@@ -30,7 +30,7 @@ export default function EducationModal({ education, onClose }: Props) {
             onClick={onClose}
             className="absolute top-3 right-4 text-gray-400 hover:text-cyan-300 text-xl font-bold cursor-pointer transition duration-300 z-20"
           >
-            ✕
+            ✖
           </button>
 
           <h2 className="text-2xl md:text-3xl font-bold text-cyan-300 mb-3">
