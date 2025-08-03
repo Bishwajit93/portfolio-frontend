@@ -2,6 +2,7 @@
 import "./globals.css";
 import { Metadata } from "next";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Bishwajit Karmaker Portfolio",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="dark" className="h-full">
       <body className="flex flex-col min-h-screen bg-black text-white overflow-x-hidden">
         <LayoutWrapper>{children}</LayoutWrapper>
+        <Analytics />
       </body>
     </html>
   );
