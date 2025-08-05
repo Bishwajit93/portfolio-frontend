@@ -99,7 +99,7 @@ export default function AboutPage() {
           ) : skills.length === 0 ? (
             <p className="text-center text-gray-400">No skills found.</p>
           ) : (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {skills.map((skill) => (
                   <MotionCard key={skill.id}>
                     <li
@@ -107,10 +107,10 @@ export default function AboutPage() {
                         rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
                         hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                     >
-                      <h3 className="text-[15px] font-medium text-cyan-300 mb-1 tracking-wide">
+                      <h3 className="text-[14px] font-medium text-cyan-300 mb-1 tracking-wide">
                         {skill.name}
                       </h3>
-                      <p className="text-[13px] text-gray-300 mb-3 leading-snug">
+                      <p className="text-[12px] text-gray-300 mb-3 leading-snug">
                         <span className="text-cyan-400">Level:</span> {skill.level}
                       </p>
 
