@@ -38,7 +38,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
     setForm((prev) => ({
       ...prev,
       status: !inProgress ? "In Progress" : "Completed",
-      end_date: !inProgress ? "" : prev.end_date,
+      end_date: !inProgress ? null : prev.end_date,
     }));
   };
 
@@ -50,7 +50,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
     const payload: ProjectData = {
       ...form,
       status: inProgress ? "In Progress" : "Completed",
-      end_date: inProgress ? "" : form.end_date,
+      end_date: inProgress ? null : form.end_date,
     };
 
     try {

@@ -39,7 +39,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     setInProgress(checked);
     setForm((prev) => ({
       ...prev,
-      end_date: checked ? "" : prev.end_date,
+      end_date: checked ? null : prev.end_date,
       status: checked ? "In Progress" : "Completed",
     }));
   };
@@ -52,7 +52,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     const payload: ProjectData = {
       ...form,
       status: inProgress ? "In Progress" : form.status,
-      end_date: inProgress ? "" : form.end_date,
+      end_date: inProgress ? null : form.end_date,
     };
 
     try {
