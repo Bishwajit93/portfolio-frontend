@@ -35,8 +35,8 @@ export default function LoginPage() {
         return;
       }
 
-      const { access } = data;  // ✅ Fixed here
-      login(access);
+      const { access, refresh } = data;  // ✅ Fixed here
+      login(access, refresh);
       router.push("/");
     } catch (err) {
       setError("Something went wrong. Please try again.");

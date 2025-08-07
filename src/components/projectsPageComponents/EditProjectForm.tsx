@@ -23,6 +23,7 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     status: project.status,
   });
 
+  const [inProgress, setInProgress] = useState(form.status === "In Progress");
   const [errors, setErrors] = useState<{ [key: string]: string | string[] }>({});
   const [saving, setSaving] = useState(false);
 
@@ -30,7 +31,17 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setInProgress(checked);
+    setForm((prev) => ({
+      ...prev,
+      end_date: checked ? "" : prev.end_date,
+      status: checked ? "In Progress" : "Completed",
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,9 +49,15 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
     setSaving(true);
     setErrors({});
 
+    const payload: ProjectData = {
+      ...form,
+      status: inProgress ? "In Progress" : form.status,
+      end_date: inProgress ? "" : form.end_date,
+    };
+
     try {
-      await updateProject(project.id, form);
-      onProjectUpdated({ ...form, id: project.id });
+      await updateProject(project.id, payload);
+      onProjectUpdated({ ...payload, id: project.id });
       onClose();
     } catch (err: unknown) {
       if (typeof err === "object" && err !== null) {
@@ -104,20 +121,14 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
         </div>
 
         {/* Status */}
-        <div>
-          <label className="block mb-1 text-cyan-300">Status</label>
-          <select
-            name="status"
-            value={form.status}
-            onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
-          >
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="Paused">Paused</option>
-          </select>
+        <div className="flex items-center gap-4">
+          <label className="block mb-1 text-cyan-300">In Progress</label>
+          <input
+            type="checkbox"
+            checked={inProgress}
+            onChange={handleCheckboxChange}
+            className="w-5 h-5 accent-cyan-400"
+          />
         </div>
 
         {/* Dates */}
@@ -129,8 +140,8 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             value={form.start_date || ""}
             onChange={handleChange}
             className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+            focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -141,9 +152,12 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             name="end_date"
             value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            disabled={inProgress}
+            className={`w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
+            border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+            focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text ${
+              inProgress ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           />
         </div>
 
@@ -156,8 +170,8 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
             onChange={handleChange}
             rows={4}
             className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+            focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
           />
         </div>
 
@@ -175,8 +189,8 @@ export default function EditProjectForm({ project, onProjectUpdated, onClose }: 
               value={form[field.name] ?? ""}
               onChange={handleChange}
               className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+              border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
+              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
             />
           </div>
         ))}

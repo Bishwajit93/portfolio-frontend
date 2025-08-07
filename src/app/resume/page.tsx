@@ -4,7 +4,6 @@ import { useState } from "react";
 import ResumeDownloadButton from "@/components/ResumeDownloadButton";
 
 
-
 export default function ResumePage() {
   const [lang, setLang] = useState<"en" | "de">("en");
 

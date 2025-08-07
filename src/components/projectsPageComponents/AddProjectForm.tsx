@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
+  const [inProgress, setInProgress] = useState(true);
   const [form, setForm] = useState<ProjectData>({
     title: "",
     description: "",
@@ -32,6 +33,15 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleCheckbox = () => {
+    setInProgress((prev) => !prev);
+    setForm((prev) => ({
+      ...prev,
+      status: !inProgress ? "In Progress" : "Completed",
+      end_date: !inProgress ? "" : prev.end_date,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -39,8 +49,8 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
 
     const payload: ProjectData = {
       ...form,
-      status: form.end_date ? form.status : "In Progress",
-      end_date: form.end_date || "",
+      status: inProgress ? "In Progress" : "Completed",
+      end_date: inProgress ? "" : form.end_date,
     };
 
     try {
@@ -88,9 +98,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="title"
             value={form.title}
             onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)]"
           />
         </div>
 
@@ -102,25 +110,8 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="tech_stack"
             value={form.tech_stack}
             onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)]"
           />
-        </div>
-
-        {/* Status */}
-        <div>
-          <label className="block mb-1 text-cyan-300">Status</label>
-          <select
-            name="status"
-            value={form.status}
-            onChange={handleChange}
-            className="w-full p-3 rounded-md bg-black border border-cyan-400/40 text-white focus:outline-none"
-          >
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Paused</option>
-          </select>
         </div>
 
         {/* Start Date */}
@@ -131,13 +122,25 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="start_date"
             value={form.start_date || ""}
             onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)]"
           />
         </div>
 
-        {/* End Date */}
+        {/* In Progress Checkbox */}
+        <div className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            checked={inProgress}
+            onChange={handleCheckbox}
+            className="accent-cyan-400 w-4 h-4"
+            id="inprogress"
+          />
+          <label htmlFor="inprogress" className="text-cyan-300">
+            Project is still in progress
+          </label>
+        </div>
+
+        {/* End Date (disabled if inProgress is true) */}
         <div>
           <label className="block mb-1 text-cyan-300">End Date</label>
           <input
@@ -145,11 +148,11 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             name="end_date"
             value={form.end_date || ""}
             onChange={handleChange}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            disabled={inProgress}
+            className={`w-full p-2 rounded bg-zinc-800 text-white border shadow-[0_0_10px_rgba(0,255,255,0.5)] ${
+              inProgress ? "border-gray-400 text-gray-400 cursor-not-allowed" : "border-cyan-400"
+            }`}
           />
-          <p className="text-sm text-gray-500 mt-1">Leave blank to mark as “In Progress.”</p>
         </div>
 
         {/* Description */}
@@ -160,9 +163,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-              placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-              focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+            className="w-full p-2 rounded bg-zinc-800 text-white border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)]"
           />
         </div>
 
@@ -177,14 +178,12 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
               name={field}
               value={form[field] ?? ""}
               onChange={handleChange}
-              className="w-full p-2 rounded bg-zinc-800 text-white font-sans text-sm font-light 
-                placeholder-cyan-300 border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)] 
-                focus:outline-none focus:ring-2 focus:ring-cyan-400 transition cursor-text"
+              className="w-full p-2 rounded bg-zinc-800 text-white border border-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.5)]"
             />
           </div>
         ))}
 
-        {/* Error Display */}
+        {/* Error Messages */}
         {Object.entries(errors).length > 0 && (
           <div className="text-red-400 text-sm">
             {Object.entries(errors).map(([k, v]) => (
@@ -201,8 +200,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             type="submit"
             disabled={saving}
             className="flex-1 py-3 border border-cyan-400 text-cyan-300 rounded-md 
-            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-            hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
+            shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 hover:text-white"
           >
             {saving ? "Saving..." : "Save"}
           </button>
@@ -211,8 +209,7 @@ export default function AddProjectForm({ onProjectAdded, onClose }: Props) {
             type="button"
             onClick={onClose}
             className="flex-1 py-3 border border-red-500 text-red-400 rounded-md 
-            shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
-            hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
+            shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 hover:text-black"
           >
             Cancel
           </button>
