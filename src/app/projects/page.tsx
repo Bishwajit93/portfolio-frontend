@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import AddProjectForm from "@/components/projectsPageComponents/AddProjectForm";
 import EditProjectForm from "@/components/projectsPageComponents/EditProjectForm";
 import DeleteConfirmationModal from "@/components/experiencePageComponents/DeleteConfirmationModal";
-import ProjectModal from "@/components/projectsPageComponents/ProjectModal.ts";
+import ProjectModal from "@/components/projectsPageComponents/ProjectModal";
 import AnimatedPageWrapper from "@/components/AnimatedPageWrapper";
 import MotionCard from "@/components/MotionCard";
 import "@/styles/experienceCard.css";
