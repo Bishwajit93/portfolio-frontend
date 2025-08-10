@@ -50,6 +50,31 @@ export default function ProjectsPage() {
     }
   };
 
+  function toParagraphs(text: string, maxLen = 160): string[] {
+    const t = (text || "").trim();
+    if (!t) return [];
+
+    if (/\r?\n/.test(t)) {
+      return t.split(/\n\s*\n|[\r\n]+/).map(s => s.trim()).filter(Boolean);
+    }
+
+    const sentences = t.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+    const paras: string[] = [];
+    let buf = "";
+
+    for (const s of sentences) {
+      const candidate = buf ? `${buf} ${s}` : s;
+      if (candidate.length > maxLen && buf) {
+        paras.push(buf);
+        buf = s;
+      } else {
+        buf = candidate;
+      }
+    }
+    if (buf) paras.push(buf);
+    return paras;
+  }
+
   return (
     <AnimatedPageWrapper key="projects">
       <div className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
@@ -133,10 +158,40 @@ export default function ProjectsPage() {
                       <p className="text-sm font-light font-sans">
                         <span className="text-cyan-400">Duration:</span> {project.start_date} to {project.end_date ?? "Present"}
                       </p>
-                      <p className="text-sm font-light font-sans mt-3">
-                        <span className="text-cyan-400">Description:</span> {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-4 mt-3 text-sm">
+                      <div className="text-sm font-light font-sans mt-3">
+                        <span className="text-cyan-400">Description:</span>
+                        {(() => {
+                          const paras = toParagraphs(project.description, 160);
+                          const preview = paras[0] ?? "";
+                          const hasMore = paras.length > 1 || preview.length > 160;
+
+                          return (
+                            <div className="mt-2 space-y-2">
+                              <p className="text-gray-200/90 break-words hyphens-auto">
+                                {preview}
+                                {hasMore && " …"}
+                              </p>
+
+                              {hasMore && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // do not open card by accident
+                                    setModalProject(project); // open full modal
+                                  }}
+                                  className="inline-block text-cyan-300 hover:text-white underline underline-offset-4 cursor-pointer transition"
+                                  aria-label={`Read more about ${project.title}`}
+                                >
+                                  Read more
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                      <div
+                        className="flex flex-wrap gap-4 mt-3 text-sm"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         {project.github_frontend_url && (
                           <a href={project.github_frontend_url} target="_blank" rel="noopener noreferrer"
                             className="text-blue-400 underline hover:text-blue-300">Frontend</a>
@@ -150,7 +205,6 @@ export default function ProjectsPage() {
                             className="text-green-400 underline hover:text-green-300">Live</a>
                         )}
                       </div>
-
                       {token && (
                         <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
                           <button
