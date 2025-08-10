@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 
 type Props = {
@@ -12,7 +13,7 @@ type Props = {
 export default function ProjectModal({ project, onClose }: Props) {
   const [footerOffset, setFooterOffset] = useState(0);
 
-  // Lock background scroll + neutralize footer pointer/taps while modal is open
+  // Lock page scroll + neutralize footer taps while modal is open
   useEffect(() => {
     const bodyPrev = document.body.style.overflow;
     const footer = document.getElementById("site-footer");
@@ -21,10 +22,7 @@ export default function ProjectModal({ project, onClose }: Props) {
     document.body.style.overflow = "hidden";
     if (footer) footer.style.pointerEvents = "none";
 
-    const updateOffset = () => {
-      const h = footer?.offsetHeight ?? 0;
-      setFooterOffset(h);
-    };
+    const updateOffset = () => setFooterOffset(footer?.offsetHeight ?? 0);
     updateOffset();
     window.addEventListener("resize", updateOffset);
 
@@ -35,10 +33,10 @@ export default function ProjectModal({ project, onClose }: Props) {
     };
   }, []);
 
-  // Panel max-height avoids the footer. Use 100dvh for iOS dynamic viewport correctness.
+  // Keep panel clear of the fixed mobile footer
   const panelStyle = useMemo<React.CSSProperties>(() => {
     return {
-      maxHeight: `calc(100dvh - ${footerOffset}px - 16px)`, // 16px breathing room
+      maxHeight: `calc(100dvh - ${footerOffset}px - 16px)`, // little breathing room
       WebkitOverflowScrolling: "touch",
       willChange: "transform",
     };
@@ -49,20 +47,20 @@ export default function ProjectModal({ project, onClose }: Props) {
       className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/70 px-3 sm:px-6"
       role="dialog"
       aria-modal="true"
-      onClick={onClose} // tap backdrop closes
+      onClick={onClose}
     >
-      <div
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
-        className="
-          w-full max-w-2xl rounded-2xl border border-cyan-400/30 bg-[#0a0a0a]
-          shadow-[0_6px_30px_rgba(0,255,255,0.25)]
-          overflow-hidden
-          translate-y-2 opacity-0 animate-[modalIn_160ms_ease-out_forwards]
-          sm:translate-y-0
-        "
+      <motion.div
+        onClick={(e) => e.stopPropagation()}
+        initial={{ y: 8, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.16, ease: "easeOut" }}
         style={panelStyle}
+        className={`
+          w-full max-w-2xl rounded-2xl border border-cyan-400/30 bg-[#0a0a0a]
+          shadow-[0_6px_30px_rgba(0,255,255,0.25)] overflow-hidden
+        `}
       >
-        {/* Sticky header keeps the close button reachable */}
+        {/* Sticky header keeps close reachable */}
         <div className="sticky top-0 z-10 bg-[#0a0a0a]/95 backdrop-blur-[1px] border-b border-cyan-400/15 px-4 py-3 flex justify-end">
           <button
             onClick={onClose}
@@ -72,26 +70,20 @@ export default function ProjectModal({ project, onClose }: Props) {
           </button>
         </div>
 
-        {/* Scrollable content (inherits maxHeight from panel) */}
+        {/* Scrollable content (inherits maxHeight) */}
         <div className="overflow-y-auto overscroll-contain px-6 py-6" style={{ maxHeight: "inherit" }}>
           <h2 className="text-2xl sm:text-3xl font-bold text-cyan-300 mb-4 text-center">
             {project.title}
           </h2>
 
           <div className="space-y-4 text-gray-200">
-            <p>
-              <span className="text-cyan-400 font-semibold">Tech Stack:</span> {project.tech_stack}
-            </p>
-            <p>
-              <span className="text-cyan-400 font-semibold">Status:</span> {project.status}
-            </p>
+            <p><span className="text-cyan-400 font-semibold">Tech Stack:</span> {project.tech_stack}</p>
+            <p><span className="text-cyan-400 font-semibold">Status:</span> {project.status}</p>
             <p>
               <span className="text-cyan-400 font-semibold">Duration:</span>{" "}
               {project.start_date} to {project.end_date || "Present"}
             </p>
-            <p>
-              <span className="text-cyan-400 font-semibold">Description:</span> {project.description}
-            </p>
+            <p><span className="text-cyan-400 font-semibold">Description:</span> {project.description}</p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               {project.github_frontend_url && (
@@ -127,18 +119,10 @@ export default function ProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* bottom spacer so last link never hides under mobile footer rubber-band */}
+          {/* Spacer so last item isn't under iOS rubber-band */}
           <div className="h-6" />
         </div>
-      </div>
-
-      {/* tiny keyframes, no plugin needed */}
-      <style jsx>{`
-        @keyframes modalIn {
-          from { transform: translateY(8px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-      `}</style>
+      </motion.div>
     </div>
   );
 }

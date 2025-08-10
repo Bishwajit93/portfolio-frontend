@@ -18,7 +18,7 @@ export default function MobileNav() {
 
   return (
     <motion.nav
-      id="site-footer" // <-- important: modal uses this to measure height
+      id="site-footer" // modal measures this height
       initial={{ y: 80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
