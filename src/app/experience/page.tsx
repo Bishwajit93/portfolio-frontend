@@ -26,7 +26,18 @@ export default function ExperiencePage() {
     setLoading(true);
     try {
       const data = await fetchExperiences();
-      setExperiences(data);
+
+      // Sort: current job first, then by latest end_date
+      const sorted = data.sort((a, b) => {
+        if (a.still_working && !b.still_working) return -1;
+        if (!a.still_working && b.still_working) return 1;
+
+        const endA = a.end_date ? new Date(a.end_date).getTime() : 0;
+        const endB = b.end_date ? new Date(b.end_date).getTime() : 0;
+        return endB - endA;
+      });
+
+      setExperiences(sorted);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred");
     } finally {
@@ -58,16 +69,12 @@ export default function ExperiencePage() {
             Experience
           </h1>
           <div className="text-base md:text-lg text-cyan-300 font-normal text-center max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              My professional journey began in customer-oriented roles across restaurants and retail. These experiences shaped my discipline, time management, and attention to detail—qualities I now bring to my work as a developer.
-            </p>
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              During my studies in Scientific Computing, I developed a strong interest in web development and gradually shifted my focus toward real-world application building. Every position I have held, technical or not, has contributed to the mindset and work ethic I bring to software development today.
-            </p>
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              I am now fully dedicated to a career in web development, showcasing my skills through full-stack projects, continuous learning, and a commitment to delivering value in a team.
+            <p className="text-base font-light text-gray-300 text-center max-w-2xl mx-auto mb-14 leading-relaxed">
+              I bring strong reliability, teamwork, and process discipline from previous roles —
+              the same mindset I now apply to software development.
             </p>
           </div>
+
           {token && (
             <button
               className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
@@ -120,17 +127,20 @@ export default function ExperiencePage() {
                       rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
                       hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
                   >
-                    <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
-                      {exp.job_title} at {exp.company_name}
+                    <h2 className="text-lg font-semibold text-cyan-300 mb-2">
+                      {exp.job_title} — {exp.company_name}
                     </h2>
-                    <p className="text-sm font-light font-sans">
+                    <p className="text-sm text-gray-300">
                       <span className="text-cyan-400">Location:</span> {exp.location}
                     </p>
-                    <p className="text-sm font-light font-sans">
-                      <span className="text-cyan-400">Duration:</span> {exp.start_date} to {exp.end_date ?? (exp.still_working ? "Present" : "N/A")}
+                    <p className="text-sm text-gray-300">
+                      <span className="text-cyan-400">Duration:</span>{" "}
+                      {exp.start_date} to{" "}
+                      {exp.still_working ? "Present" : exp.end_date ?? "N/A"}
                     </p>
-                    <p className="text-sm font-light font-sans mt-3">
-                      <span className="text-cyan-400">Description:</span> {exp.description}
+                    <p className="text-sm text-gray-300 mt-3 line-clamp-3">
+                      <span className="text-cyan-400">Description:</span>{" "}
+                      {exp.description}
                     </p>
                     {token && (
                       <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
@@ -145,7 +155,6 @@ export default function ExperiencePage() {
                         >
                           Edit
                         </button>
-
                         <button
                           onClick={() => setExperienceToDelete(exp)}
                           className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 

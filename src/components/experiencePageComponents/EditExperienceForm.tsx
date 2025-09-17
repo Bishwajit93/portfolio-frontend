@@ -28,10 +28,19 @@ export default function EditExperienceForm({ experience, onExperienceUpdated, on
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
-    setForm({
-      ...form,
-      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
-    });
+    if (type === "checkbox" && name === "still_working") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setForm({
+        ...form,
+        still_working: checked,
+        end_date: checked ? null : form.end_date,  // ✅ clear end_date if still working
+      });
+    } else {
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

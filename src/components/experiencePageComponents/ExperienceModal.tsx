@@ -41,7 +41,9 @@ export default function ExperienceModal({ experience, onClose }: Props) {
           </p>
           <p className="text-sm text-gray-500 italic mb-4">
             <strong>Duration:</strong> {experience.start_date} to{" "}
-            {experience.end_date ?? (experience.still_working ? "Present" : "N/A")}
+            {experience.still_working
+              ? "Present"
+              : experience.end_date || "N/A"}
           </p>
           <p className="text-gray-200 whitespace-pre-line text-sm md:text-base leading-relaxed">
             {experience.description}

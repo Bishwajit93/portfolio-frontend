@@ -83,15 +83,10 @@ export default function ProjectsPage() {
             Projects
           </h1>
           <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              My path into web development has been shaped by perseverance and self-motivation. Balancing full-time work with limited resources, I often started personal projects without fully finishing them—not from a lack of drive, but due to the real-world challenges of time and energy.
+            <p className="text-base font-light text-gray-200 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+              Selected work showing end-to-end delivery — from UI design to backend logic and deployment.
             </p>
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              Today, I am in a position to work with focus and structure. I have completed my first full-stack portfolio project and continue developing more. I actively use tools like ChatGPT—not to replace understanding, but to deepen it, debug faster, and maintain progress while working full-time.
-            </p>
-            <p className="text-base font-light font-sans text-cyan-200 max-w-md sm:max-w-lg md:max-w-xl mx-auto text-center leading-relaxed">
-              This section highlights the projects I have completed so far. Each project represents a concrete step forward in my learning, mindset, and capabilities. I am committed to building impactful, user-focused applications and continuously leveling up as a developer.
-            </p>
+
           </div>
           {token && (
             <button
@@ -152,9 +147,9 @@ export default function ProjectsPage() {
                       <p className="text-sm font-light font-sans">
                         <span className="text-cyan-400">Tech Stack:</span> {project.tech_stack}
                       </p>
-                      <p className="text-sm font-light font-sans">
+                      {/* <p className="text-sm font-light font-sans">
                         <span className="text-cyan-400">Status:</span> {project.status}
-                      </p>
+                      </p> */}
                       <p className="text-sm font-light font-sans">
                         <span className="text-cyan-400">Duration:</span> {project.start_date} to {project.end_date ?? "Present"}
                       </p>

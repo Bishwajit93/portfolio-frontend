@@ -6,7 +6,8 @@ import ResumePDF from "./ResumePDF";
 
 export default function ResumeDownloadButton({ lang }: { lang: "en" | "de" }) {
   const handleDownload = useCallback(async () => {
-    const blob = await pdf(<ResumePDF lang={lang} />).toBlob();
+    // Force a fresh tree render per language using `key={lang}`
+    const blob = await pdf(<ResumePDF key={lang} lang={lang} />).toBlob();
 
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
