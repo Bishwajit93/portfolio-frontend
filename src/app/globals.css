@@ -210,3 +210,26 @@ a {
     0 0 55px rgba(15, 23, 42, 1);
   transform: translateY(-1px);
 }
+
+@keyframes code-rain-fall {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+}
+
+.code-rain-column {
+  animation-name: code-rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

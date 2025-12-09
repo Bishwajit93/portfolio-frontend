@@ -156,7 +156,7 @@ export default function ContactPage() {
                     className="relative flex flex-col items-center group cursor-pointer"
                   >
                     <Icon className="text-2xl sm:text-3xl text-cyan-50 drop-shadow-[0_0_8px_cyan]" />
-                    <span className="absolute top-full mt-1 px-2 py-1 text-[10px] sm:text-xs text-cyan-100 bg-black border border-cyan-400 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                    <span className="absolute top-full mt-1 px-2 py-1 text-[10px] sm:text-xs text-cyan-50 bg-black border border-cyan-400 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
                       {title}
                     </span>
                   </motion.a>
