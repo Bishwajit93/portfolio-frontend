@@ -86,10 +86,10 @@ export default function ProjectsPage() {
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
           {/* Page title + intro */}
           <section className="text-center space-y-4">
-            <h1 className="text-2xl md:text-3xl text-cyan-300 mb-2">
+            <h1 className="text-2xl md:text-3xl text-cyan-50 mb-2">
               Projects
             </h1>
-            <p className="text-sm md:text-[15px] text-cyan-100/90 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-[15px] text-cyan-50 max-w-2xl mx-auto leading-relaxed">
               Selected work that shows end-to-end delivery—from backend APIs and
               auth to responsive UI, animation, and deployment.
             </p>

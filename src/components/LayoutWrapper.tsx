@@ -5,6 +5,7 @@ import { setViewportHeight } from "@/utils/setViewportHeight";
 import { AuthProvider } from "@/context/AuthContext";
 import MobileNav from "@/components/MobileNav";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, Variants } from "framer-motion";
 
 type Props = {
@@ -38,6 +39,15 @@ export default function LayoutWrapper({ children }: Props) {
     setViewportHeight();
   }, []);
 
+  const pathname = usePathname();
+
+  const items = [
+    { label: "About", href: "/" },
+    { label: "Projects", href: "/projects" },
+    { label: "Experience", href: "/experience" },
+    { label: "Education", href: "/education" },
+  ];
+
   return (
     <AuthProvider>
       {/* Optional global background if you use it in your theme */}
@@ -48,34 +58,68 @@ export default function LayoutWrapper({ children }: Props) {
         variants={navContainer}
         initial="hidden"
         animate="show"
-        className="hidden md:flex flex-col gap-7 fixed right-10 top-1/2 -translate-y-1/2 z-40"
+        className="
+          hidden md:flex
+          fixed right-10 top-1/2 -translate-y-1/2
+          z-40
+        "
       >
-        {[
-          { label: "About", href: "/" },
-          { label: "Projects", href: "/projects" },
-          { label: "Experience", href: "/experience" },
-          { label: "Education", href: "/education" },
-        ].map((item) => (
-          <motion.div
-            key={item.href}
-            variants={navItem}
-            whileHover={{ scale: 1.08 }}
-            transition={{ type: "spring", stiffness: 230, damping: 15 }}
-          >
-            <Link
-              href={item.href}
-              className="
-                inline-flex items-center justify-center
-                w-36 px-5 py-2.5
-                pill-button
-                text-[12px] text-cyan-50
-                text-center
-              "
-            >
-              {item.label}
-            </Link>
-          </motion.div>
-        ))}
+        {/* Wrapper for the vertical line + points */}
+        <div className="relative flex flex-col items-end gap-6 pr-3 py-4 min-h-[260px]">
+          {/* Glowing vertical line (uses the .timeline-rail style from globals.css) */}
+          <div className="timeline-rail" />
+
+          {items.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <motion.div
+                key={item.href}
+                variants={navItem}
+                whileHover={{ scale: 1.05, x: -4 }}
+                className={`
+                  relative z-10 pr-4
+                  transition-transform duration-300
+                  ${isActive ? "-translate-x-1" : ""}
+                `}
+              >
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-3"
+                >
+                  {/* Label pill */}
+                  <span
+                    className={[
+                      "px-4 py-1.5 rounded-full text-[12px] font-medium",
+                      "border border-cyan-400/60",
+                      "bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.22),transparent_55%),radial-gradient(circle_at_bottom,rgba(129,140,248,0.28),transparent_55%),rgba(6,12,24,0.98)]",
+                      "shadow-[0_0_12px_rgba(34,211,238,0.65)]",
+                      "transition-all duration-300",
+                      isActive
+                        ? "text-cyan-50 shadow-[0_0_18px_rgba(34,211,238,0.95)] border-cyan-300"
+                        : "text-cyan-200 hover:text-cyan-50 hover:shadow-[0_0_16px_rgba(34,211,238,0.8)] hover:border-cyan-300/80",
+                    ].join(" ")}
+                  >
+                    {item.label}
+                  </span>
+
+                  {/* Dot on the line */}
+                  <span className="relative flex items-center justify-center">
+                    <span
+                      className={[
+                        "block rounded-full",
+                        "transition-all duration-300",
+                        isActive
+                          ? "w-[11px] h-[11px] bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,1)]"
+                          : "w-[7px] h-[7px] bg-cyan-500/80 shadow-[0_0_6px_rgba(34,211,238,0.8)]",
+                      ].join(" ")}
+                    />
+                  </span>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.nav>
 
       {/* Main content area */}
@@ -122,7 +166,7 @@ export default function LayoutWrapper({ children }: Props) {
         </main>
       </div>
 
-      {/* Mobile bottom navigation (unchanged) */}
+      {/* Mobile bottom navigation */}
       <MobileNav />
     </AuthProvider>
   );

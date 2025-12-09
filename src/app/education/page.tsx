@@ -63,10 +63,10 @@ export default function EducationPage() {
         <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
           {/* Page Title + intro */}
           <section className="text-center space-y-4">
-            <h1 className="text-2xl md:text-3xl text-cyan-300 mb-2">
+            <h1 className="text-2xl md:text-3xl text-cyan-50 mb-2">
               Education
             </h1>
-            <p className="text-sm md:text-[15px] text-cyan-100/90 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-[15px] text-cyan-50 max-w-2xl mx-auto leading-relaxed">
               B.Sc. in Mathematics from BRAC University with a strong analytical
               background. I now apply this mindset to full-stack development
               with Django, PostgreSQL, React, and Next.js.
