@@ -228,8 +228,3 @@ a {
   }
 }
 
-.code-rain-column {
-  animation-name: code-rain-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
