@@ -20,7 +20,7 @@ export default function LayoutWrapper({ children }: Props) {
     <AuthProvider>
       <div className="background" />
       <Header />
-      <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 pt-[60px] pb-[70px] md:pt-20 md:pb-10">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-8 pt-[60px] pb-[90px] md:pt-20 md:pb-10">
         {children}
       </main>
       <Footer />
