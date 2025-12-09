@@ -57,6 +57,16 @@ export default function AboutPage() {
                       GitHub
                     </a>
                     <Link
+                      href="/resume"
+                      className="inline-flex items-center justify-center
+                              px-5 py-2.5
+                              pill-button
+                              text-xs md:text-sm text-cyan-50
+                            "
+                    >
+                      Resume
+                    </Link>
+                    <Link
                       href="/contact"
                       className="inline-flex items-center justify-center
                         px-5 py-2.5
@@ -118,20 +128,6 @@ export default function AboutPage() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Under-hero buttons: only resume + contact */}
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/resume"
-                className="inline-flex items-center justify-center
-                        px-5 py-2.5
-                        pill-button
-                        text-xs md:text-sm text-cyan-50
-                      "
-              >
-                Resume
-              </Link>
             </div>
           </section>
 
