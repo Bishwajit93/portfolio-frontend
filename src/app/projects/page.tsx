@@ -28,7 +28,9 @@ export default function ProjectsPage() {
       const data = await fetchProjects();
       setProjects(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred");
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
     } finally {
       setLoading(false);
     }
@@ -55,7 +57,10 @@ export default function ProjectsPage() {
     if (!t) return [];
 
     if (/\r?\n/.test(t)) {
-      return t.split(/\n\s*\n|[\r\n]+/).map(s => s.trim()).filter(Boolean);
+      return t
+        .split(/\n\s*\n|[\r\n]+/)
+        .map((s) => s.trim())
+        .filter(Boolean);
     }
 
     const sentences = t.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
@@ -77,34 +82,45 @@ export default function ProjectsPage() {
 
   return (
     <AnimatedPageWrapper key="projects">
-      <div className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
-            Projects
-          </h1>
-          <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p className="text-base font-light text-gray-200 text-center max-w-2xl mx-auto mb-12 leading-relaxed">
-              Selected work showing end-to-end delivery — from UI design to backend logic and deployment.
+      <main className="min-h-screen text-white pt-[40px] pb-[80px] px-4 md:px-8">
+        <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+          {/* Page title + intro */}
+          <section className="text-center space-y-4">
+            <h1 className="text-2xl md:text-3xl text-cyan-300 mb-2">
+              Projects
+            </h1>
+            <p className="text-sm md:text-[15px] text-cyan-100/90 max-w-2xl mx-auto leading-relaxed">
+              Selected work that shows end-to-end delivery—from backend APIs and
+              auth to responsive UI, animation, and deployment.
             </p>
 
-          </div>
-          {token && (
-            <button
-              className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
-              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
-              onClick={() => {
-                setAddMode(true);
-                setSelectedProject(null);
-              }}
-            >
-              + Add Project
-            </button>
+            {token && (
+              <button
+                className="inline-flex items-center justify-center mt-3 px-5 py-2.5 rounded-full 
+                  border border-cyan-400/90 bg-cyan-500/20 text-[13px] text-cyan-50 
+                  shadow-[0_0_20px_rgba(34,211,238,0.8)] hover:bg-cyan-500/30 
+                  hover:shadow-[0_0_28px_rgba(34,211,238,1)] transition cursor-pointer"
+                onClick={() => {
+                  setAddMode(true);
+                  setSelectedProject(null);
+                }}
+              >
+                + Add Project
+              </button>
+            )}
+          </section>
+
+          {/* Loading / error */}
+          {loading && (
+            <p className="text-center text-sm text-cyan-200/80">
+              Loading projects...
+            </p>
+          )}
+          {error && (
+            <p className="text-center text-sm text-red-400 mt-2">{error}</p>
           )}
 
-          {loading && <p className="text-gray-400">Loading projects...</p>}
-          {error && <p className="text-red-500">{error}</p>}
-
+          {/* Forms */}
           {addMode && token && (
             <AddProjectForm
               onProjectAdded={async () => {
@@ -126,113 +142,158 @@ export default function ProjectsPage() {
             />
           )}
 
-          {!addMode && !selectedProject && !loading && projects.length === 0 && (
-            <p>No projects available.</p>
-          )}
+          {/* Empty state */}
+          {!addMode &&
+            !selectedProject &&
+            !loading &&
+            projects.length === 0 && (
+              <p className="text-center text-sm text-cyan-200/80">
+                No projects available yet.
+              </p>
+            )}
 
+          {/* Project cards (hero-shell style, single column) */}
           {!addMode && !selectedProject && projects.length > 0 && (
-            <ul className="space-y-6">
+            <section className="space-y-6">
               {projects.map((project) => (
-                <li key={project.id}>
-                  <MotionCard>
-                    <div
-                      onClick={() => setModalProject(project)}
-                      className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
-                        rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
-                        hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
-                    >
-                      <h2 className="text-sm font-light font-sans text-xl text-cyan-300 mb-2">
-                        {project.title}
-                      </h2>
-                      <p className="text-sm font-light font-sans">
-                        <span className="text-cyan-400">Tech Stack:</span> {project.tech_stack}
-                      </p>
-                      {/* <p className="text-sm font-light font-sans">
-                        <span className="text-cyan-400">Status:</span> {project.status}
-                      </p> */}
-                      <p className="text-sm font-light font-sans">
-                        <span className="text-cyan-400">Duration:</span> {project.start_date} to {project.end_date ?? "Present"}
-                      </p>
-                      <div className="text-sm font-light font-sans mt-3">
-                        <span className="text-cyan-400">Description:</span>
-                        {(() => {
-                          const paras = toParagraphs(project.description, 160);
-                          const preview = paras[0] ?? "";
-                          const hasMore = paras.length > 1 || preview.length > 160;
+                <MotionCard key={project.id}>
+                  <div
+                    onClick={() => setModalProject(project)}
+                    className="hero-shell px-6 py-6 cursor-pointer transition-all duration-300"
+                  >
+                    {/* Title */}
+                    <h2 className="text-[17px] text-cyan-200 mb-2">
+                      {project.title}
+                    </h2>
 
-                          return (
-                            <div className="mt-2 space-y-2">
-                              <p className="text-gray-200/90 break-words hyphens-auto">
-                                {preview}
-                                {hasMore && " …"}
-                              </p>
-
-                              {hasMore && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation(); // do not open card by accident
-                                    setModalProject(project); // open full modal
-                                  }}
-                                  className="inline-block text-cyan-300 hover:text-white underline underline-offset-4 cursor-pointer transition"
-                                  aria-label={`Read more about ${project.title}`}
-                                >
-                                  Read more
-                                </button>
-                              )}
-                            </div>
-                          );
-                        })()}
-                      </div>
-                      <div
-                        className="flex flex-wrap gap-4 mt-3 text-sm"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {project.github_frontend_url && (
-                          <a href={project.github_frontend_url} target="_blank" rel="noopener noreferrer"
-                            className="text-blue-400 underline hover:text-blue-300">Frontend</a>
-                        )}
-                        {project.github_backend_url && (
-                          <a href={project.github_backend_url} target="_blank" rel="noopener noreferrer"
-                            className="text-blue-400 underline hover:text-blue-300">Backend</a>
-                        )}
-                        {project.live_url && (
-                          <a href={project.live_url} target="_blank" rel="noopener noreferrer"
-                            className="text-green-400 underline hover:text-green-300">Live</a>
-                        )}
-                      </div>
-                      {token && (
-                        <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => {
-                              setSelectedProject(project);
-                              setAddMode(false);
-                            }}
-                            className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
-                              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-                              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
-                          >
-                            Edit
-                          </button>
-
-                          <button
-                            onClick={() => setProjectToDelete(project)}
-                            className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
-                              shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
-                              hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
-                          >
-                            Delete
-                          </button>
-                        </div>
+                    {/* Basic info */}
+                    <div className="space-y-1 text-sm text-cyan-100/90">
+                      {project.tech_stack && (
+                        <p>
+                          <span className="text-cyan-300">Tech stack: </span>
+                          {project.tech_stack}
+                        </p>
                       )}
 
-                      <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
+                      <p>
+                        <span className="text-cyan-300">Duration: </span>
+                        {project.start_date} —{" "}
+                        {project.end_date ?? "Present"}
+                      </p>
                     </div>
-                  </MotionCard>
-                </li>
+
+                    {/* Description preview */}
+                    <div className="mt-3 text-sm text-cyan-100/90">
+                      <span className="text-cyan-300">Description: </span>
+                      {(() => {
+                        const paras = toParagraphs(project.description, 160);
+                        const preview = paras[0] ?? "";
+                        const hasMore =
+                          paras.length > 1 || preview.length > 160;
+
+                        return (
+                          <div className="mt-2 space-y-2">
+                            <p className="text-cyan-100/90 break-words hyphens-auto">
+                              {preview}
+                              {hasMore && " …"}
+                            </p>
+
+                            {hasMore && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setModalProject(project);
+                                }}
+                                className="inline-block text-cyan-300 hover:text-white underline underline-offset-4 cursor-pointer transition"
+                                aria-label={`Read more about ${project.title}`}
+                              >
+                                Read more
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })()}
+                    </div>
+
+                    {/* Links (Live / GitHub) */}
+                    <div
+                      className="flex flex-wrap gap-4 mt-4 text-sm"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {project.github_frontend_url && (
+                        <a
+                          href={project.github_frontend_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-cyan-300 underline underline-offset-4 hover:text-white transition"
+                        >
+                          Frontend
+                        </a>
+                      )}
+                      {project.github_backend_url && (
+                        <a
+                          href={project.github_backend_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-cyan-300 underline underline-offset-4 hover:text-white transition"
+                        >
+                          Backend
+                        </a>
+                      )}
+                      {project.live_url && (
+                        <a
+                          href={project.live_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-300 underline underline-offset-4 hover:text-emerald-100 transition"
+                        >
+                          Live
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Admin buttons */}
+                    {token && (
+                      <div
+                        className="mt-5 flex gap-3"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          onClick={() => {
+                            setSelectedProject(project);
+                            setAddMode(false);
+                          }}
+                          className="
+                            inline-flex items-center justify-center px-4 py-1.5 rounded-full
+                            border border-cyan-400/90 bg-cyan-500/20 text-[12px] text-cyan-50
+                            shadow-[0_0_14px_rgba(34,211,238,0.7)]
+                            hover:bg-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,1)]
+                            transition"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() => setProjectToDelete(project)}
+                          className="
+                            inline-flex items-center justify-center px-4 py-1.5 rounded-full
+                            border border-red-500/80 bg-red-600/10 text-[12px] text-red-300
+                            shadow-[0_0_10px_rgba(248,113,113,0.7)]
+                            hover:bg-red-500/30 hover:text-black
+                            hover:shadow-[0_0_18px_rgba(248,113,113,1)]
+                            transition"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </MotionCard>
               ))}
-            </ul>
+            </section>
           )}
 
+          {/* Delete confirmation modal */}
           {projectToDelete && (
             <DeleteConfirmationModal
               message={`Are you sure you want to delete the project "${projectToDelete.title}"?`}
@@ -241,6 +302,7 @@ export default function ProjectsPage() {
             />
           )}
 
+          {/* Full project modal */}
           {modalProject && (
             <ProjectModal
               project={modalProject}
@@ -248,7 +310,7 @@ export default function ProjectsPage() {
             />
           )}
         </div>
-      </div>
+      </main>
     </AnimatedPageWrapper>
   );
 }

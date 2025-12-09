@@ -6,7 +6,6 @@ import ResumePDF from "./ResumePDF";
 
 export default function ResumeDownloadButton({ lang }: { lang: "en" | "de" }) {
   const handleDownload = useCallback(async () => {
-    // Force a fresh tree render per language using `key={lang}`
     const blob = await pdf(<ResumePDF key={lang} lang={lang} />).toBlob();
 
     const url = URL.createObjectURL(blob);
@@ -22,10 +21,14 @@ export default function ResumeDownloadButton({ lang }: { lang: "en" | "de" }) {
   return (
     <button
       onClick={handleDownload}
-      className="px-4 py-2 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md hover:bg-cyan-500/10 hover:text-white cursor-pointer"
-      style={{ cursor: "pointer", boxShadow: "0 0 8px rgba(0,255,255,0.4)" }}
+      className="inline-flex items-center justify-center px-5 py-2.5 rounded-full 
+                 border border-cyan-400/90 bg-cyan-500/20 
+                 text-xs md:text-sm text-cyan-50 
+                 shadow-[0_0_20px_rgba(34,211,238,0.8)] 
+                 hover:bg-cyan-500/30 hover:shadow-[0_0_28px_rgba(34,211,238,1)] 
+                 transition cursor-pointer"
     >
-      Download PDF
+      {lang === "de" ? "PDF herunterladen" : "Download PDF"}
     </button>
   );
 }

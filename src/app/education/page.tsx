@@ -59,39 +59,43 @@ export default function EducationPage() {
 
   return (
     <AnimatedPageWrapper key="education">
-      <main className="min-h-screen text-white pt-[100px] pb-[60px] px-4 md:px-10">
-        <div className="max-w-7xl mx-auto">
-          {/* Page Title */}
-          <h1 className="text-2xl md:text-3xl font-bold text-cyan-400 text-center mb-6">
-            Education
-          </h1>
-
-          {/* Intro */}
-          <div className="text-base md:text-lg text-cyan-300 text-center font-normal max-w-2xl mx-auto mb-16 leading-loose space-y-6">
-            <p className="text-base font-light text-gray-300 max-w-2xl mx-auto text-center leading-relaxed">
-              B.Sc. degree in Mathematics (BRAC University) with strong analytical skills, now focused on full-stack development using Django, PostgreSQL, React, and Next.js.
+      <main className="min-h-screen text-white pt-[40px] pb-[80px] px-4 md:px-8">
+        <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
+          {/* Page Title + intro */}
+          <section className="text-center space-y-4">
+            <h1 className="text-2xl md:text-3xl text-cyan-300 mb-2">
+              Education
+            </h1>
+            <p className="text-sm md:text-[15px] text-cyan-100/90 max-w-2xl mx-auto leading-relaxed">
+              B.Sc. in Mathematics from BRAC University with a strong analytical
+              background. I now apply this mindset to full-stack development
+              with Django, PostgreSQL, React, and Next.js.
             </p>
 
-          </div>
+            {token && (
+              <button
+                className="inline-flex items-center justify-center mt-3 px-5 py-2.5 rounded-full 
+                  border border-cyan-400/90 bg-cyan-500/20 text-[13px] text-cyan-50 
+                  shadow-[0_0_20px_rgba(34,211,238,0.8)] hover:bg-cyan-500/30 
+                  hover:shadow-[0_0_28px_rgba(34,211,238,1)] transition cursor-pointer"
+                onClick={() => {
+                  setAddMode(true);
+                  setSelectedEducation(null);
+                }}
+              >
+                + Add Education
+              </button>
+            )}
+          </section>
 
-          {/* Add Button */}
-          {token && (
-            <button
-              className="mb-10 px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
-              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
-              onClick={() => {
-                setAddMode(true);
-                setSelectedEducation(null);
-              }}
-            >
-              + Add Education
-            </button>
+          {/* Loading indicator */}
+          {loading && (
+            <p className="text-center text-sm text-cyan-200/80">
+              Loading education...
+            </p>
           )}
 
-          {loading && <p className="text-gray-400">Loading education...</p>}
-
-          {/* Forms */}
+          {/* Add / Edit forms */}
           {addMode && token && (
             <AddEducationForm
               onEducationAdded={async () => {
@@ -113,70 +117,92 @@ export default function EducationPage() {
             />
           )}
 
-          {/* List */}
+          {/* Empty state */}
           {!addMode && !selectedEducation && !loading && educations.length === 0 && (
-            <p>No education available.</p>
+            <p className="text-center text-sm text-cyan-200/80">
+              No education entries available yet.
+            </p>
           )}
 
+          {/* Education cards (hero-shell style, one per row) */}
           {!addMode && !selectedEducation && educations.length > 0 && (
-            <ul className="space-y-6">
+            <section className="space-y-6">
               {educations.map((edu) => (
-                <li key={edu.id}>
-                  <MotionCard>
-                    <div
-                      onClick={() => setModalEducation(edu)}
-                      className="relative flex flex-col justify-between h-full p-6 border border-cyan-400/30 
-                        rounded-xl bg-black text-gray-100 shadow-[0_0_20px_rgba(0,255,255,0.3)] 
-                        hover:shadow-[0_0_35px_rgba(0,255,255,0.6)] transition duration-500 cursor-pointer group overflow-hidden"
-                    >
-                      <h2 className="text-lg font-semibold text-cyan-300 mb-2">
-                        {edu.degree} — {edu.institution_name}
-                      </h2>
-                      <p className="text-sm text-gray-300">
-                        <span className="text-cyan-400">Field:</span> {edu.field_of_study}
-                      </p>
-                      <p className="text-sm text-gray-300">
-                        <span className="text-cyan-400">Period:</span> {edu.start_date} to{" "}
-                        {edu.end_date ?? "Present"}
-                      </p>
-                      <p className="text-sm text-gray-300">
-                        <span className="text-cyan-400">Grade:</span> {edu.grade}
-                      </p>
-                      <p className="text-sm text-gray-300 mt-3 line-clamp-3">
-                        <span className="text-cyan-400">Description:</span> {edu.description}
+                <MotionCard key={edu.id}>
+                  <div
+                    onClick={() => setModalEducation(edu)}
+                    className="hero-shell px-6 py-6 cursor-pointer transition-all duration-300"
+                  >
+                    {/* Title */}
+                    <h2 className="text-[17px] text-cyan-200 mb-2">
+                      {edu.degree} — {edu.institution_name}
+                    </h2>
+
+                    {/* Details */}
+                    <div className="space-y-1 text-sm text-cyan-100/90">
+                      <p>
+                        <span className="text-cyan-300">Field: </span>
+                        {edu.field_of_study}
                       </p>
 
-                      {/* Admin Controls */}
-                      {token && (
-                        <div className="mt-4 flex gap-3" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => {
-                              setSelectedEducation(edu);
-                              setAddMode(false);
-                            }}
-                            className="px-4 py-1.5 text-sm font-semibold text-cyan-300 border border-cyan-400 rounded-md 
-                              shadow-[0_0_6px_rgba(0,255,255,0.4)] hover:bg-cyan-500/10 
-                              hover:text-white hover:shadow-[0_0_8px_rgba(0,255,255,0.6)] cursor-pointer transition-all duration-300"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => setEducationToDelete(edu)}
-                            className="px-4 py-1.5 text-sm font-semibold text-red-400 border border-red-500 rounded-md 
-                              shadow-[0_0_6px_rgba(255,0,0,0.3)] hover:bg-red-600 
-                              hover:text-black hover:shadow-[0_0_10px_rgba(255,0,0,0.6)] cursor-pointer transition-all duration-300"
-                          >
-                            Delete
-                          </button>
-                        </div>
+                      <p>
+                        <span className="text-cyan-300">Period: </span>
+                        {edu.start_date} — {edu.end_date ?? "Present"}
+                      </p>
+
+                      {edu.grade && (
+                        <p>
+                          <span className="text-cyan-300">Grade: </span>
+                          {edu.grade}
+                        </p>
                       )}
 
-                      <span className="absolute inset-0 rounded-xl pointer-events-none z-0 glow-border" />
+                      {edu.description && (
+                        <p className="mt-2 text-cyan-100/80 leading-relaxed">
+                          {edu.description}
+                        </p>
+                      )}
                     </div>
-                  </MotionCard>
-                </li>
+
+                    {/* Admin Buttons */}
+                    {token && (
+                      <div
+                        className="mt-5 flex gap-3"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button
+                          onClick={() => {
+                            setSelectedEducation(edu);
+                            setAddMode(false);
+                          }}
+                          className="
+                            inline-flex items-center justify-center px-4 py-1.5 rounded-full
+                            border border-cyan-400/90 bg-cyan-500/20 text-[12px] text-cyan-50
+                            shadow-[0_0_14px_rgba(34,211,238,0.7)]
+                            hover:bg-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,1)]
+                            transition"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={() => setEducationToDelete(edu)}
+                          className="
+                            inline-flex items-center justify-center px-4 py-1.5 rounded-full
+                            border border-red-500/80 bg-red-600/10 text-[12px] text-red-300
+                            shadow-[0_0_10px_rgba(248,113,113,0.7)]
+                            hover:bg-red-500/30 hover:text-black
+                            hover:shadow-[0_0_18px_rgba(248,113,113,1)]
+                            transition"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </MotionCard>
               ))}
-            </ul>
+            </section>
           )}
 
           {/* Modals */}
@@ -186,6 +212,7 @@ export default function EducationPage() {
               onClose={() => setModalEducation(null)}
             />
           )}
+
           {educationToDelete && (
             <DeleteConfirmationModal
               message={`Are you sure you want to delete "${educationToDelete.degree}" at "${educationToDelete.institution_name}"?`}

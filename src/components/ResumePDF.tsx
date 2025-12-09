@@ -11,16 +11,52 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     lineHeight: 1.45,
   },
-  name: { fontSize: 20, textAlign: "center", fontWeight: "bold", marginBottom: 2 },
-  title: { fontSize: 12, textAlign: "center", marginBottom: 6 },
-  contact: { fontSize: 10, textAlign: "center", marginBottom: 12 },
-  section: { marginBottom: 12 },
-  heading: { fontSize: 12, marginBottom: 6, textDecoration: "underline", fontWeight: "bold" },
-  subheading: { fontSize: 11, fontWeight: "bold", marginBottom: 2 },
-  text: { fontSize: 10, marginBottom: 2 },
-  link: { color: "#0000EE", textDecoration: "underline" },
-  row: { display: "flex", flexDirection: "row", justifyContent: "space-between", gap: 16 },
-  col: { width: "48%" },
+  name: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginBottom: 2,
+  },
+  title: {
+    fontSize: 12,
+    textAlign: "center",
+    marginBottom: 6,
+  },
+  contact: {
+    fontSize: 10,
+    textAlign: "center",
+    marginBottom: 12,
+  },
+  section: {
+    marginBottom: 12,
+  },
+  heading: {
+    fontSize: 12,
+    marginBottom: 6,
+    textDecoration: "underline",
+    fontWeight: "bold",
+  },
+  subheading: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginBottom: 2,
+  },
+  text: {
+    fontSize: 10,
+    marginBottom: 2,
+  },
+  link: {
+    color: "#0000EE",
+    textDecoration: "underline",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 16,
+  },
+  col: {
+    width: "48%",
+  },
 });
 
 export default function ResumePDF({ lang }: { lang: "en" | "de" }) {
@@ -28,7 +64,9 @@ export default function ResumePDF({ lang }: { lang: "en" | "de" }) {
 
   const info = {
     name: "Bishwajit Karmaker",
-    title: isGerman ? "Junior Full-Stack Webentwickler" : "Junior Full-Stack Developer",
+    title: isGerman
+      ? "Full-Stack Webentwickler"
+      : "Full-Stack Web Developer",
     location: isGerman ? "Berlin, Deutschland" : "Berlin, Germany",
     phone: "+49 1556 6062930",
     email: "contact@abdullahstack.com",
@@ -44,30 +82,39 @@ export default function ResumePDF({ lang }: { lang: "en" | "de" }) {
         <Text style={styles.name}>{info.name}</Text>
         <Text style={styles.title}>{info.title}</Text>
         <Text style={styles.contact}>
-          {info.location} • {info.phone} • {info.email} {"\n"}
-          <Link src={info.website} style={styles.link}>abdullahstack.com</Link> •{" "}
-          <Link src={info.github} style={styles.link}>GitHub</Link> •{" "}
-          <Link src={info.linkedin} style={styles.link}>LinkedIn</Link>
+          {info.location} • {info.phone} • {info.email}
+          {"\n"}
+          <Link src={info.website} style={styles.link}>
+            abdullahstack.com
+          </Link>{" "}
+          •{" "}
+          <Link src={info.github} style={styles.link}>
+            github.com/Bishwajit93
+          </Link>{" "}
+          •{" "}
+          <Link src={info.linkedin} style={styles.link}>
+            linkedin.com/in/bishwajit-karmaker
+          </Link>
         </Text>
 
         {/* Profile */}
-        <Section title={isGerman ? "Profil" : "Profile"}>
+        <PDFSection title={isGerman ? "Profil" : "Profile"}>
           <Text style={styles.text}>
             {isGerman
-              ? "Autodidaktischer Full-Stack-Entwickler mit Praxis in Django, Next.js, Tailwind CSS und PostgreSQL. Sauberer, wartbarer Code, funktionale Features, kontinuierliches Lernen. Mehrere reale Projekte mit End-to-End-Verantwortung (inkl. Deployment)."
-              : "Self-taught full-stack developer with hands-on experience in Django, Next.js, Tailwind CSS, and PostgreSQL. Clean, maintainable code, functional features, and continuous learning. Delivered several real-world projects end-to-end, including deployment."}
+              ? "Autodidaktischer Full-Stack-Webentwickler mit Erfahrung in der Entwicklung, Bereitstellung und Wartung moderner Webanwendungen. Fundiertes Wissen in Django, Django REST Framework, Next.js, Tailwind CSS und PostgreSQL. Übernimmt Verantwortung für komplette Entwicklungsprozesse – von Konzeption über Backend- und Frontend-Entwicklung bis hin zum Deployment. Bringt Zuverlässigkeit, Lernbereitschaft und lösungsorientiertes Arbeiten aus langjähriger Berufserfahrung mit."
+              : "Self-taught Full-Stack Web Developer with strong experience in building, deploying, and maintaining modern web applications. Skilled in Django, Django REST Framework, Next.js, Tailwind CSS, and PostgreSQL. Capable of taking full ownership of projects from concept to production, with a focus on clean code, scalability, and user-friendly design, backed by years of professional work experience."}
           </Text>
-        </Section>
+        </PDFSection>
 
         {/* Projects */}
-        <Section title={isGerman ? "Projekte" : "Projects"}>
+        <PDFSection title={isGerman ? "Projekte" : "Projects"}>
           <Text style={styles.subheading}>
-            {isGerman ? "Portfolio-Website (2025)" : "Portfolio Website (2025)"}
+            {isGerman ? "Portfolio Website (2025)" : "Portfolio Website (2025)"}
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Django, PostgreSQL, Next.js, Tailwind. JWT-Auth, CRUD, Resend API, responsives Dark-UI."
-              : "Django, PostgreSQL, Next.js, Tailwind. JWT auth, CRUD, Resend API, responsive dark UI."}
+              ? "Full-Stack-Portfolio mit Django, PostgreSQL, Next.js und Tailwind CSS. Enthält JWT-Authentifizierung, vollständige CRUD-Funktionen, Projekt- und Erfahrungsverwaltung sowie ein integriertes Kontaktformular mit der Resend API. Responsives Dark-UI, bereitgestellt über Vercel (Frontend) und Railway (Backend)."
+              : "Full-stack portfolio platform built with Django, PostgreSQL, Next.js, and Tailwind CSS. Includes JWT authentication, complete CRUD functionality, project and experience management, and an integrated contact system using the Resend API. Fully responsive dark UI deployed on Vercel (frontend) and Railway (backend)."}
           </Text>
           <Text style={styles.text}>
             {isGerman ? "Live:" : "Live:"}{" "}
@@ -81,116 +128,152 @@ export default function ResumePDF({ lang }: { lang: "en" | "de" }) {
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Plattform für eine Künstlerin: Galerie (Bilder/Videos), Preis-Anfragen, responsive Layout. Backend: Django REST; Frontend: Next.js & Tailwind; Deployment: Vercel & Railway."
-              : "Platform for a Berlin-based artist: image/video gallery, price request contact flow, responsive layout. Backend: Django REST; Frontend: Next.js & Tailwind; Deployment: Vercel & Railway."}
+              ? "Individuelle Kunstgalerie- und Portfolio-Plattform für eine Berliner Künstlerin. Funktionen: dynamische Bild- und Videoverwaltung, Preisanfrageformular mit automatisierten E-Mails, responsives Layout und JWT-basierte Authentifizierung. Backend mit Django REST Framework, Frontend mit Next.js und Tailwind CSS, Deployment über Vercel und Railway."
+              : "Custom portfolio and gallery platform for a Berlin-based artist. Features: dynamic image and video galleries, artwork inquiry form with automated emails, responsive layouts, and secure JWT-based authentication. Backend built with Django REST Framework, frontend with Next.js and Tailwind CSS, deployed on Vercel and Railway."}
           </Text>
-        </Section>
+        </PDFSection>
 
         {/* Work Experience */}
-        <Section title={isGerman ? "Berufserfahrung" : "Work Experience"}>
+        <PDFSection
+          title={isGerman ? "Berufserfahrung" : "Work Experience"}
+        >
           <Text style={styles.subheading}>
             {isGerman
-              ? "2024–heute — Sport Voswinkel GmbH, Berlin"
-              : "2024–Present — Sport Voswinkel GmbH, Berlin"}
+              ? "Einzelhandelsmitarbeiter – Sport Voswinkel GmbH, Berlin (2024–heute)"
+              : "Retail Associate – Sport Voswinkel GmbH, Berlin (2024–Present)"}
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Kundenberatung, Lagerorganisation, SAP; effiziente Abläufe im Team und eigenständig."
-              : "Customer service, inventory operations, SAP; efficient processes in team-based and solo work."}
-          </Text>
-
-          <Text style={[styles.subheading, { marginTop: 4 }]}>
-            {isGerman ? "2021–2022 — Flink SE, Berlin" : "2021–2022 — Flink SE, Berlin"}
-          </Text>
-          <Text style={styles.text}>
-            {isGerman
-              ? "Kommissionierung, Lagerorganisation, Produkthandling; sichere, zügige Arbeitsweise im KPI-Umfeld."
-              : "Order picking, inventory organization, product handling; safe, fast operations in a KPI-driven setting."}
+              ? "Kundenbetreuung, Waren- und Lagerverwaltung mittels SAP und digitaler Systeme. Optimierung von Arbeitsabläufen, präzise Organisation und zuverlässige Zusammenarbeit im Team. Stärkung von Verantwortungsbewusstsein, Zeitmanagement und Kommunikationsfähigkeit."
+              : "Customer support, merchandise management, and inventory operations using SAP and digital systems. Improved workflow structure, accuracy, and coordination in a fast-paced environment. Developed strong reliability, time management, and communication skills."}
           </Text>
 
           <Text style={[styles.subheading, { marginTop: 4 }]}>
             {isGerman
-              ? "2019–2024 — Küchenhilfe, verschiedene Restaurants (Berlin)"
-              : "2019–2024 — Kitchen Assistant, various restaurants (Berlin)"}
+              ? "Lagerhelfer – Flink SE, Berlin (2021–2022)"
+              : "Warehouse Associate – Flink SE, Berlin (2021–2022)"}
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Unterstützung in Küche/Service, Hygiene & Schichtbetrieb; Belastbarkeit und Teamarbeit."
-              : "Supported kitchen/service, hygiene & shift work; resilience and teamwork in fast-paced settings."}
+              ? "Kommissionierung, Bestandskontrolle und Lagerprozesse unter Zeitdruck. Hohe Genauigkeit, Teamarbeit und effizientes Arbeiten in dynamischen Situationen."
+              : "Handled order preparation, stock control, and warehouse processes under time pressure. Strengthened teamwork, efficiency, and attention to detail in dynamic situations."}
           </Text>
-        </Section>
+
+          <Text style={[styles.subheading, { marginTop: 4 }]}>
+            {isGerman
+              ? "Küchenhilfe – Verschiedene Restaurants (Berlin) (2019–2024)"
+              : "Kitchen Assistant – Multiple Restaurants (Berlin) (2019–2024)"}
+          </Text>
+          <Text style={styles.text}>
+            {isGerman
+              ? "Arbeit in schnelllebigen, multikulturellen Küchenumgebungen. Einhaltung von Hygiene- und Sicherheitsstandards, Teamkoordination und Zuverlässigkeit während hoher Arbeitsbelastung."
+              : "Worked in fast-paced, multicultural kitchen environments. Maintained hygiene and safety standards, coordinated with teams, and delivered reliable performance during peak workload."}
+          </Text>
+        </PDFSection>
 
         {/* Education */}
-        <Section title={isGerman ? "Bildung" : "Education"}>
+        <PDFSection title={isGerman ? "Bildung" : "Education"}>
           <Text style={styles.subheading}>
-            2013–2018 — {isGerman ? "BSc Mathematik, BRAC University, Dhaka" : "BSc Mathematics, BRAC University, Dhaka"}
+            {isGerman
+              ? "M.Sc. Scientific Computing – Technische Universität Berlin (2021–2024, nicht abgeschlossen)"
+              : "M.Sc. Scientific Computing – Technische Universität Berlin (2021–2024, not completed)"}
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Starke Grundlagen in Logik und strukturiertem Problemlösen."
-              : "Strong foundation in logic and structured problem-solving."}
+              ? "Vertiefung in Programmierung und angewandter Informatik; später Fokuswechsel auf praxisnahe Webentwicklung und eigene Projekte."
+              : "Focused on programming and applied scientific computing; later shifted fully towards practical web development and independent projects."}
           </Text>
 
           <Text style={[styles.subheading, { marginTop: 4 }]}>
-            2021–2025 — {isGerman ? "MSc Scientific Computing, TU Berlin (nicht abgeschlossen)" : "MSc Scientific Computing, TU Berlin (not completed)"}
+            {isGerman
+              ? "B.Sc. Mathematik – BRAC University, Dhaka (2013–2018)"
+              : "B.Sc. Mathematics – BRAC University, Dhaka (2013–2018)"}
           </Text>
           <Text style={styles.text}>
             {isGerman
-              ? "Fokus auf Programmierung und angewandte Informatik; später Wechsel zu praxisnaher Entwicklung."
-              : "Focus on programming and applied CS; later shifted fully to hands-on development."}
+              ? "Fundierte mathematische Grundlagen in Logik, Analyse und Problemlösung."
+              : "Strong mathematical foundation in logic, analysis, and problem-solving."}
           </Text>
-        </Section>
-
-        {/* Certifications */}
-        <Section title={isGerman ? "Zertifikate" : "Certifications"}>
-          <Text style={styles.text}>
-            {isGerman
-              ? "2021 — Full-Stack Webentwicklungs-Bootcamp (HTML, CSS, JavaScript, React, Backend-Grundlagen). Fundament für Django & PostgreSQL."
-              : "2021 — Full-Stack Web Development Bootcamp (HTML, CSS, JavaScript, React, backend fundamentals). Foundation for Django & PostgreSQL."}
-          </Text>
-        </Section>
+        </PDFSection>
 
         {/* Technical Skills */}
-        <Section title={isGerman ? "Technische Kenntnisse" : "Technical Skills"}>
+        <PDFSection
+          title={isGerman ? "Technische Kenntnisse" : "Technical Skills"}
+        >
           <View style={styles.row}>
             <View style={styles.col}>
-              <Text style={styles.subheading}>{isGerman ? "Sprachen" : "Languages"}</Text>
-              <Text style={styles.text}>Python, JavaScript, TypeScript</Text>
-
-              <Text style={[styles.subheading, { marginTop: 6 }]}>{isGerman ? "Frameworks" : "Frameworks"}</Text>
-              <Text style={styles.text}>Django, DRF, React, Next.js, Tailwind CSS</Text>
+              <Text style={styles.subheading}>
+                {isGerman
+                  ? "Programmiersprachen & Frameworks"
+                  : "Languages & Frameworks"}
+              </Text>
+              <Text style={styles.text}>
+                Python, JavaScript, TypeScript
+              </Text>
+              <Text style={styles.text}>
+                Django, Django REST Framework
+              </Text>
+              <Text style={styles.text}>
+                React, Next.js, Tailwind CSS
+              </Text>
             </View>
             <View style={styles.col}>
-              <Text style={styles.subheading}>{isGerman ? "Datenbanken" : "Databases"}</Text>
-              <Text style={styles.text}>PostgreSQL</Text>
-
-              <Text style={[styles.subheading, { marginTop: 6 }]}>{isGerman ? "Tools" : "Tools"}</Text>
-              <Text style={styles.text}>Git/GitHub, Railway, Vercel, Bunny, SAP, Ubuntu, VS Code</Text>
+              <Text style={styles.subheading}>
+                {isGerman
+                  ? "Datenbanken & Tools"
+                  : "Databases & Tools"}
+              </Text>
+              <Text style={styles.text}>PostgreSQL, SQLite</Text>
+              <Text style={styles.text}>Git, GitHub, GitLab</Text>
+              <Text style={styles.text}>Railway, Vercel, BunnyCDN</Text>
+              <Text style={styles.text}>Ubuntu, VS Code, SAP</Text>
             </View>
           </View>
-        </Section>
+        </PDFSection>
 
         {/* Languages */}
-        <Section title={isGerman ? "Sprachen" : "Languages"}>
-          <Text style={styles.text}>{isGerman ? "Englisch — fließend" : "English — fluent"}</Text>
-          <Text style={styles.text}>{isGerman ? "Deutsch — Mittelstufe (B1/B2)" : "German — intermediate (B1/B2)"}</Text>
-          <Text style={styles.text}>{isGerman ? "Bengalisch — Muttersprache" : "Bengali — native"}</Text>
-        </Section>
-
-        {/* Personal Strengths */}
-        <Section title={isGerman ? "Persönliche Stärken" : "Personal Strengths"}>
+        <PDFSection
+          title={isGerman ? "Sprachen" : "Languages"}
+        >
           <Text style={styles.text}>
             {isGerman
-              ? "Teamfähigkeit • Zuverlässigkeit • Belastbarkeit • Selbstmotivation • Lernbereitschaft"
-              : "Teamwork • Reliability • Resilience • Self-motivation • Willingness to learn"}
+              ? "Englisch (fließend)"
+              : "English (fluent)"}
           </Text>
-        </Section>
+          <Text style={styles.text}>
+            {isGerman
+              ? "Deutsch (konversationssicher – B1/B2)"
+              : "German (conversational – B1/B2)"}
+          </Text>
+          <Text style={styles.text}>
+            {isGerman
+              ? "Bengalisch (Muttersprache)"
+              : "Bengali (native)"}
+          </Text>
+        </PDFSection>
+
+        {/* Strengths */}
+        <PDFSection
+          title={isGerman ? "Persönliche Stärken" : "Strengths"}
+        >
+          <Text style={styles.text}>
+            {isGerman
+              ? "Zuverlässigkeit — Teamfähigkeit — Analytisches Denken — Problemlösung — Selbstmotivation"
+              : "Reliability — Teamwork — Analytical thinking — Problem-solving — Self-motivation"}
+          </Text>
+        </PDFSection>
       </Page>
     </Document>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function PDFSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <View style={styles.section}>
       <Text style={styles.heading}>{title}</Text>
