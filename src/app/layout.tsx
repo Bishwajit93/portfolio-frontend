@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Bishwajit Karmaker Portfolio",
-  description: "A unique developer portfolio by Abdullah Karmaker.",
+  description: "A unique developer portfolio by Bishwajit(Abdullah).",
   icons: {
     icon: "/favicon.ico",
   },
