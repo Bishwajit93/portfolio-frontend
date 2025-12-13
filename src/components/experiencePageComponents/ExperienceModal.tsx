@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Experience } from "@/types/experience";
 
 type Props = {
@@ -10,46 +11,91 @@ type Props = {
 
 export default function ExperienceModal({ experience, onClose }: Props) {
   useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
+    const bodyPrev = document.body.style.overflow;
+    const footer = document.getElementById("site-footer");
+    const footerPrevPointer = footer?.style.pointerEvents ?? "";
+
     document.body.style.overflow = "hidden";
+    if (footer) footer.style.pointerEvents = "none";
+
     return () => {
-      document.body.style.overflow = originalStyle;
+      document.body.style.overflow = bodyPrev;
+      if (footer) footer.style.pointerEvents = footerPrevPointer;
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/80 backdrop-blur-md">
-      <div className="relative w-full max-w-2xl bg-[#0a0a0a] rounded-xl overflow-hidden border border-cyan-400 shadow-[0_0_25px_rgba(0,255,255,0.4)]">
-        {/* ✨ Clean border glow - NO animation inside */}
-        <div className="absolute inset-0 rounded-xl border border-cyan-400/20 pointer-events-none z-0" />
-
-        {/* Scrollable Content */}
-        <div className="relative z-10 max-h-[90vh] overflow-y-auto p-6 pr-5 scrollbar-thin scrollbar-thumb-cyan-700 scrollbar-track-transparent">
-          {/* Close Button */}
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md px-3 sm:px-6"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <motion.div
+        onClick={(e) => e.stopPropagation()}
+        initial={{ scale: 0.98, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        className="
+          w-[92vw] max-w-md sm:max-w-2xl
+          h-[78dvh] sm:h-[80vh]
+          hero-shell
+          rounded-2xl overflow-hidden
+          flex flex-col
+        "
+      >
+        {/* Sticky header */}
+        <div className="shrink-0 sticky top-0 z-10 bg-black/70 backdrop-blur-sm border-b border-cyan-400/20 px-4 py-3 flex justify-end">
           <button
             onClick={onClose}
-            className="absolute top-3 right-4 text-gray-400 hover:text-cyan-300 text-xl font-bold cursor-pointer transition duration-300 z-20"
+            className="
+              text-cyan-200 hover:text-cyan-50
+              text-xs md:text-sm font-medium
+              px-3 py-1.5 rounded-full
+              border border-cyan-400/70
+              bg-black/40
+              shadow-[0_0_10px_rgba(34,211,238,0.6)]
+              cursor-pointer transition
+            "
           >
-            ✖
+            Close
           </button>
-
-          <h2 className="text-2xl md:text-3xl font-bold text-cyan-300 mb-3">
-            {experience.job_title} at {experience.company_name}
-          </h2>
-          <p className="text-sm text-gray-400 mb-1">
-            <strong>Location:</strong> {experience.location}
-          </p>
-          <p className="text-sm text-gray-500 italic mb-4">
-            <strong>Duration:</strong> {experience.start_date} to{" "}
-            {experience.still_working
-              ? "Present"
-              : experience.end_date || "N/A"}
-          </p>
-          <p className="text-gray-200 whitespace-pre-line text-sm md:text-base leading-relaxed">
-            {experience.description}
-          </p>
         </div>
-      </div>
+
+        {/* Scrollable content */}
+        <div
+          className="grow overflow-y-auto overscroll-contain px-6 py-6"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-200 mb-4 text-center">
+            {experience.job_title} — {experience.company_name}
+          </h2>
+
+          <div className="space-y-4 text-sm sm:text-base text-cyan-100/90">
+            <p>
+              <span className="text-cyan-300 font-semibold">Location: </span>
+              {experience.location}
+            </p>
+
+            <p>
+              <span className="text-cyan-300 font-semibold">Duration: </span>
+              {experience.start_date} to{" "}
+              {experience.still_working ? "Present" : experience.end_date || "N/A"}
+            </p>
+
+            {experience.description && (
+              <div>
+                <span className="text-cyan-300 font-semibold">Description:</span>
+                <p className="mt-2 text-cyan-100/90 whitespace-pre-line leading-relaxed break-words hyphens-auto">
+                  {experience.description}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="h-6" />
+        </div>
+      </motion.div>
     </div>
   );
 }

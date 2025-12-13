@@ -26,17 +26,15 @@ export default function ProjectModal({ project, onClose }: Props) {
     };
   }, []);
 
-    // helper (put near the top of the component file)
+  // helper: split description into paragraphs
   function toParagraphs(text: string, maxLen = 320): string[] {
     const t = (text || "").trim();
     if (!t) return [];
 
-    // If author used newlines, respect them
     if (/\r?\n/.test(t)) {
-      return t.split(/\n\s*\n|[\r\n]+/).map(s => s.trim()).filter(Boolean);
+      return t.split(/\n\s*\n|[\r\n]+/).map((s) => s.trim()).filter(Boolean);
     }
 
-    // Otherwise split on sentence boundaries
     const sentences = t.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
     const paras: string[] = [];
     let buf = "";
@@ -66,61 +64,76 @@ export default function ProjectModal({ project, onClose }: Props) {
         initial={{ scale: 0.98, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.18, ease: "easeOut" }}
-        className={`
+        className="
           w-[92vw] max-w-md sm:max-w-2xl
-          h-[78dvh] sm:h-[80vh]  /* fixed height so the rest scrolls */
-          rounded-2xl border border-cyan-400/30 bg-[#0a0a0a]
-          shadow-[0_6px_30px_rgba(0,255,255,0.25)]
-          overflow-hidden flex flex-col
-        `}
+          h-[78dvh] sm:h-[80vh]
+          hero-shell
+          rounded-2xl overflow-hidden
+          flex flex-col
+        "
       >
-        {/* Sticky header keeps close reachable */}
-        <div className="shrink-0 sticky top-0 z-10 bg-[#0a0a0a]/95 backdrop-blur-[1px] border-b border-cyan-400/15 px-4 py-3 flex justify-end">
+        {/* Sticky header with close button */}
+        <div className="shrink-0 sticky top-0 z-10 bg-black/70 backdrop-blur-sm border-b border-cyan-400/20 px-4 py-3 flex justify-end">
           <button
             onClick={onClose}
-            className="text-cyan-300 hover:text-white cursor-pointer"
+            className="
+              text-cyan-200 hover:text-cyan-50
+              text-xs md:text-sm font-medium
+              px-3 py-1.5 rounded-full
+              border border-cyan-400/70
+              bg-black/40
+              shadow-[0_0_10px_rgba(34,211,238,0.6)]
+              cursor-pointer transition
+            "
           >
-            ✖ Close
+            Close
           </button>
         </div>
 
         {/* Scrollable content within fixed panel */}
         <div
-            className="grow overflow-y-auto overscroll-contain px-6 py-6"
-            style={{ WebkitOverflowScrolling: "touch" }}
-          >
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-300 mb-4 text-center">
+          className="grow overflow-y-auto overscroll-contain px-6 py-6"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-200 mb-4 text-center">
             {project.title}
           </h2>
 
-          <div className="space-y-4 text-gray-200">
+          <div className="space-y-4 text-sm sm:text-base text-cyan-100/90">
             <p>
-              <span className="text-cyan-400 font-semibold">Tech Stack:</span>{" "}
+              <span className="text-cyan-300 font-semibold">Tech Stack: </span>
               {project.tech_stack}
             </p>
             <p>
-              <span className="text-cyan-400 font-semibold">Status:</span>{" "}
+              <span className="text-cyan-300 font-semibold">Status: </span>
               {project.status}
             </p>
             <p>
-              <span className="text-cyan-400 font-semibold">Duration:</span>{" "}
+              <span className="text-cyan-300 font-semibold">Duration: </span>
               {project.start_date} to {project.end_date || "Present"}
             </p>
+
             <div>
-              <span className="text-cyan-400 font-semibold">Description:</span>
+              <span className="text-cyan-300 font-semibold">Description:</span>
               <div className="mt-2 space-y-3 leading-relaxed">
-                  {toParagraphs(project.description).map((para, i) => (
-                    <p key={i} className="text-gray-200 break-words hyphens-auto">{para}</p>
-                  ))}
+                {toParagraphs(project.description).map((para, i) => (
+                  <p
+                    key={i}
+                    className="text-cyan-100/90 break-words hyphens-auto"
+                  >
+                    {para}
+                  </p>
+                ))}
               </div>
             </div>
+
             <div className="flex flex-wrap gap-4 pt-2">
               {project.github_frontend_url && (
                 <a
                   href={project.github_frontend_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-cyan-300 hover:text-white underline"
+                  className="text-cyan-300 hover:text-cyan-50 underline underline-offset-4"
                 >
                   Frontend Code
                 </a>
@@ -130,7 +143,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   href={project.github_backend_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-cyan-300 hover:text-white underline"
+                  className="text-cyan-300 hover:text-cyan-50 underline underline-offset-4"
                 >
                   Backend Code
                 </a>
@@ -140,7 +153,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   href={project.live_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-green-400 hover:text-white underline"
+                  className="text-green-400 hover:text-green-200 underline underline-offset-4"
                 >
                   Live Demo
                 </a>
@@ -148,7 +161,6 @@ export default function ProjectModal({ project, onClose }: Props) {
             </div>
           </div>
 
-          {/* Bottom breathing space */}
           <div className="h-6" />
         </div>
       </motion.div>
