@@ -31,16 +31,30 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.detail || "Login failed");
+        setError(data?.detail || "Login failed");
         return;
       }
 
-      const { access, refresh } = data;  // ✅ Fixed here
+      const access = data?.access;
+      const refresh = data?.refresh;
+
+      if (!access || !refresh) {
+        setError("Login failed (tokens missing).");
+        return;
+      }
+
+      // ✅ THIS IS THE CRITICAL PART
+      localStorage.setItem("accessToken", access);
+      localStorage.setItem("refreshToken", refresh);
+
+      // update context state
       login(access, refresh);
-      router.push("/");
+
+      // hard reload so AuthProvider re-reads localStorage
+      window.location.href = "/";
     } catch (err) {
+      console.error(err);
       setError("Something went wrong. Please try again.");
-      console.error("Login error:", err);
     }
   };
 
