@@ -5,14 +5,6 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 
-const navItems = [
-  { label: "About", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "Experience", href: "/experience" },
-  { label: "Education", href: "/education" },
-  { label: "Contact", href: "/contact" },
-];
-
 export default function MobileNav() {
   const pathname = usePathname();
   const { token, hydrated, logout } = useAuth();
@@ -23,6 +15,15 @@ export default function MobileNav() {
     logout();
     window.location.href = "/";
   };
+
+  const navItems = [
+    { label: "About", href: "/" },
+    { label: "Projects", href: "/projects" },
+    { label: "Experience", href: "/experience" },
+    { label: "Education", href: "/education" },
+    { label: "Contact", href: "/contact" },
+    ...(isLoggedIn ? [{ label: "Account", href: "/account" }] : []),
+  ];
 
   return (
     <motion.nav
@@ -58,15 +59,12 @@ export default function MobileNav() {
                   <span
                     className={[
                       "px-1 text-[11px] font-medium transition-all duration-300",
-                      isActive
-                        ? "text-cyan-50"
-                        : "text-cyan-200 hover:text-white",
+                      isActive ? "text-cyan-50" : "text-cyan-200 hover:text-white",
                     ].join(" ")}
                   >
                     {item.label}
                   </span>
 
-                  {/* Underline only on active */}
                   {isActive && (
                     <span className="mt-[1px] w-6 h-[2px] bg-cyan-50 shadow-[0_0_4px_rgba(0,255,255,0.5)] rounded-full" />
                   )}

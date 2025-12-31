@@ -42,14 +42,23 @@ function LayoutInner({ children }: Props) {
   };
 
   const items = useMemo(
-    () => [
-      { label: "About", href: "/" },
-      { label: "Projects", href: "/projects" },
-      { label: "Experience", href: "/experience" },
-      { label: "Education", href: "/education" },
-    ],
-    []
+    () => {
+      const baseItems = [
+        { label: "About", href: "/" },
+        { label: "Projects", href: "/projects" },
+        { label: "Experience", href: "/experience" },
+        { label: "Education", href: "/education" },
+      ];
+
+      if (isLoggedIn) {
+        baseItems.push({ label: "Account", href: "/account" });
+      }
+
+      return baseItems;
+    },
+    [isLoggedIn]
   );
+
 
   return (
     <>
@@ -133,30 +142,6 @@ function LayoutInner({ children }: Props) {
               </motion.div>
             );
           })}
-
-          {/* ✅ Logout in the right nav too (extra) */}
-          {isLoggedIn && (
-            <motion.div
-              variants={navItem}
-              whileHover={{ scale: 1.05, x: -4 }}
-              className="relative z-10 pr-4"
-            >
-              <button
-                type="button"
-                onClick={handleLogout}
-                className={[
-                  "px-4 py-1.5 rounded-full text-[12px] font-medium",
-                  "border border-red-400/70",
-                  "bg-[radial-gradient(circle_at_top,rgba(248,113,113,0.18),transparent_55%),radial-gradient(circle_at_bottom,rgba(239,68,68,0.22),transparent_55%),rgba(6,12,24,0.98)]",
-                  "shadow-[0_0_12px_rgba(239,68,68,0.55)]",
-                  "transition-all duration-300 cursor-pointer",
-                  "text-red-200 hover:text-red-50 hover:shadow-[0_0_16px_rgba(239,68,68,0.8)] hover:border-red-300/80",
-                ].join(" ")}
-              >
-                Logout
-              </button>
-            </motion.div>
-          )}
         </div>
       </motion.nav>
 
@@ -185,7 +170,7 @@ function LayoutInner({ children }: Props) {
             </Link>
 
             {/* ✅ Bottom-pill Logout backup */}
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
               <button
                 type="button"
                 onClick={handleLogout}
@@ -193,7 +178,7 @@ function LayoutInner({ children }: Props) {
               >
                 Logout
               </button>
-            )}
+            )} */}
           </div>
         </main>
       </div>

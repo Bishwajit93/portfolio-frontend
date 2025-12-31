@@ -1,6 +1,6 @@
-// src/context/AuthContext.tsx
 "use client";
 
+import { API_BASE_URL } from "@/lib/api/apiBase";
 import {
   createContext,
   useContext,
@@ -15,6 +15,7 @@ interface AuthContextType {
   hydrated: boolean;
   login: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
+  refreshNow: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,34 +32,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshAccessToken = useCallback(
     async (refreshToken: string) => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/token/refresh/`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refresh: refreshToken }),
-          }
-        );
+      const res = await fetch(`${API_BASE_URL}/auth/jwt/refresh/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh: refreshToken }),
+      });
 
-        if (!res.ok) {
-          logout();
-          return;
-        }
+      if (!res.ok) {
+        logout();
+        return;
+      }
 
-        const data = await res.json();
-        if (data?.access) {
-          localStorage.setItem("accessToken", data.access);
-          setToken(data.access);
-        } else {
-          logout();
-        }
-      } catch {
+      const data = await res.json();
+      if (data?.access) {
+        localStorage.setItem("accessToken", data.access);
+        setToken(data.access);
+      } else {
         logout();
       }
     },
     [logout]
   );
+
+  const refreshNow = useCallback(async () => {
+    const storedRefresh = localStorage.getItem("refreshToken");
+    if (!storedRefresh) return;
+    await refreshAccessToken(storedRefresh);
+  }, [refreshAccessToken]);
 
   useEffect(() => {
     const access = localStorage.getItem("accessToken");
@@ -67,18 +67,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(access);
     setHydrated(true);
 
-    if (!access && refresh) {
+    // If we have refresh, keep access fresh proactively
+    if (refresh) {
+      // Refresh soon after load (helps if access is expired)
       refreshAccessToken(refresh);
+
+      // Then refresh repeatedly
+      const interval = setInterval(() => {
+        const r = localStorage.getItem("refreshToken");
+        if (r) refreshAccessToken(r);
+      }, 14 * 60 * 1000);
+
+      return () => clearInterval(interval);
     }
 
-    const interval = setInterval(() => {
-      const storedRefresh = localStorage.getItem("refreshToken");
-      if (storedRefresh) {
-        refreshAccessToken(storedRefresh);
-      }
-    }, 14 * 60 * 1000);
-
-    return () => clearInterval(interval);
+    return;
   }, [refreshAccessToken]);
 
   const login = (accessToken: string, refreshToken: string) => {
@@ -88,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, hydrated, login, logout }}>
+    <AuthContext.Provider value={{ token, hydrated, login, logout, refreshNow }}>
       {children}
     </AuthContext.Provider>
   );
