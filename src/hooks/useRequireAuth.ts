@@ -12,7 +12,7 @@ export default function useRequireAuth() {
     if (!token) {
       router.push("/login");
     }
-  }, [token]);
+  }, [token, router]);
 
   return token;
 }

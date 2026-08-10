@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
-import Link from "next/link";
 import AnimatedPageWrapper from "@/components/AnimatedPageWrapper";
 import ResumeDownloadButton from "@/components/ResumeDownloadButton";
 
