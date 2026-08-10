@@ -44,12 +44,6 @@ export default function ResumePage() {
           </aside>
         </section>
 
-        <section className="resume-v3-note">
-          <div className="resume-v3-note-mark">BK / BLACK</div>
-          <div><strong>{de ? "Auf Schwarz gebaut — mit Absicht." : "Built on black — by choice."}</strong><p>{de ? "Meine Lieblingsfarbe wird hier zur ruhigen Bühne: hoher Kontrast, klare Prioritäten, weniger visuelles Rauschen." : "My favorite color becomes the quiet stage here: high contrast, clear priorities, less visual noise."}</p></div>
-          <span>{de ? "Designentscheidung, nicht Dekoration" : "Design decision, not decoration"}</span>
-        </section>
-
         <section className="resume-v3-overview" aria-label="Professional overview">
           <OverviewCard index="01" label={de ? "Profil" : "Profile"} value={de ? "Backend-first Entwickler" : "Backend-first builder"} detail={de ? "Mathematik · APIs · relationale Daten" : "Mathematics · APIs · relational data"} />
           <OverviewCard index="02" label={de ? "Produktion" : "Production"} value="Railway · Vercel" detail={de ? "Deployments · Logs · Konfiguration" : "Deployments · logs · configuration"} />
