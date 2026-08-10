@@ -1,169 +1,111 @@
-// src/components/projectsPageComponents/ProjectModal.tsx
 "use client";
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Project } from "@/types/project";
+import type { Project } from "@/types/project";
 
-type Props = {
-  project: Project;
-  onClose: () => void;
-};
+type Props = { project: Project; onClose: () => void };
 
 export default function ProjectModal({ project, onClose }: Props) {
-  // Lock page scroll + neutralize footer taps while modal is open
   useEffect(() => {
-    const bodyPrev = document.body.style.overflow;
-    const footer = document.getElementById("site-footer");
-    const footerPrevPointer = footer?.style.pointerEvents ?? "";
-
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    if (footer) footer.style.pointerEvents = "none";
-
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = bodyPrev;
-      if (footer) footer.style.pointerEvents = footerPrevPointer;
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [onClose]);
 
-  // helper: split description into paragraphs
-  function toParagraphs(text: string, maxLen = 320): string[] {
-    const t = (text || "").trim();
-    if (!t) return [];
-
-    if (/\r?\n/.test(t)) {
-      return t.split(/\n\s*\n|[\r\n]+/).map((s) => s.trim()).filter(Boolean);
-    }
-
-    const sentences = t.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
-    const paras: string[] = [];
-    let buf = "";
-
-    for (const s of sentences) {
-      const candidate = buf ? `${buf} ${s}` : s;
-      if (candidate.length > maxLen && buf) {
-        paras.push(buf);
-        buf = s;
-      } else {
-        buf = candidate;
-      }
-    }
-    if (buf) paras.push(buf);
-    return paras;
-  }
+  const paragraphs = toParagraphs(project.description || "");
+  const endDate = project.end_date || "Present";
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md px-3 sm:px-6"
+    <motion.div
+      className="detail-modal-backdrop"
       role="dialog"
       aria-modal="true"
+      aria-labelledby="project-detail-title"
       onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.98, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-        className="
-          w-[92vw] max-w-md sm:max-w-2xl
-          h-[78dvh] sm:h-[80vh]
-          hero-shell
-          rounded-2xl overflow-hidden
-          flex flex-col
-        "
+      <motion.article
+        className="detail-modal detail-modal-project"
+        onClick={(event) => event.stopPropagation()}
+        initial={{ opacity: 0, y: 34, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Sticky header with close button */}
-        <div className="shrink-0 sticky top-0 z-10 bg-black/70 backdrop-blur-sm border-b border-cyan-400/20 px-4 py-3 flex justify-end">
-          <button
-            onClick={onClose}
-            className="
-              text-cyan-200 hover:text-cyan-50
-              text-xs md:text-sm font-medium
-              px-3 py-1.5 rounded-full
-              border border-cyan-400/70
-              bg-black/40
-              shadow-[0_0_10px_rgba(34,211,238,0.6)]
-              cursor-pointer transition
-            "
-          >
-            Close
+        <div className="detail-modal-chrome">
+          <div className="detail-modal-context"><i /> Work / engineering brief</div>
+          <button type="button" className="detail-modal-close" onClick={onClose} aria-label="Close project details">
+            <span>Close</span><b>×</b>
           </button>
         </div>
 
-        {/* Scrollable content within fixed panel */}
-        <div
-          className="grow overflow-y-auto overscroll-contain px-6 py-6"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-200 mb-4 text-center">
-            {project.title}
-          </h2>
-
-          <div className="space-y-4 text-sm sm:text-base text-cyan-100/90">
-            <p>
-              <span className="text-cyan-300 font-semibold">Tech Stack: </span>
-              {project.tech_stack}
-            </p>
-            <p>
-              <span className="text-cyan-300 font-semibold">Status: </span>
-              {project.status}
-            </p>
-            <p>
-              <span className="text-cyan-300 font-semibold">Duration: </span>
-              {project.start_date} to {project.end_date || "Present"}
-            </p>
-
-            <div>
-              <span className="text-cyan-300 font-semibold">Description:</span>
-              <div className="mt-2 space-y-3 leading-relaxed">
-                {toParagraphs(project.description).map((para, i) => (
-                  <p
-                    key={i}
-                    className="text-cyan-100/90 break-words hyphens-auto"
-                  >
-                    {para}
-                  </p>
-                ))}
-              </div>
+        <div className="detail-modal-scroll">
+          <header className="detail-modal-hero">
+            <div className="detail-modal-hero-line">
+              <span className="detail-modal-index">Project / Detail</span>
+              <span className={`detail-modal-status ${project.status === "Completed" ? "is-complete" : ""}`}>{project.status || "Project"}</span>
             </div>
+            <h2 id="project-detail-title">{project.title}</h2>
+            <p>{project.tech_stack || "Full-stack web application"}</p>
+          </header>
 
-            <div className="flex flex-wrap gap-4 pt-2">
-              {project.github_frontend_url && (
-                <a
-                  href={project.github_frontend_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-cyan-300 hover:text-cyan-50 underline underline-offset-4"
-                >
-                  Frontend Code
-                </a>
+          <div className="detail-modal-layout">
+            <aside className="detail-modal-rail">
+              <Meta label="Timeline" value={`${project.start_date || "—"} — ${endDate}`} />
+              <Meta label="Status" value={project.status || "—"} />
+              <Meta label="Stack" value={project.tech_stack || "—"} />
+            </aside>
+
+            <section className="detail-modal-copy">
+              <span className="detail-modal-section-label">System brief</span>
+              {paragraphs.length > 0 ? paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>) : <p className="is-muted">No project description has been added yet.</p>}
+
+              {(project.live_url || project.github_frontend_url || project.github_backend_url) && (
+                <div className="detail-modal-actions" aria-label="Project links">
+                  {project.live_url && <a href={project.live_url} target="_blank" rel="noreferrer"><span>Live system</span><b>↗</b></a>}
+                  {project.github_frontend_url && <a href={project.github_frontend_url} target="_blank" rel="noreferrer"><span>Frontend source</span><b>↗</b></a>}
+                  {project.github_backend_url && <a href={project.github_backend_url} target="_blank" rel="noreferrer"><span>Backend source</span><b>↗</b></a>}
+                </div>
               )}
-              {project.github_backend_url && (
-                <a
-                  href={project.github_backend_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-cyan-300 hover:text-cyan-50 underline underline-offset-4"
-                >
-                  Backend Code
-                </a>
-              )}
-              {project.live_url && (
-                <a
-                  href={project.live_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-green-400 hover:text-green-200 underline underline-offset-4"
-                >
-                  Live Demo
-                </a>
-              )}
-            </div>
+            </section>
           </div>
 
-          <div className="h-6" />
+          <footer className="detail-modal-footer">
+            <span>Engineering work / AbdullahStack</span>
+            <button type="button" onClick={onClose}>Return to work ↑</button>
+          </footer>
         </div>
-      </motion.div>
-    </div>
+      </motion.article>
+    </motion.div>
   );
+}
+
+function Meta({ label, value }: { label: string; value: string }) {
+  return <div className="detail-modal-meta"><span>{label}</span><strong>{value}</strong></div>;
+}
+
+function toParagraphs(text: string, maxLength = 320): string[] {
+  const trimmed = text.trim();
+  if (!trimmed) return [];
+  if (/\r?\n/.test(trimmed)) return trimmed.split(/\n\s*\n|[\r\n]+/).map((item) => item.trim()).filter(Boolean);
+
+  const sentences = trimmed.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+  const paragraphs: string[] = [];
+  let buffer = "";
+  for (const sentence of sentences) {
+    const candidate = buffer ? `${buffer} ${sentence}` : sentence;
+    if (candidate.length > maxLength && buffer) {
+      paragraphs.push(buffer);
+      buffer = sentence;
+    } else buffer = candidate;
+  }
+  if (buffer) paragraphs.push(buffer);
+  return paragraphs;
 }

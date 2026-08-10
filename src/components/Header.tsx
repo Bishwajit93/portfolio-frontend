@@ -29,7 +29,7 @@ export default function Header() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full bg-black text-white fixed top-0 left-0 z-50 h-[60px] md:h-[80px] border-b border-blue-500/40 shadow-md"
+      className="w-full bg-[#14101c]/90 backdrop-blur-xl text-white fixed top-0 left-0 z-50 h-[60px] md:h-[80px] border-b border-white/10 shadow-md"
     >
       <div className="flex items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-blue-500/20 shadow-[0_4px_20px_rgba(0,191,255,0.4)]">
         {/* LEFT: Brand (always left, never auto-centered) */}

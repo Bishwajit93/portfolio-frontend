@@ -1,0 +1,47 @@
+:root {
+  --ink: #17131f;
+  --surface: #0d1116;
+  --surface-2: #121820;
+  --line: rgba(255,255,255,.11);
+  --line-strong: rgba(255,255,255,.2);
+  --text: #f5f7f8;
+  --muted: #9aa4ad;
+  --accent: #5de8ff;
+  --accent-soft: rgba(93,232,255,.12);
+  --green: #93f7c5;
+  --max: 1180px;
+}
+
+.site-frame { min-height: 100dvh; background:
+  radial-gradient(circle at 12% -10%, rgba(93,232,255,.075), transparent 30rem),
+  radial-gradient(circle at 92% 28%, rgba(122,112,255,.055), transparent 30rem),
+  var(--ink); }
+.page-shell { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; padding-top: 118px; }
+
+.eyebrow { margin: 0; color: var(--accent); font: 700 11px/1.2 "Courier New", monospace; letter-spacing: .16em; text-transform: uppercase; }
+.kicker { margin: 0; color: var(--muted); font: 600 12px/1.4 "Courier New", monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+.button { min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line-strong); display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .2s ease, border-color .2s ease, background .2s ease, color .2s ease; }
+.button:hover { transform: translateY(-2px); }
+.button-primary { background: var(--text); color: #0a0d10; border-color: var(--text); }
+.button-primary:hover { background: var(--accent); border-color: var(--accent); }
+.button-ghost { background: rgba(255,255,255,.025); color: var(--text); }
+.button-ghost:hover { border-color: rgba(93,232,255,.55); background: var(--accent-soft); }
+.button-arrow { width: 17px; height: 17px; }
+.text-link { display: inline-flex; margin-top: 22px; color: var(--text); font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--line-strong); padding-bottom: 4px; }
+.text-link:hover { color: var(--accent); }
+
+/* Legacy compatibility: old CRUD pages keep working while inheriting V2 visual language. */
+.hero-shell, .glass-card {
+  border: 1px solid var(--line) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012)) !important;
+  box-shadow: none !important;
+}
+.hero-shell:hover, .glass-card:hover { border-color: rgba(93,232,255,.35) !important; box-shadow: 0 18px 55px rgba(0,0,0,.22) !important; }
+.pill-button { border: 1px solid var(--line-strong) !important; border-radius: 999px !important; background: rgba(255,255,255,.035) !important; box-shadow: none !important; }
+.pill-button:hover { border-color: rgba(93,232,255,.5) !important; background: var(--accent-soft) !important; box-shadow: none !important; }
+
+@media (max-width: 767px) {
+  .page-shell { width: min(100% - 28px, var(--max)); padding-top: 92px; padding-bottom: 90px; }
+}

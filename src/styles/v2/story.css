@@ -1,0 +1,135 @@
+.story-page { display: flex; flex-direction: column; gap: 54px; }
+.story-header { max-width: 900px; padding: 72px 0 54px; }
+.story-header h1 { margin: 18px 0 24px; color: var(--text); font-size: clamp(50px, 7vw, 82px); line-height: .98; letter-spacing: -.062em; font-weight: 620; }
+.story-header > p:not(.eyebrow) { max-width: 690px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.story-header .button { margin-top: 26px; }
+.timeline-list, .education-list { border-top: 1px solid var(--line); }
+.timeline-entry { position: relative; min-height: 260px; padding: 34px 4px; display: grid; grid-template-columns: 65px 1fr 170px; gap: 28px; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding .25s ease, background .25s ease; }
+.timeline-entry:hover, .education-entry:hover { padding-left: 16px; padding-right: 16px; background: linear-gradient(90deg, rgba(93,232,255,.035), transparent 75%); }
+.timeline-year, .education-index { color: #4c5760; font: 700 10px/1 "Courier New", monospace; letter-spacing: .1em; padding-top: 6px; }
+.timeline-title { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.timeline-title h2, .education-main h2 { margin: 0; color: #edf1f3; font-size: 28px; letter-spacing: -.035em; }
+.timeline-company { margin: 8px 0 0; color: #a4adb5; font-size: 12px; font-weight: 700; }
+.timeline-description, .education-description { max-width: 720px; margin: 22px 0 0 !important; color: #858f98 !important; font-size: 12px !important; line-height: 1.7; }
+.timeline-period { padding-top: 4px; display: flex; flex-direction: column; gap: 5px; align-items: flex-end; color: #758089; font: 700 9px/1.25 "Courier New", monospace; text-transform: uppercase; letter-spacing: .05em; }
+.timeline-period span { color: #3f4a52; }
+.timeline-admin { position: absolute; right: 4px; bottom: 18px; display: flex; gap: 12px; }
+.timeline-admin button { padding: 0; border: 0; color: #707b84; background: transparent; font-size: 9px; font-weight: 700; cursor: pointer; }
+.timeline-admin button:last-child { color: #b36d6d; }
+.education-entry { position: relative; min-height: 250px; padding: 34px 4px; display: grid; grid-template-columns: 65px 1fr 200px; gap: 28px; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding .25s ease, background .25s ease; }
+.education-main > p:first-child { margin: 0 0 10px; color: var(--accent); font: 700 9px/1.2 "Courier New", monospace; text-transform: uppercase; letter-spacing: .08em; }
+.education-main > span { display: block; margin-top: 10px; color: #9ca6ae; font-size: 12px; }
+.education-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; color: #758089; font: 700 9px/1.35 "Courier New", monospace; text-transform: uppercase; letter-spacing: .04em; }
+
+@media (max-width: 767px) {
+  .story-page { gap: 36px; }
+  .story-header { padding: 34px 0 26px; }
+  .story-header h1 { font-size: 51px; }
+  .timeline-entry, .education-entry { grid-template-columns: 34px 1fr; gap: 12px; min-height: 0; padding: 26px 0 50px; }
+  .timeline-entry:hover, .education-entry:hover { padding-left: 0; padding-right: 0; }
+  .timeline-period, .education-meta { grid-column: 2; align-items: flex-start; margin-top: 6px; }
+  .timeline-admin { right: 0; }
+  .timeline-title h2, .education-main h2 { font-size: 24px; }
+}
+
+/* Experience detail — V2 editorial modal */
+.experience-modal-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  padding: 28px;
+  display: grid;
+  place-items: center;
+  background: rgba(3,5,7,.78);
+  backdrop-filter: blur(16px) saturate(90%);
+}
+.experience-modal {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: min(820px, calc(100dvh - 56px));
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 88% 6%, rgba(93,232,255,.08), transparent 25rem),
+    linear-gradient(145deg, #0d1116 0%, #090c10 58%, #080a0d 100%);
+  box-shadow: 0 40px 120px rgba(0,0,0,.62), inset 0 1px rgba(255,255,255,.035);
+}
+.experience-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--accent) 22%, rgba(93,232,255,.12) 72%, transparent);
+  opacity: .7;
+}
+.experience-modal-topbar {
+  min-height: 64px;
+  padding: 0 22px 0 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8,10,13,.72);
+  backdrop-filter: blur(18px);
+}
+.experience-modal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #89939c;
+  font: 700 9px/1 "Courier New", monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.experience-modal-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(93,232,255,.75); }
+.experience-modal-close {
+  min-height: 36px;
+  padding: 0 10px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #afb8bf;
+  background: rgba(255,255,255,.025);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.experience-modal-close strong { color: white; font-size: 20px; font-weight: 300; line-height: 1; }
+.experience-modal-close:hover { color: white; border-color: rgba(93,232,255,.4); background: rgba(93,232,255,.06); }
+.experience-modal-scroll { max-height: calc(min(820px, 100dvh - 56px) - 64px); overflow-y: auto; overscroll-behavior: contain; }
+.experience-modal-hero { padding: 54px 58px 44px; border-bottom: 1px solid var(--line); }
+.experience-modal-hero h2 { max-width: 740px; margin: 16px 0 12px; color: var(--text); font-size: clamp(38px, 6vw, 70px); line-height: .98; letter-spacing: -.058em; font-weight: 620; }
+.experience-modal-company { margin: 0; color: #aab3ba; font-size: 15px; font-weight: 650; }
+.experience-modal-grid { display: grid; grid-template-columns: 230px 1fr; }
+.experience-modal-meta { padding: 38px 30px 46px 58px; display: flex; flex-direction: column; gap: 28px; border-right: 1px solid var(--line); }
+.experience-modal-meta div { display: flex; flex-direction: column; gap: 8px; }
+.experience-modal-meta span, .experience-modal-label { color: #5e6972; font: 700 9px/1.25 "Courier New", monospace; text-transform: uppercase; letter-spacing: .11em; }
+.experience-modal-meta strong { color: #c6cdd2; font-size: 11px; line-height: 1.5; font-weight: 650; }
+.experience-modal-body { padding: 38px 58px 52px 46px; }
+.experience-modal-description { margin: 18px 0 0; color: #a2abb2; font-size: 14px; line-height: 1.9; white-space: pre-line; overflow-wrap: anywhere; }
+.experience-modal-description.muted { color: #68727a; }
+.experience-modal-footer { min-height: 66px; padding: 0 30px 0 58px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #56616a; font: 700 9px/1.2 "Courier New", monospace; text-transform: uppercase; letter-spacing: .08em; }
+.experience-modal-footer button { padding: 0; border: 0; color: #aeb7be; background: transparent; font: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer; }
+.experience-modal-footer button:hover { color: var(--accent); }
+
+@media (max-width: 767px) {
+  .experience-modal-backdrop { padding: 12px; align-items: end; }
+  .experience-modal { width: 100%; max-height: calc(100dvh - 24px); border-radius: 22px 22px 16px 16px; }
+  .experience-modal-topbar { min-height: 58px; padding: 0 14px 0 18px; }
+  .experience-modal-close span { display: none; }
+  .experience-modal-close { width: 36px; padding: 0; justify-content: center; }
+  .experience-modal-scroll { max-height: calc(100dvh - 82px); }
+  .experience-modal-hero { padding: 34px 22px 30px; }
+  .experience-modal-hero h2 { font-size: 40px; }
+  .experience-modal-grid { grid-template-columns: 1fr; }
+  .experience-modal-meta { padding: 24px 22px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); border-right: 0; border-bottom: 1px solid var(--line); gap: 20px 16px; }
+  .experience-modal-body { padding: 28px 22px 36px; }
+  .experience-modal-description { font-size: 13px; line-height: 1.8; }
+  .experience-modal-footer { min-height: 58px; padding: 0 22px; }
+  .experience-modal-footer > span { display: none; }
+}

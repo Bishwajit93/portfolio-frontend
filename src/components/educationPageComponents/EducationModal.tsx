@@ -2,118 +2,79 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Education } from "@/types/education";
+import type { Education } from "@/types/education";
 
-type Props = {
-  education: Education;
-  onClose: () => void;
-};
+type Props = { education: Education; onClose: () => void };
 
 export default function EducationModal({ education, onClose }: Props) {
   useEffect(() => {
-    const bodyPrev = document.body.style.overflow;
-    const footer = document.getElementById("site-footer");
-    const footerPrevPointer = footer?.style.pointerEvents ?? "";
-
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    if (footer) footer.style.pointerEvents = "none";
-
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = bodyPrev;
-      if (footer) footer.style.pointerEvents = footerPrevPointer;
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [onClose]);
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md px-3 sm:px-6"
+    <motion.div
+      className="detail-modal-backdrop"
       role="dialog"
       aria-modal="true"
+      aria-labelledby="education-detail-title"
       onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.98, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-        className="
-          w-[92vw] max-w-md sm:max-w-2xl
-          h-[78dvh] sm:h-[80vh]
-          hero-shell
-          rounded-2xl overflow-hidden
-          flex flex-col
-        "
+      <motion.article
+        className="detail-modal"
+        onClick={(event) => event.stopPropagation()}
+        initial={{ opacity: 0, y: 34, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Sticky header */}
-        <div className="shrink-0 sticky top-0 z-10 bg-black/70 backdrop-blur-sm border-b border-cyan-400/20 px-4 py-3 flex justify-end">
-          <button
-            onClick={onClose}
-            className="
-              text-cyan-200 hover:text-cyan-50
-              text-xs md:text-sm font-medium
-              px-3 py-1.5 rounded-full
-              border border-cyan-400/70
-              bg-black/40
-              shadow-[0_0_10px_rgba(34,211,238,0.6)]
-              cursor-pointer transition
-            "
-          >
-            Close
+        <div className="detail-modal-chrome">
+          <div className="detail-modal-context"><i /> Education / academic record</div>
+          <button type="button" className="detail-modal-close" onClick={onClose} aria-label="Close education details">
+            <span>Close</span><b>×</b>
           </button>
         </div>
 
-        {/* Scrollable content */}
-        <div
-          className="grow overflow-y-auto overscroll-contain px-6 py-6"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-200 mb-4 text-center">
-            {education.degree}
-          </h2>
+        <div className="detail-modal-scroll">
+          <header className="detail-modal-hero">
+            <span className="detail-modal-index">Education / Detail</span>
+            <h2 id="education-detail-title">{education.degree}</h2>
+            <p>{education.institution_name}</p>
+          </header>
 
-          <div className="space-y-4 text-sm sm:text-base text-cyan-100/90">
-            <p>
-              <span className="text-cyan-300 font-semibold">
-                Institution:
-              </span>{" "}
-              {education.institution_name}
-            </p>
+          <div className="detail-modal-layout">
+            <aside className="detail-modal-rail">
+              <Meta label="Field" value={education.field_of_study || "—"} />
+              <Meta label="Period" value={`${education.start_date} — ${education.end_date || "Present"}`} />
+              {education.grade && <Meta label="Grade" value={education.grade} />}
+            </aside>
 
-            <p>
-              <span className="text-cyan-300 font-semibold">
-                Field of Study:
-              </span>{" "}
-              {education.field_of_study}
-            </p>
-
-            {education.grade && (
-              <p>
-                <span className="text-cyan-300 font-semibold">Grade:</span>{" "}
-                {education.grade}
+            <section className="detail-modal-copy">
+              <span className="detail-modal-section-label">Academic context</span>
+              <p className={!education.description ? "is-muted" : ""}>
+                {education.description || "No additional description has been added for this education entry yet."}
               </p>
-            )}
-
-            <p className="text-cyan-100/80 italic">
-              <span className="text-cyan-300 font-semibold">Period:</span>{" "}
-              {education.start_date} to{" "}
-              {education.end_date ?? "Present"}
-            </p>
-
-            {education.description && (
-              <div>
-                <span className="text-cyan-300 font-semibold">
-                  Description:
-                </span>
-                <p className="mt-2 text-cyan-100/90 whitespace-pre-line leading-relaxed break-words hyphens-auto">
-                  {education.description}
-                </p>
-              </div>
-            )}
+            </section>
           </div>
 
-          <div className="h-6" />
+          <footer className="detail-modal-footer">
+            <span>Education record / AbdullahStack</span>
+            <button type="button" onClick={onClose}>Return to education ↑</button>
+          </footer>
         </div>
-      </motion.div>
-    </div>
+      </motion.article>
+    </motion.div>
   );
+}
+
+function Meta({ label, value }: { label: string; value: string }) {
+  return <div className="detail-modal-meta"><span>{label}</span><strong>{value}</strong></div>;
 }

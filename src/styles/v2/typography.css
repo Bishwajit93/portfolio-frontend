@@ -1,0 +1,297 @@
+/*
+ * Portfolio V2 typography system
+ * One hierarchy across public pages, recruiter mode, detail modals and legacy surfaces.
+ */
+:root {
+  --font-sans: "Segoe UI Variable", "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --type-body: 16px;
+  --type-body-sm: 14px;
+  --type-meta: 11px;
+  --type-label: 10px;
+}
+
+html { font-size: 16px; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  line-height: 1.6;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+/* Core reusable typography */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: .14em;
+}
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: .075em;
+}
+.button { font-size: 14px; font-weight: 620; letter-spacing: -.01em; }
+.text-link { font-size: 14px; font-weight: 620; }
+
+/* Header / navigation / footer */
+.brand-mark { font-family: var(--font-mono); font-size: 12px; font-weight: 760; }
+.brand-copy strong { font-family: var(--font-display); font-size: 14px; font-weight: 650; letter-spacing: -.018em; }
+.brand-copy small { font-family: var(--font-mono); font-size: 10px; font-weight: 560; letter-spacing: .075em; }
+.desktop-nav a { font-size: 13px; font-weight: 610; letter-spacing: -.012em; }
+.header-contact { font-size: 13px; font-weight: 620; }
+.site-footer > div, .site-footer nav { font-size: 13px; line-height: 1.55; }
+.site-footer strong { font-size: 14px; font-weight: 630; }
+.mobile-dock a { font-size: 10px; font-weight: 620; }
+
+/* Home */
+.availability-line,
+.console-head,
+.console-row,
+.proof-strip,
+.system-index,
+.tech-line,
+.status-chip,
+.profile-lanes article > span {
+  font-family: var(--font-mono);
+}
+.availability-line { font-size: 10.5px; font-weight: 600; }
+.hero-copy h1 {
+  font-family: var(--font-display);
+  font-weight: 570;
+  letter-spacing: -.055em;
+}
+.hero-lede { font-size: 17px; line-height: 1.72; font-weight: 400; }
+.console-head { font-size: 10px; }
+.console-row { font-size: 11px; line-height: 1.55; font-weight: 560; }
+.proof-strip { font-size: 10px; line-height: 1.35; font-weight: 620; }
+.section-heading h2,
+.profile-intro h2,
+.closing-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  letter-spacing: -.048em;
+}
+.section-heading > p,
+.profile-intro > p:not(.eyebrow) { font-size: 16px; line-height: 1.75; font-weight: 400; }
+.system-index { font-size: 11px; font-weight: 650; }
+.system-main h3 { font-family: var(--font-display); font-size: 30px; line-height: 1.12; font-weight: 600; letter-spacing: -.035em; }
+.system-main p { font-size: 16px; line-height: 1.68; }
+.tech-line { font-size: 11.5px; line-height: 1.55; font-weight: 560; }
+.status-chip { font-size: 9px; font-weight: 650; }
+.system-links { font-size: 12px; font-weight: 620; }
+.profile-lanes h3 { font-size: 18px; font-weight: 610; letter-spacing: -.018em; }
+.profile-lanes p { font-size: 15px; line-height: 1.7; }
+
+/* Work / projects */
+.work-header h1,
+.story-header h1,
+.contact-v2-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  letter-spacing: -.052em;
+}
+.work-header-copy p { font-size: 16px; line-height: 1.75; }
+.work-meta { font-family: var(--font-mono); font-size: 10.5px; font-weight: 620; }
+.work-number { font-family: var(--font-mono); font-size: 10.5px; font-weight: 650; }
+.work-card-body h2 { font-family: var(--font-display); font-size: 34px; line-height: 1.08; font-weight: 590; letter-spacing: -.035em; }
+.work-card-body p { font-size: 15px; line-height: 1.72; font-weight: 400; }
+.work-card-bottom span { font-family: var(--font-mono); font-size: 9.5px; font-weight: 620; }
+.work-card-bottom strong { font-size: 12px; line-height: 1.5; font-weight: 560; }
+.work-external { font-size: 11.5px; font-weight: 610; }
+.work-state { font-size: 15px; }
+
+/* Experience / education list pages */
+.story-header > p:not(.eyebrow) { font-size: 16px; line-height: 1.75; }
+.timeline-year, .education-index { font-family: var(--font-mono); font-size: 10.5px; font-weight: 650; }
+.timeline-title h2, .education-main h2 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 590;
+  letter-spacing: -.03em;
+}
+.timeline-company { font-size: 14px; line-height: 1.5; font-weight: 600; }
+.timeline-description, .education-description {
+  font-size: 15px !important;
+  line-height: 1.75;
+  font-weight: 400;
+}
+.timeline-period, .education-meta, .education-main > p:first-child {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 620;
+}
+.education-main > span { font-size: 14px; line-height: 1.55; }
+.timeline-admin button { font-size: 11px; font-weight: 620; }
+
+/* Shared detail modals: Work + Experience + Education */
+.detail-modal-context,
+.detail-modal-index,
+.detail-modal-section-label,
+.detail-modal-meta span,
+.detail-modal-footer,
+.detail-modal-status,
+.experience-modal-status,
+.experience-modal-meta span,
+.experience-modal-label,
+.experience-modal-footer {
+  font-family: var(--font-mono);
+}
+.detail-modal-context, .experience-modal-status { font-size: 10px; font-weight: 620; }
+.detail-modal-close, .experience-modal-close { font-size: 12px; font-weight: 610; }
+.detail-modal-index, .detail-modal-section-label { font-size: 10px; font-weight: 620; }
+.detail-modal-hero h2, .experience-modal-hero h2 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  letter-spacing: -.052em;
+}
+.detail-modal-hero p, .experience-modal-company { font-size: 16px; line-height: 1.5; font-weight: 590; }
+.detail-modal-meta span, .experience-modal-meta span, .experience-modal-label { font-size: 9.5px; font-weight: 620; }
+.detail-modal-meta strong, .experience-modal-meta strong { font-size: 13px; line-height: 1.55; font-weight: 570; }
+.detail-modal-copy p, .experience-modal-description { font-size: 16px; line-height: 1.82; font-weight: 400; }
+.detail-modal-footer, .experience-modal-footer { font-size: 9.5px; font-weight: 620; }
+.detail-modal-status { font-size: 9px; font-weight: 650; }
+.detail-modal-actions a { font-size: 12px; line-height: 1.45; font-weight: 610; }
+
+/* Recruiter mode */
+.recruiter-primary h2 { font-family: var(--font-display); font-weight: 560; letter-spacing: -.045em; }
+.lede { font-size: 16px; line-height: 1.7; }
+.fact-row span { font-family: var(--font-mono); font-size: 9.5px; font-weight: 620; }
+.fact-row strong { font-size: 13px; line-height: 1.5; font-weight: 570; }
+.recruiter-projects article > span { font-family: var(--font-mono); font-size: 10px; }
+.recruiter-projects h3 { font-size: 16px; line-height: 1.35; font-weight: 610; }
+.recruiter-projects p { font-size: 13.5px; line-height: 1.6; }
+.recruiter-footer { font-size: 12px; font-weight: 610; }
+
+/* Contact */
+.contact-v2-intro p { font-size: 16px; line-height: 1.78; }
+.contact-v2-status,
+.contact-v2-label,
+.contact-v2-note span { font-family: var(--font-mono); font-size: 9.5px; font-weight: 620; }
+.contact-v2-email { font-family: var(--font-display); font-weight: 540; letter-spacing: -.035em; }
+.contact-v2-links a { font-size: 13px; font-weight: 570; }
+.contact-v2-note strong { font-size: 19px; line-height: 1.35; font-weight: 600; }
+.contact-v2-note p { font-size: 14px; line-height: 1.7; }
+.contact-v2-form-head h2 { font-family: var(--font-display); font-weight: 590; letter-spacing: -.03em; }
+.contact-v2-form-head p,
+.contact-v2-form-head em { font-size: 13px; line-height: 1.6; }
+.contact-v2-field label { font-family: var(--font-mono); font-size: 10px; font-weight: 620; }
+.contact-v2-field input,
+.contact-v2-field textarea { font-family: var(--font-sans); font-size: 16px; line-height: 1.55; font-weight: 400; }
+.contact-v2-field small { font-size: 12px; line-height: 1.5; }
+.contact-v2-feedback { font-size: 13px; line-height: 1.55; }
+.contact-v2-submit-row button { font-size: 14px; font-weight: 620; }
+
+/* Resume — application-grade reading hierarchy */
+.resume-v3 { font-family: var(--font-sans); }
+.resume-v3-signal,
+.resume-v3-kicker,
+.resume-v3-kit-head,
+.resume-language button,
+.resume-v3-kit-facts span,
+.resume-v3-note-mark,
+.resume-v3-note > span,
+.resume-v3-overview article > span,
+.resume-v3-section > header span,
+.resume-v3-skills article > span,
+.resume-v3-project-index,
+.resume-v3-entry-head > span,
+.resume-v3-education span,
+.resume-v3-languages span {
+  font-family: var(--font-mono);
+}
+.resume-v3-signal { font-size: 10.5px; font-weight: 620; }
+.resume-v3-kicker { font-size: 9.5px; font-weight: 620; }
+.resume-v3-identity h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6.4vw, 78px);
+  line-height: .98;
+  letter-spacing: -.052em;
+  font-weight: 560;
+}
+.resume-v3-identity h1 span { font-weight: 470; }
+.resume-v3-role { font-size: 18px; line-height: 1.58; font-weight: 430; letter-spacing: -.014em; }
+.resume-v3-contact-row a { font-size: 13px; line-height: 1.45; font-weight: 570; }
+.resume-v3-kit-head { font-size: 9.5px; }
+.resume-language button { font-size: 10px; font-weight: 650; }
+.resume-download { font-size: 13px; font-weight: 620; }
+.resume-v3-kit-facts span { font-size: 9px; }
+.resume-v3-kit-facts strong { font-size: 11.5px; line-height: 1.45; font-weight: 560; }
+.resume-v3-note strong { font-size: 14px; line-height: 1.4; font-weight: 600; }
+.resume-v3-note p { font-size: 13px; line-height: 1.65; }
+.resume-v3-note > span { font-size: 9px; }
+.resume-v3-overview article > span { font-size: 9px; }
+.resume-v3-overview strong { font-size: 16px; line-height: 1.35; font-weight: 590; }
+.resume-v3-overview p { font-size: 12.5px; line-height: 1.55; }
+.resume-v3-section > header span { font-size: 9.5px; }
+.resume-v3-section h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+  font-weight: 610;
+}
+.resume-v3-profile-copy {
+  max-width: 880px;
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 400;
+  color: #a0aab1;
+}
+.resume-v3-skills article > span { font-size: 9.5px; }
+.resume-v3-skills p { font-size: 14px; line-height: 1.65; color: #98a2a9; }
+.resume-v3-entry-head h3 { font-size: 17px; line-height: 1.42; font-weight: 600; letter-spacing: -.015em; }
+.resume-v3-entry-head > span { font-size: 9.5px; line-height: 1.5; }
+.resume-v3-project li,
+.resume-v3-entry-card li { font-size: 14px; line-height: 1.72; color: #909aa1; }
+.resume-v3-project a { font-size: 12px; font-weight: 610; }
+.resume-v3-education h3 { font-size: 15px; line-height: 1.4; font-weight: 590; }
+.resume-v3-education p { font-size: 13px; line-height: 1.55; }
+.resume-v3-languages span { font-size: 9.5px; }
+.resume-v3-languages strong { font-size: 13px; line-height: 1.4; font-weight: 570; }
+
+/* Legacy / account / legal / auth surfaces inherit the same readable base. */
+.hero-shell, .glass-card { font-family: var(--font-sans); }
+.hero-shell p, .hero-shell li, .glass-card p, .glass-card li { line-height: 1.7; }
+.hero-shell label, .glass-card label { font-size: 14px; font-weight: 560; }
+.hero-shell input, .hero-shell textarea, .glass-card input, .glass-card textarea { font-family: var(--font-sans); font-size: 15px; }
+.hero-shell .text-xs, .glass-card .text-xs { font-size: 12px !important; line-height: 1.6; }
+.hero-shell .text-sm, .glass-card .text-sm { font-size: 14px !important; line-height: 1.65; }
+.hero-shell .text-lg, .glass-card .text-lg { font-size: 18px !important; line-height: 1.4; }
+.hero-shell .text-xl, .glass-card .text-xl { font-size: 21px !important; line-height: 1.35; font-weight: 600 !important; }
+.hero-shell .text-3xl, .glass-card .text-3xl { font-family: var(--font-display); font-size: 30px !important; line-height: 1.15; font-weight: 600 !important; letter-spacing: -.025em; }
+
+@media (max-width: 767px) {
+  body { font-size: 15px; }
+  .hero-lede,
+  .section-heading > p,
+  .profile-intro > p:not(.eyebrow),
+  .work-header-copy p,
+  .story-header > p:not(.eyebrow),
+  .contact-v2-intro p { font-size: 15px; }
+  .system-main h3 { font-size: 27px; }
+  .system-main p { font-size: 15px; }
+  .profile-lanes p { font-size: 14px; }
+  .work-card-body h2 { font-size: 29px; }
+  .work-card-body p { font-size: 14.5px; }
+  .timeline-title h2, .education-main h2 { font-size: 25px; }
+  .timeline-description, .education-description { font-size: 14.5px !important; }
+  .detail-modal-copy p, .experience-modal-description { font-size: 15px; line-height: 1.78; }
+  .detail-modal-meta strong, .experience-modal-meta strong { font-size: 12px; }
+  .resume-v3-role { font-size: 16px; }
+  .resume-v3-contact-row a { font-size: 12px; }
+  .resume-v3-section h2 { font-size: 20px; }
+  .resume-v3-profile-copy { font-size: 15px; line-height: 1.75; }
+  .resume-v3-skills p { font-size: 13.5px; }
+  .resume-v3-entry-head h3 { font-size: 16px; }
+  .resume-v3-project li, .resume-v3-entry-card li { font-size: 13.5px; }
+  .resume-v3-education h3 { font-size: 14.5px; }
+  .resume-v3-education p, .resume-v3-languages strong { font-size: 12.5px; }
+}

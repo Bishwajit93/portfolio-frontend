@@ -1,56 +1,31 @@
-/* src/app/globals.css */
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+@import "../styles/v2/theme.css";
+@import "../styles/v2/navigation.css";
+@import "../styles/v2/home.css";
+@import "../styles/v2/recruiter.css";
+@import "../styles/v2/work.css";
+@import "../styles/v2/story.css";
+@import "../styles/v2/resume-v2.css";
+@import "../styles/v2/detail-modal.css";
+@import "../styles/v2/contact.css";
+@import "../styles/v2/typography.css";
 
-/* ✅ Theme Variables */
-:root {
-  --background: black;             /* True black background */
-  --foreground: #ededed;           /* Light text */
-  --glow: rgba(0, 255, 255, 0.5);  /* Cyan glow */
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-mono: var(--font-geist-mono);
-}
-
-/* ✅ Reset Layout */
-html,
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: #092126; }
 body {
-  height: 100%;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  display: flex;
-  flex-direction: column;
   min-height: 100dvh;
   overflow-x: hidden;
-
-  /* 🔥 Full-page bluish-black gradient, everywhere */
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%),
-    radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.18), transparent 60%),
-    #000000;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #17131f;
+  color: #f4f6f8;
+  font-family: var(--font-sans, "Segoe UI Variable", "Segoe UI", Arial, sans-serif);
+  -webkit-font-smoothing: antialiased;
 }
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+::selection { background: rgba(93, 232, 255, .25); color: white; }
 
-
-/* ✅ General Link Behavior (NOT cyan styling) */
-a {
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-}
-
-/* ✅ Global glow class (optional usage) */
-.glow-text {
-  text-shadow: 0 0 6px var(--glow), 0 0 12px var(--glow);
-}
-
-/* Resume print override */
 #resume-pdf * {
   color: #ffffff !important;
   background: transparent !important;
@@ -61,212 +36,11 @@ a {
   filter: none !important;
 }
 
-/* Footer links */
-.footer-link {
-  position: relative;
-  padding: 0 0.6rem;
-  color: #66fcf1;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.3s ease-in-out;
-}
+* { scrollbar-width: thin; scrollbar-color: #3a4651 transparent; }
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #303942; border-radius: 999px; border: 2px solid #080a0d; }
 
-.footer-link:hover {
-  color: white;
-  text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
-}
-
-.footer-link:not(:first-child)::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 70%;
-  width: 1px;
-  background: rgba(0, 255, 255, 0.4);
-  box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
-  border-radius: 2px;
-}
-
-/* === AbdullahStack new theme helpers === */
-
-/* Page background with subtle glows */
-.app-shell {
-  min-height: 100vh;
-  padding-bottom: 4rem;
-}
-
-
-
-/* Main glassy hero container */
-.hero-shell {
-  position: relative;
-  border-radius: 1.5rem;
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 60%),
-    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.25), transparent 60%),
-    rgba(0, 0, 0, 0.96);
-  box-shadow:
-    0 0 32px rgba(56, 189, 248, 0.45),
-    0 0 80px rgba(15, 23, 42, 1);
-  overflow: hidden;
-}
-
-/* ✅ Unified glowing cards for projects / experience / skills / qualities */
-.glass-card {
-  border-radius: 1.2rem;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%),
-    rgba(15, 23, 42, 0.98);
-  box-shadow:
-    0 0 16px rgba(56, 189, 248, 0.55),
-    0 0 50px rgba(15, 23, 42, 1);
-  transition:
-    transform 0.2s ease-out,
-    box-shadow 0.2s ease-out,
-    border-color 0.2s ease-out;
-}
-
-.glass-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(56, 189, 248, 0.9);
-  box-shadow:
-    0 0 20px rgba(56, 189, 248, 0.85),
-    0 0 70px rgba(15, 23, 42, 1);
-}
-
-/* (Optional) vertical neon “metro line” – currently not used, but kept if needed later */
-.timeline-rail {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(
-    to bottom,
-    rgba(56, 189, 248, 0.1),
-    rgba(56, 189, 248, 0.9),
-    rgba(147, 51, 234, 0.9),
-    rgba(248, 113, 113, 0.9)
-  );
-  box-shadow: 0 0 18px rgba(56, 189, 248, 0.9);
-}
-
-/* Little “station” pills hanging off the rail, if ever used again */
-.timeline-pill {
-  position: absolute;
-  right: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.25rem 0.8rem;
-  border-radius: 9999px;
-  background: rgba(15, 23, 42, 0.98);
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  color: #e5f9ff;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
-}
-
-.timeline-dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 9999px;
-  box-shadow: 0 0 8px currentColor;
-}
-
-
-/* === Reusable glassy pill button (matches hero / glass-card vibe) === */
-.pill-button {
-  border-radius: 9999px;
-  border: 1px solid rgba(56, 189, 248, 0.7);
-  background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.22), transparent 55%),
-    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.28), transparent 55%),
-    rgba(6, 12, 24, 0.98); /* deep bluish-black core */
-  box-shadow:
-    0 0 16px rgba(56, 189, 248, 0.65),
-    0 0 40px rgba(15, 23, 42, 1);
-  transition:
-    background 0.2s ease-out,
-    box-shadow 0.2s ease-out,
-    border-color 0.2s ease-out,
-    transform 0.15s ease-out;
-}
-
-.pill-button:hover {
-  border-color: rgba(56, 189, 248, 0.95);
-  background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.30), transparent 55%),
-    radial-gradient(circle at bottom, rgba(129, 140, 248, 0.35), transparent 55%),
-    rgba(6, 12, 24, 0.98);
-  box-shadow:
-    0 0 20px rgba(56, 189, 248, 0.9),
-    0 0 55px rgba(15, 23, 42, 1);
-  transform: translateY(-1px);
-}
-
-@keyframes code-rain-fall {
-  0% {
-    transform: translateY(-110%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(110%);
-    opacity: 0;
-  }
-}
-
-/* ===============================
-   AbdullahStack Custom Scrollbar
-   =============================== */
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(56, 189, 248, 0.6) transparent;
-}
-
-/* WebKit (Chrome, Edge, Safari) */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    to bottom,
-    rgba(56, 189, 248, 0.35),
-    rgba(129, 140, 248, 0.55)
-  );
-  border-radius: 9999px;
-  box-shadow:
-    0 0 10px rgba(56, 189, 248, 0.55),
-    inset 0 0 6px rgba(15, 23, 42, 0.8);
-  border: 2px solid rgba(0, 0, 0, 0.9);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    to bottom,
-    rgba(56, 189, 248, 0.7),
-    rgba(129, 140, 248, 0.9)
-  );
-  box-shadow:
-    0 0 16px rgba(56, 189, 248, 0.9),
-    inset 0 0 8px rgba(15, 23, 42, 1);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }

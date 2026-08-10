@@ -1,342 +1,135 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import AnimatedPageWrapper from "@/components/AnimatedPageWrapper";
 import ResumeDownloadButton from "@/components/ResumeDownloadButton";
 
 type Lang = "en" | "de";
+type Entry = { title: string; meta: string; bullets: string[]; link?: { label: string; href: string } };
 
 export default function ResumePage() {
   const [lang, setLang] = useState<Lang>("en");
-  const isGerman = lang === "de";
+  const de = lang === "de";
+  const copy = getCopy(de);
 
   return (
     <AnimatedPageWrapper key={`resume-${lang}`}>
-      <main className="min-h-screen text-white pt-[40px] pb-[80px] px-4 md:px-8">
-        <div className="max-w-5xl mx-auto space-y-8 md:space-y-10">
-          {/* === TOP BAR: BACK BUTTON === */}
-          <div className="flex justify-between items-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center px-4 py-1.5 rounded-full
-                border border-cyan-400/90 bg-cyan-500/20 text-[12px] md:text-sm text-cyan-50
-                shadow-[0_0_16px_rgba(34,211,238,0.7)]
-                hover:bg-cyan-500/30 hover:shadow-[0_0_24px_rgba(34,211,238,1)]
-                transition cursor-pointer"
-            >
-              ← Back to About
-            </Link>
+      <main className="resume-v3">
+        <section className="resume-v3-hero">
+          <div className="resume-v3-identity">
+            <div className="resume-v3-signal"><i /> {de ? "Berlin · offen für relevante Rollen" : "Berlin · open to relevant roles"}</div>
+            <div className="resume-v3-kicker"><span>{de ? "Lebenslauf" : "Résumé"}</span><b>2026</b></div>
+            <h1>Bishwajit <span>Karmaker</span></h1>
+            <p className="resume-v3-role">{copy.role}</p>
+            <div className="resume-v3-contact-row">
+              <a href="mailto:contact@abdullahstack.com">contact@abdullahstack.com ↗</a>
+              <a href="https://github.com/Bishwajit93" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href="https://gitlab.com/abdullahbk" target="_blank" rel="noreferrer">GitLab ↗</a>
+            </div>
           </div>
 
-          {/* === HERO / HEADER === */}
-          <section>
-            <div className="hero-shell px-6 py-7 md:px-10 md:py-9">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                {/* Left: Name + title + contact */}
-                <div className="space-y-3">
-                  <p className="text-[12px] uppercase tracking-[0.22em] text-cyan-200 drop-shadow-[0_0_4px_rgba(34,211,238,0.6)]">
-                    {isGerman ? "Lebenslauf" : "Resume"}
-                  </p>
-
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl text-cyan-50">
-                    Bishwajit Karmaker
-                  </h1>
-
-                  <p className="text-sm md:text-base text-cyan-100/85">
-                    {isGerman
-                      ? "Full-Stack Webentwickler · Berlin, Deutschland"
-                      : "Full-Stack Web Developer · Berlin, Germany"}
-                  </p>
-
-                  <p className="text-xs md:text-sm text-cyan-100/80 leading-relaxed">
-                    Berlin · +49 1556 6062930 ·{" "}
-                    <span className="text-cyan-200">
-                      contact@abdullahstack.com
-                    </span>{" "}
-                    •{" "}
-                    <br />
-                    <a
-                      href="https://abdullahstack.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 text-cyan-300 hover:text-cyan-100"
-                    >
-                      abdullahstack.com
-                    </a>{" "}
-                    •{" "}
-                    <a
-                      href="https://github.com/Bishwajit93"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 text-cyan-300 hover:text-cyan-100"
-                    >
-                      GitHub
-                    </a>{" "}
-                    •{" "}
-                    <a
-                      href="https://www.linkedin.com/in/bishwajit-karmaker/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 text-cyan-300 hover:text-cyan-100"
-                    >
-                      LinkedIn
-                    </a>
-                  </p>
-                </div>
-
-                {/* Right: language toggle only */}
-                <div className="flex flex-col items-start md:items-end gap-3">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setLang("en")}
-                      className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full border text-xs md:text-sm transition
-                        ${
-                          lang === "en"
-                            ? "border-cyan-400/90 bg-cyan-500/25 text-cyan-50 shadow-[0_0_16px_rgba(34,211,238,0.8)] cursor-pointer"
-                            : "border-cyan-400/40 text-cyan-200 hover:bg-cyan-500/10 hover:text-white cursor-pointer"
-                        }`}
-                    >
-                      English
-                    </button>
-                    <button
-                      onClick={() => setLang("de")}
-                      className={`inline-flex items-center justify-center px-4 py-1.5 rounded-full border text-xs md:text-sm transition
-                        ${
-                          lang === "de"
-                            ? "border-cyan-400/90 bg-cyan-500/25 text-cyan-50 shadow-[0_0_16px_rgba(34,211,238,0.8)] cursor-pointer"
-                            : "border-cyan-400/40 text-cyan-200 hover:bg-cyan-500/10 hover:text-white cursor-pointer"
-                        }`}
-                    >
-                      Deutsch
-                    </button>
-                  </div>
-                </div>
-              </div>
+          <aside className="resume-v3-kit">
+            <div className="resume-v3-kit-head"><span>{de ? "Bewerbungsset" : "Application kit"}</span><b>01</b></div>
+            <div className="resume-language" aria-label="Resume language">
+              <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
+              <button className={lang === "de" ? "active" : ""} onClick={() => setLang("de")}>DE</button>
             </div>
-          </section>
-
-          {/* === DOWNLOAD BUTTON (CENTERED UNDER HERO) === */}
-          <section className="flex justify-center">
             <ResumeDownloadButton lang={lang} />
-          </section>
+            <div className="resume-v3-kit-facts">
+              <Fact label={de ? "Schwerpunkt" : "Focus"} value={de ? "Backend · Full Stack" : "Data · Backend"} />
+              <Fact label="Core" value="Python · Django · DRF" />
+              <Fact label="Data" value="PostgreSQL · Relational Models" />
+            </div>
+          </aside>
+        </section>
 
-          {/* === BODY SECTIONS === */}
-          <section className="space-y-6 md:space-y-7">
-            {/* Profile */}
-            <ResumeSection title={isGerman ? "Profil" : "Profile"}>
-              <p className="text-sm text-cyan-100/90 leading-relaxed">
-                {isGerman
-                  ? "Autodidaktischer Full-Stack-Webentwickler mit Erfahrung in der Entwicklung, Bereitstellung und Wartung moderner Webanwendungen. Fundiertes Wissen in Django, Django REST Framework, Next.js, Tailwind CSS und PostgreSQL. Übernimmt Verantwortung für komplette Entwicklungsprozesse – von Konzeption über Backend- und Frontend-Entwicklung bis hin zum Deployment. Bringt Zuverlässigkeit, Lernbereitschaft und lösungsorientiertes Arbeiten aus langjähriger Berufserfahrung mit."
-                  : "Self-taught full-stack web developer with strong experience in building, deploying, and maintaining modern web applications. Skilled in Django, Django REST Framework, Next.js, Tailwind CSS, and PostgreSQL. Able to take full ownership of projects from concept to production with focus on clean code, scalability, and user-friendly design, supported by years of professional work discipline."}
-              </p>
-            </ResumeSection>
+        <section className="resume-v3-note">
+          <div className="resume-v3-note-mark">BK / BLACK</div>
+          <div><strong>{de ? "Auf Schwarz gebaut — mit Absicht." : "Built on black — by choice."}</strong><p>{de ? "Meine Lieblingsfarbe wird hier zur ruhigen Bühne: hoher Kontrast, klare Prioritäten, weniger visuelles Rauschen." : "My favorite color becomes the quiet stage here: high contrast, clear priorities, less visual noise."}</p></div>
+          <span>{de ? "Designentscheidung, nicht Dekoration" : "Design decision, not decoration"}</span>
+        </section>
 
-            {/* Projects */}
-            <ResumeSection title={isGerman ? "Projekte" : "Projects"}>
-              <div className="space-y-4 text-sm text-cyan-100/90">
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      Portfolio Website (2025)
-                    </span>
-                    {" · "}
-                    {isGerman ? "Eigenes Projekt" : "Personal project"}
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Full-Stack-Portfolio mit Django, PostgreSQL, Next.js und Tailwind CSS. Enthält JWT-Authentifizierung, vollständige CRUD-Funktionen, Projekt- und Erfahrungsverwaltung sowie ein integriertes Kontaktformular mit der Resend API. Responsives Dark-UI, bereitgestellt über Vercel (Frontend) und Railway (Backend)."
-                      : "Full-stack portfolio platform built with Django, PostgreSQL, Next.js, and Tailwind CSS. Includes JWT authentication, full CRUD features, project and experience management, and an integrated contact system using the Resend API. Fully responsive dark UI deployed via Vercel (frontend) and Railway (backend)."}
-                  </p>
-                  <p className="mt-1">
-                    <span className="text-cyan-200">
-                      {isGerman ? "Live:" : "Live:"}
-                    </span>{" "}
-                    <a
-                      href="https://abdullahstack.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-4 text-cyan-300 hover:text-cyan-100"
-                    >
-                      abdullahstack.com
-                    </a>
-                  </p>
-                </div>
+        <section className="resume-v3-overview" aria-label="Professional overview">
+          <OverviewCard index="01" label={de ? "Profil" : "Profile"} value={de ? "Backend-first Entwickler" : "Backend-first builder"} detail={de ? "Mathematik · APIs · relationale Daten" : "Mathematics · APIs · relational data"} />
+          <OverviewCard index="02" label={de ? "Produktion" : "Production"} value="Railway · Vercel" detail={de ? "Deployments · Logs · Konfiguration" : "Deployments · logs · configuration"} />
+          <OverviewCard index="03" label={de ? "Aktuell" : "Current"} value="OPSHUB" detail={de ? "Multi-Tenant SaaS in aktiver Entwicklung" : "Multi-tenant SaaS in active development"} />
+        </section>
 
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      Linda Art Gallery (2025)
-                    </span>
-                    {" · "}
-                    {isGerman
-                      ? "Portfolio-Plattform für eine Berliner Künstlerin"
-                      : "Custom portfolio platform for a Berlin-based artist"}
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Individuelle Kunstgalerie- und Portfolio-Plattform mit dynamischer Bild- und Videodarstellung, Preisanfrageformular mit automatisierten E-Mails, responsivem Layout und JWT-basierter Authentifizierung. Backend mit Django REST Framework, Frontend mit Next.js und Tailwind CSS, Deployment über Vercel und Railway."
-                      : "Custom gallery and portfolio platform featuring dynamic image and video presentation, artwork inquiry form with automated emails, responsive layout, and JWT-based authentication. Backend built with Django REST Framework, frontend with Next.js and Tailwind CSS, deployed via Vercel and Railway."}
-                  </p>
-                </div>
-              </div>
-            </ResumeSection>
+        <div className="resume-v3-body">
+          <ResumeSection index="01" title={de ? "Profil" : "Profile"} lead>
+            <p className="resume-v3-profile-copy">{copy.profile}</p>
+          </ResumeSection>
 
-            {/* Work Experience */}
-            <ResumeSection
-              title={isGerman ? "Berufserfahrung" : "Work Experience"}
-            >
-              <div className="space-y-4 text-sm text-cyan-100/90">
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      {isGerman
-                        ? "Einzelhandelsmitarbeiter – Sport Voswinkel GmbH, Berlin"
-                        : "Retail Associate – Sport Voswinkel GmbH, Berlin"}
-                    </span>{" "}
-                    · 2024–{isGerman ? "heute" : "present"}
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Kundenbetreuung, Warenpräsentation und Lagerverwaltung mit SAP und digitalen Systemen. Optimierung von Abläufen, präzise Organisation und zuverlässige Teamarbeit in einem schnelllebigen Umfeld. Aufbau von Verantwortungsbewusstsein, Zeitmanagement und Kommunikationsfähigkeit."
-                      : "Customer support, merchandise presentation, and inventory operations using SAP and digital systems. Improved workflow structure, accuracy, and coordination in a fast-paced environment. Built reliability, time management, and strong communication skills."}
-                  </p>
-                </div>
+          <ResumeSection index="02" title={de ? "Technische Kenntnisse" : "Technical Skills"}>
+            <div className="resume-v3-skills">
+              {copy.skills.map((skill) => <SkillCard key={skill.label} label={skill.label} values={skill.values} />)}
+            </div>
+          </ResumeSection>
 
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      {isGerman
-                        ? "Lagerhelfer – Flink SE, Berlin"
-                        : "Warehouse Associate – Flink SE, Berlin"}
-                    </span>{" "}
-                    · 2021–2022
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Kommissionierung, Bestandskontrolle und Lagerprozesse unter Zeitdruck. Hohe Genauigkeit, effiziente Teamarbeit und strukturiertes Arbeiten in dynamischen Situationen."
-                      : "Handled order preparation, stock control, and warehouse processes under time pressure. Strengthened teamwork, efficiency, and attention to detail in a dynamic environment."}
-                  </p>
-                </div>
+          <ResumeSection index="03" title={de ? "Ausgewählte Softwareprojekte" : "Selected Software Projects"}>
+            <div className="resume-v3-projects">{copy.projects.map((entry, index) => <ProjectEntry key={entry.title} entry={entry} index={index + 1} />)}</div>
+          </ResumeSection>
 
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      {isGerman
-                        ? "Küchenhilfe – Verschiedene Restaurants (Berlin)"
-                        : "Kitchen Assistant – Multiple Restaurants (Berlin)"}
-                    </span>{" "}
-                    · 2019–2024
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Arbeit in multikulturellen, schnelllebigen Küchen. Einhaltung von Hygiene- und Sicherheitsstandards, enge Abstimmung im Team und zuverlässige Leistung während hoher Auslastung."
-                      : "Worked in multicultural, fast-paced kitchen environments. Maintained hygiene and safety standards, coordinated closely with teams, and delivered reliable performance during peak hours."}
-                  </p>
-                </div>
-              </div>
-            </ResumeSection>
+          <ResumeSection index="04" title={de ? "Berufserfahrung" : "Professional Experience"}>
+            <div className="resume-v3-experience"><span className="resume-v3-current-dot" /> <EntryCard entry={copy.work} /></div>
+          </ResumeSection>
 
-            {/* Education */}
-            <ResumeSection title={isGerman ? "Bildung" : "Education"}>
-              <div className="space-y-3 text-sm text-cyan-100/90">
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      M.Sc. Scientific Computing – TU Berlin
-                    </span>{" "}
-                    · 2021–2024{" "}
-                    <span className="text-cyan-300/80">
-                      ({isGerman ? "nicht abgeschlossen" : "not completed"})
-                    </span>
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Vertiefung in Programmierung und angewandter Informatik; später Fokuswechsel auf praxisorientierte Webentwicklung und eigene Projekte."
-                      : "Focused on programming and applied scientific computing; later shifted fully towards practical web development and self-directed projects."}
-                  </p>
-                </div>
+          <ResumeSection index="05" title={de ? "Bildung" : "Education"}>
+            <div className="resume-v3-education">
+              <EducationCard title="BRAC University, Dhaka" detail="Bachelor of Science in Mathematics" meta="2018" />
+              <EducationCard title={de ? "Full-Stack Web Development Bootcamp (Präsenz)" : "Full-Stack Web Development Bootcamp (in-class)"} detail="HTML · CSS · JavaScript · Ruby · Ruby on Rails" meta="2021" />
+            </div>
+          </ResumeSection>
 
-                <div>
-                  <p className="text-[13px] text-cyan-200 mb-1">
-                    <span className="font-semibold">
-                      B.Sc. Mathematics – BRAC University, Dhaka
-                    </span>{" "}
-                    · 2013–2018
-                  </p>
-                  <p className="leading-relaxed">
-                    {isGerman
-                      ? "Fundierte Grundlagen in Logik, Analyse und strukturiertem Problemlösen."
-                      : "Built a strong foundation in logic, analysis, and structured problem-solving."}
-                  </p>
-                </div>
-              </div>
-            </ResumeSection>
-
-            {/* Technical skills */}
-            <ResumeSection
-              title={isGerman ? "Technische Kenntnisse" : "Technical Skills"}
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-cyan-100/90">
-                <div className="space-y-2">
-                  <p className="text-cyan-200 text-[13px]">
-                    {isGerman
-                      ? "Programmiersprachen & Frameworks"
-                      : "Languages & Frameworks"}
-                  </p>
-                  <p>Python, JavaScript, TypeScript</p>
-                  <p>Django, Django REST Framework</p>
-                  <p>React, Next.js, Tailwind CSS</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-cyan-200 text-[13px]">
-                    {isGerman ? "Datenbanken & Tools" : "Databases & Tools"}
-                  </p>
-                  <p>PostgreSQL, SQLite</p>
-                  <p>Git, GitHub, GitLab</p>
-                  <p>Railway, Vercel, BunnyCDN</p>
-                  <p>Ubuntu, VS Code, SAP</p>
-                </div>
-              </div>
-            </ResumeSection>
-
-            {/* Languages */}
-            <ResumeSection title={isGerman ? "Sprachen" : "Languages"}>
-              <p className="text-sm text-cyan-100/90 leading-relaxed">
-                {isGerman
-                  ? "Englisch (fließend) · Deutsch (konversationssicher – B1/B2) · Bengalisch (Muttersprache)"
-                  : "English (fluent) · German (conversational – B1/B2) · Bengali (native)"}
-              </p>
-            </ResumeSection>
-
-            {/* Strengths */}
-            <ResumeSection title={isGerman ? "Persönliche Stärken" : "Strengths"}>
-              <p className="text-sm text-cyan-100/90 leading-relaxed">
-                {isGerman
-                  ? "Zuverlässigkeit · Teamfähigkeit · Problemlösung · Schnelles Lernen · Selbstmotivation"
-                  : "Reliability · Teamwork · Problem-solving · Fast learning · Self-motivation"}
-              </p>
-            </ResumeSection>
-          </section>
+          <ResumeSection index="06" title={de ? "Sprachen" : "Languages"}>
+            <div className="resume-v3-languages">
+              {(de ? [["Deutsch", "Berufliche Kommunikation"], ["Englisch", "Fließend"], ["Bengali", "Muttersprache"]] : [["English", "Fluent"], ["German", "Professional communication"], ["Bengali", "Native"]]).map(([name, level]) => <div key={name}><span>{name}</span><strong>{level}</strong></div>)}
+            </div>
+          </ResumeSection>
         </div>
       </main>
     </AnimatedPageWrapper>
   );
 }
 
-function ResumeSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section>
-      <div className="glass-card px-5 py-5 md:px-7 md:py-6 space-y-3">
-        <h2 className="text-base md:text-lg text-cyan-300">{title}</h2>
-        <div>{children}</div>
-      </div>
-    </section>
-  );
+function ResumeSection({ index, title, children, lead = false }: { index: string; title: string; children: ReactNode; lead?: boolean }) {
+  return <section className={`resume-v3-section${lead ? " is-lead" : ""}`}><header><span>{index}</span><h2>{title}</h2></header><div>{children}</div></section>;
+}
+function Fact({ label, value }: { label: string; value: string }) { return <div><span>{label}</span><strong>{value}</strong></div>; }
+function OverviewCard({ index, label, value, detail }: { index: string; label: string; value: string; detail: string }) { return <article><span>{index} / {label}</span><strong>{value}</strong><p>{detail}</p></article>; }
+function SkillCard({ label, values }: { label: string; values: string[] }) { return <article><span>{label}</span>{values.map((value) => <p key={value}>{value}</p>)}</article>; }
+function ProjectEntry({ entry, index }: { entry: Entry; index: number }) { return <article className="resume-v3-project"><span className="resume-v3-project-index">0{index}</span><div><div className="resume-v3-entry-head"><h3>{entry.title}</h3><span>{entry.meta}</span></div><ul>{entry.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>{entry.link && <a href={entry.link.href} target="_blank" rel="noreferrer">{entry.link.label} ↗</a>}</div></article>; }
+function EntryCard({ entry }: { entry: Entry }) { return <article className="resume-v3-entry-card"><div className="resume-v3-entry-head"><h3>{entry.title}</h3><span>{entry.meta}</span></div><ul>{entry.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul></article>; }
+function EducationCard({ title, detail, meta }: { title: string; detail: string; meta: string }) { return <article><span>{meta}</span><h3>{title}</h3><p>{detail}</p></article>; }
+
+function getCopy(de: boolean) {
+  const projects: Entry[] = de ? [
+    { title: "OPSHUB — SaaS-Plattform für Operations, Finance & POS", meta: "2025–heute · aktive Entwicklung / V1", bullets: ["Entwicklung einer mandantenfähigen Business-Anwendung zur Digitalisierung betrieblicher Prozesse mit Modulen für POS, Inventar, Finanzen und weitere Unternehmensabläufe.", "Konzeption organisations- und filialbezogener Datenstrukturen, rollenbasierter Berechtigungen sowie nachvollziehbarer Backend-Workflows für sensible Geschäftsprozesse.", "Umsetzung REST-basierter Validierungs-, Authentifizierungs- und Transaktionslogik mit Fokus auf Datenkonsistenz, Wartbarkeit und schrittweise Erweiterbarkeit."] },
+    { title: "Linda Art Gallery — Kundenprojekt", meta: "2025–2026 · Django · PostgreSQL · Next.js · Railway", bullets: ["Entwicklung und technische Betreuung einer produktiven Galerieplattform für einen realen Kunden mit Medienverwaltung, Kontaktprozessen und Backend-Validierung.", "Implementierung von REST-API-Logik und E-Mail-Workflows sowie klarer Trennung von Geschäftslogik, API und Benutzeroberfläche.", "Deployment und strukturierte Fehleranalyse im laufenden Betrieb anhand von Logs, API-Responses und Produktionskonfiguration."], link: { label: "lindaartgallery.de", href: "https://lindaartgallery.de" } },
+    { title: "Portfolio-Webanwendung", meta: "2025–heute · Django · PostgreSQL · Next.js · JWT", bullets: ["Aufbau einer Full-Stack-Webanwendung mit CRUD-Endpunkten, Validierung, JWT-basierter Authentifizierung und geschützten Frontend-Bereichen.", "Konfiguration von Deployment, Umgebungsvariablen und Datenbankanbindung sowie systematische Analyse technischer Fehler über Logs."], link: { label: "abdullahstack.com", href: "https://abdullahstack.com" } },
+  ] : [
+    { title: "OPSHUB — Multi-tenant Operations, Finance & POS SaaS", meta: "2025–Present · active V1 development", bullets: ["Designing a multi-tenant business platform with organization- and branch-scoped data models across POS, inventory and finance workflows.", "Implementing permission-controlled backend workflows, validation and transactional business logic with emphasis on data integrity and auditability.", "Working extensively with relational models, migrations, API contracts and structured production-style debugging."] },
+    { title: "Linda Art Gallery — Client Project", meta: "2025–2026 · Django · PostgreSQL · Next.js · Railway", bullets: ["Developed and deployed a production gallery platform for a real client, including media management, validated contact workflows and email integration.", "Maintained the deployed application and diagnosed production issues using logs, API responses and configuration analysis."], link: { label: "lindaartgallery.de", href: "https://lindaartgallery.de" } },
+    { title: "Portfolio Web Application", meta: "2025–Present · Django · PostgreSQL · Next.js · JWT", bullets: ["Built a full-stack application with CRUD APIs, relational data models, validation, JWT authentication and protected frontend areas."], link: { label: "abdullahstack.com", href: "https://abdullahstack.com" } },
+  ];
+
+  return {
+    role: de ? "Junior Backend / Full-Stack Developer · Python · Django · REST APIs · PostgreSQL" : "Junior Data Engineer / Backend Developer · Mathematics · Python · PostgreSQL · REST APIs",
+    profile: de ? "Junior Backend / Full-Stack Developer mit Bachelorabschluss in Mathematik und Schwerpunkt auf Python, Django REST Framework, PostgreSQL und datengetriebenen Webanwendungen. Praktische Erfahrung in der Entwicklung und dem produktionsnahen Betrieb von REST-APIs, JWT-Authentifizierung, relationalen Datenmodellen und Cloud-Deployments. Entwickelt eigene sowie kundenbezogene Softwareprojekte von der Anforderungsstrukturierung bis zur Bereitstellung und arbeitet sich systematisch in neue Technologien und bestehende Codebasen ein." : "Junior software and data professional with a Bachelor of Science in Mathematics and hands-on experience with Python, Django REST Framework, PostgreSQL, relational data modelling, REST APIs and production deployments. Experienced in designing structured backend domains, validating transactional data, debugging through logs and API responses, and maintaining database-backed applications. Seeking to develop further in data engineering, ETL, database systems and scalable data processing.",
+    skills: de ? [
+      { label: "Programmierung", values: ["Python · TypeScript · JavaScript", "HTML · CSS"] },
+      { label: "Daten & Datenbanken", values: ["PostgreSQL · SQL-Grundlagen", "relationale Datenmodellierung · Django-Migrationen · Datenvalidierung"] },
+      { label: "Backend & APIs", values: ["Django · Django REST Framework", "REST API Design · Serializer/Validation · JWT Authentication"] },
+      { label: "Tools & Delivery", values: ["Git · GitHub · GitLab · Linux", "Railway · Vercel · VS Code · ENV-Konfiguration · Log-Debugging"] },
+    ] : [
+      { label: "Programming", values: ["Python · TypeScript · JavaScript", "HTML · CSS"] },
+      { label: "Data & Databases", values: ["PostgreSQL · SQL fundamentals", "relational data modelling · Django migrations · data validation"] },
+      { label: "Backend & APIs", values: ["Django · Django REST Framework", "REST API design · serializers · authentication/authorization · JWT"] },
+      { label: "Tools & Delivery", values: ["Git · GitHub · GitLab · Linux", "Railway · Vercel · VS Code · environment configuration · log-based debugging"] },
+    ],
+    projects,
+    work: { title: "Sport Voswinkel GmbH (INTERSPORT), Berlin · Store Associate", meta: de ? "2024–heute" : "2024–Present", bullets: de ? ["Arbeit mit SAP-gestützten Warenwirtschafts- und operativen Prozessen im laufenden Filialbetrieb.", "Sorgfältige Durchführung strukturierter Arbeitsabläufe und Dokumentation auch bei hohem Kundenaufkommen und Zeitdruck.", "Team- und kundenorientierte Kommunikation sowie zuverlässige Übernahme operativer Verantwortung."] : ["Work with SAP-supported merchandise and operational processes in a high-volume retail environment.", "Execute structured workflows and documentation accurately under time pressure while coordinating with colleagues and customers."] } as Entry,
+  };
 }

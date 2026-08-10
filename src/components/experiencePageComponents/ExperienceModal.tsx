@@ -2,100 +2,81 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Experience } from "@/types/experience";
+import type { Experience } from "@/types/experience";
 
-type Props = {
-  experience: Experience;
-  onClose: () => void;
-};
+type Props = { experience: Experience; onClose: () => void };
 
 export default function ExperienceModal({ experience, onClose }: Props) {
   useEffect(() => {
-    const bodyPrev = document.body.style.overflow;
-    const footer = document.getElementById("site-footer");
-    const footerPrevPointer = footer?.style.pointerEvents ?? "";
-
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    if (footer) footer.style.pointerEvents = "none";
-
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = bodyPrev;
-      if (footer) footer.style.pointerEvents = footerPrevPointer;
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [onClose]);
+
+  const endDate = experience.still_working ? "Present" : experience.end_date || "—";
 
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md px-3 sm:px-6"
+    <motion.div
+      className="detail-modal-backdrop"
       role="dialog"
       aria-modal="true"
+      aria-labelledby="experience-detail-title"
       onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.98, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-        className="
-          w-[92vw] max-w-md sm:max-w-2xl
-          h-[78dvh] sm:h-[80vh]
-          hero-shell
-          rounded-2xl overflow-hidden
-          flex flex-col
-        "
+      <motion.article
+        className="detail-modal"
+        onClick={(event) => event.stopPropagation()}
+        initial={{ opacity: 0, y: 34, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Sticky header */}
-        <div className="shrink-0 sticky top-0 z-10 bg-black/70 backdrop-blur-sm border-b border-cyan-400/20 px-4 py-3 flex justify-end">
-          <button
-            onClick={onClose}
-            className="
-              text-cyan-200 hover:text-cyan-50
-              text-xs md:text-sm font-medium
-              px-3 py-1.5 rounded-full
-              border border-cyan-400/70
-              bg-black/40
-              shadow-[0_0_10px_rgba(34,211,238,0.6)]
-              cursor-pointer transition
-            "
-          >
-            Close
+        <div className="detail-modal-chrome">
+          <div className="detail-modal-context"><i /> Work / selected history</div>
+          <button type="button" className="detail-modal-close" onClick={onClose} aria-label="Close work details">
+            <span>Close</span><b>×</b>
           </button>
         </div>
 
-        {/* Scrollable content */}
-        <div
-          className="grow overflow-y-auto overscroll-contain px-6 py-6"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-200 mb-4 text-center">
-            {experience.job_title} — {experience.company_name}
-          </h2>
+        <div className="detail-modal-scroll">
+          <header className="detail-modal-hero">
+            <span className="detail-modal-index">Experience / Detail</span>
+            <h2 id="experience-detail-title">{experience.job_title}</h2>
+            <p>{experience.company_name}</p>
+          </header>
 
-          <div className="space-y-4 text-sm sm:text-base text-cyan-100/90">
-            <p>
-              <span className="text-cyan-300 font-semibold">Location: </span>
-              {experience.location}
-            </p>
+          <div className="detail-modal-layout">
+            <aside className="detail-modal-rail">
+              <Meta label="Location" value={experience.location || "—"} />
+              <Meta label="Period" value={`${experience.start_date} — ${endDate}`} />
+              <Meta label="Status" value={experience.still_working ? "Current role" : "Completed"} />
+            </aside>
 
-            <p>
-              <span className="text-cyan-300 font-semibold">Duration: </span>
-              {experience.start_date} to{" "}
-              {experience.still_working ? "Present" : experience.end_date || "N/A"}
-            </p>
-
-            {experience.description && (
-              <div>
-                <span className="text-cyan-300 font-semibold">Description:</span>
-                <p className="mt-2 text-cyan-100/90 whitespace-pre-line leading-relaxed break-words hyphens-auto">
-                  {experience.description}
-                </p>
-              </div>
-            )}
+            <section className="detail-modal-copy">
+              <span className="detail-modal-section-label">Scope & contribution</span>
+              <p className={!experience.description ? "is-muted" : ""}>
+                {experience.description || "No additional description has been added for this role yet."}
+              </p>
+            </section>
           </div>
 
-          <div className="h-6" />
+          <footer className="detail-modal-footer">
+            <span>Professional history / AbdullahStack</span>
+            <button type="button" onClick={onClose}>Return to timeline ↑</button>
+          </footer>
         </div>
-      </motion.div>
-    </div>
+      </motion.article>
+    </motion.div>
   );
+}
+
+function Meta({ label, value }: { label: string; value: string }) {
+  return <div className="detail-modal-meta"><span>{label}</span><strong>{value}</strong></div>;
 }
